@@ -17,7 +17,7 @@ void IAnimation::Update_Animation_Frame()
 		++m_tFrame.iStartX;
 
 		if ( m_tFrame.iStartX >= m_tFrame.iEndX )
-			m_tFrame.iStartX = 0;
+			m_tFrame.iStartX = m_tFrame.iFrameX;
 
 		m_tFrame.dwTime = GetTickCount();
 	}

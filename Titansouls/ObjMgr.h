@@ -38,7 +38,6 @@ public:
 
 private:
 	static CObjMgr* m_pInstance;
-
 	list<CObj*>		m_listObj[OBJID::END];
 };
 

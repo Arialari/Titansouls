@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "ObjMgr.h"
 #include "Obj.h"
-//#include "CollisionMgr.h"
+#include "CollisionMgr.h"
 
 CObjMgr* CObjMgr::m_pInstance = nullptr;
 CObjMgr::CObjMgr()

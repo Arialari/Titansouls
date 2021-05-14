@@ -22,8 +22,10 @@ public:
 	void Set_Pos( float _x, float _y ) { m_tInfo.fX = _x; m_tInfo.fY = _y; }
 	void SetReserveCollisionRect( int _i ) { m_tCollisionRect.reserve( _i ); }
 
+	//Functions
+	virtual void Hit() { m_bDead = true; }
+
 	//Setter
-	void Set_Dead() { m_bDead = true; }
 	void Set_ImageKey( const TCHAR* _pImageKey ) { m_pImageKey = _pImageKey; }
 	void Set_DrawID( int _iDrawID ) { m_iDrawID = _iDrawID; }
 

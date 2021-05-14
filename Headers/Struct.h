@@ -33,11 +33,14 @@ typedef struct tagLineInfo
 
 typedef struct tagFrame
 {
+	enum PLAYTYPE { LOOP, NO_LOOP, REVERSE_NO_LOOP, PLAYTYPE_END};
 	int		iStartX;
 	int		iEndX;
-	int		iStateY;
+	int		iFrameX;
+	int		iModelY;
 	DWORD	dwDelay;
 	DWORD	dwTime;
+	PLAYTYPE	ePlayType;
 }FRAME;
 
 #endif // !__STRUCT_H__

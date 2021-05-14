@@ -9,6 +9,7 @@ class IAnimation :
 public:
     IAnimation();
     virtual ~IAnimation();
+protected:
     virtual void    Update_Animation_Frame();
 protected:
     unsigned int m_iFrameidx;

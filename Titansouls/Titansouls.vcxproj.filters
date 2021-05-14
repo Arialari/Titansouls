@@ -22,9 +22,6 @@
     <Filter Include="소스 파일\98.Manager">
       <UniqueIdentifier>{c82fb725-ac06-4a18-8f41-9d1a4a47afd5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\98.Manager\01.ObjMgr">
-      <UniqueIdentifier>{29dedd41-0b46-40b1-adbc-6ddccdf23ad0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\01.Obj">
       <UniqueIdentifier>{55bcf7e6-b180-467d-bd58-1abbd3a317ac}</UniqueIdentifier>
     </Filter>
@@ -36,6 +33,42 @@
     </Filter>
     <Filter Include="소스 파일\02.Implement\01.IAnimation">
       <UniqueIdentifier>{3ef07466-450a-4ec8-9015-f3903788b966}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\03.MyBitMap">
+      <UniqueIdentifier>{039b44ea-176a-4283-b1b6-9fdd87ee6883}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\01.Obj\00.Pawn\00.Player">
+      <UniqueIdentifier>{5bffc0f3-731c-422e-9aab-5f3cc0465086}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\04.Scene">
+      <UniqueIdentifier>{34fa1b52-7b49-4881-8ed8-35ca3b45c323}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\98.Manager\ObjMgr">
+      <UniqueIdentifier>{29dedd41-0b46-40b1-adbc-6ddccdf23ad0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\98.Manager\CollisionMgr">
+      <UniqueIdentifier>{2afa791c-4886-42f7-ba9e-900aa7add48f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\98.Manager\KeyMgr">
+      <UniqueIdentifier>{a90820c1-27b5-4064-a81e-958cf7314ebf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\98.Manager\ScrollMgr">
+      <UniqueIdentifier>{988e66c4-d512-422f-9129-e4d2032fa05b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\98.Manager\BmpMgr">
+      <UniqueIdentifier>{eb652182-bab9-4677-8f62-763e4a5f8d71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\98.Manager\SceneMgr">
+      <UniqueIdentifier>{0ea04e85-1d32-440f-a2e8-582273bcdf45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\04.Scene\Stage">
+      <UniqueIdentifier>{e54b0b54-fb28-47c2-b297-4f2569dda298}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\98.Manager\TileManager">
+      <UniqueIdentifier>{87bf703e-70de-41bb-ad91-fc94fcf8440e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\01.Obj\01.Tile">
+      <UniqueIdentifier>{791f964a-6ce0-44e9-b4c1-759e84b8340e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -58,7 +91,7 @@
       <Filter>소스 파일\00.MainGame</Filter>
     </ClInclude>
     <ClInclude Include="ObjMgr.h">
-      <Filter>소스 파일\98.Manager\01.ObjMgr</Filter>
+      <Filter>소스 파일\98.Manager\ObjMgr</Filter>
     </ClInclude>
     <ClInclude Include="Obj.h">
       <Filter>소스 파일\01.Obj</Filter>
@@ -72,6 +105,39 @@
     <ClInclude Include="IAnimation.h">
       <Filter>소스 파일\02.Implement\01.IAnimation</Filter>
     </ClInclude>
+    <ClInclude Include="CollisionMgr.h">
+      <Filter>소스 파일\98.Manager\CollisionMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyMgr.h">
+      <Filter>소스 파일\98.Manager\KeyMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="ScrollMgr.h">
+      <Filter>소스 파일\98.Manager\ScrollMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="BmpMgr.h">
+      <Filter>소스 파일\98.Manager\BmpMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="MyBitmap.h">
+      <Filter>소스 파일\03.MyBitMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>소스 파일\01.Obj\00.Pawn\00.Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>소스 파일\04.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneMgr.h">
+      <Filter>소스 파일\98.Manager\SceneMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage.h">
+      <Filter>소스 파일\04.Scene\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="TileMgr.h">
+      <Filter>소스 파일\98.Manager\TileManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>소스 파일\01.Obj\01.Tile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Titansouls.cpp">
@@ -84,7 +150,7 @@
       <Filter>소스 파일\00.MainGame</Filter>
     </ClCompile>
     <ClCompile Include="ObjMgr.cpp">
-      <Filter>소스 파일\98.Manager\01.ObjMgr</Filter>
+      <Filter>소스 파일\98.Manager\ObjMgr</Filter>
     </ClCompile>
     <ClCompile Include="Obj.cpp">
       <Filter>소스 파일\01.Obj</Filter>
@@ -97,6 +163,39 @@
     </ClCompile>
     <ClCompile Include="IAnimation.cpp">
       <Filter>소스 파일\02.Implement\01.IAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionMgr.cpp">
+      <Filter>소스 파일\98.Manager\CollisionMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyMgr.cpp">
+      <Filter>소스 파일\98.Manager\KeyMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="ScrollMgr.cpp">
+      <Filter>소스 파일\98.Manager\ScrollMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="BmpMgr.cpp">
+      <Filter>소스 파일\98.Manager\BmpMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="MyBitmap.cpp">
+      <Filter>소스 파일\03.MyBitMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>소스 파일\01.Obj\00.Pawn\00.Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>소스 파일\04.Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneMgr.cpp">
+      <Filter>소스 파일\98.Manager\SceneMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage.cpp">
+      <Filter>소스 파일\04.Scene\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMgr.cpp">
+      <Filter>소스 파일\98.Manager\TileManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>소스 파일\01.Obj\01.Tile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

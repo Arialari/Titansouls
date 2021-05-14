@@ -13,6 +13,8 @@ public:
     virtual ~CPawn();
 protected:
     float			m_fSpeed;
+    float           m_fVelocityX;
+    float           m_fVelocityY;
 };
 
 #endif // !__PAWN_H__

@@ -19,7 +19,7 @@
 #define DEFAULTCX 32
 #define DEFAULTCY 32
 
-#define TILEX 30
-#define TILEY 20
+#define TILEX 100
+#define TILEY 500
 
 #endif // !__DEFINE_H__
