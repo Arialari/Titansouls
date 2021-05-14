@@ -8,6 +8,20 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Editor", "Editor\Editor.vcxproj", "{102E4CF0-A9D6-4A75-BFE2-119F488C881A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Headers", "Headers", "{4AC38FF9-5596-46E4-A9CD-F5EE04445414}"
+	ProjectSection(SolutionItems) = preProject
+		Headers\Include.h = Headers\Include.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Include", "Include", "{E699D0AE-1DBE-40FB-B08C-45E2890431D6}"
+	ProjectSection(SolutionItems) = preProject
+		Headers\AbstractFactory.h = Headers\AbstractFactory.h
+		Headers\Define.h = Headers\Define.h
+		Headers\Enum.h = Headers\Enum.h
+		Headers\Extern.h = Headers\Extern.h
+		Headers\Function.h = Headers\Function.h
+		Headers\Functor.h = Headers\Functor.h
+		Headers\Struct.h = Headers\Struct.h
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +50,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E699D0AE-1DBE-40FB-B08C-45E2890431D6} = {4AC38FF9-5596-46E4-A9CD-F5EE04445414}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1EEE6DD0-AC05-4ADD-86A0-FCFCCD4641D5}

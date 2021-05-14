@@ -1,58 +1,77 @@
-﻿// Titansouls.cpp : 애플리케이션에 대한 진입점을 정의합니다.
+﻿// Framework.cpp : 응용 프로그램에 대한 진입점을 정의합니다.
 //
 
-#include "framework.h"
+#include "stdafx.h"
+#include "Framework.h"
 #include "Titansouls.h"
+#include "MainGame.h"
 
 #define MAX_LOADSTRING 100
 
 // 전역 변수:
+HWND	g_hWnd;
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 
-// 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
-ATOM                MyRegisterClass(HINSTANCE hInstance);
-BOOL                InitInstance(HINSTANCE, int);
-LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
-INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
+// 이 코드 모듈에 들어 있는 함수의 정방향 선언입니다.
+ATOM                MyRegisterClass( HINSTANCE hInstance );
+BOOL                InitInstance( HINSTANCE, int );
+LRESULT CALLBACK    WndProc( HWND, UINT, WPARAM, LPARAM );
+INT_PTR CALLBACK    About( HWND, UINT, WPARAM, LPARAM );
 
-int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
-                     _In_opt_ HINSTANCE hPrevInstance,
-                     _In_ LPWSTR    lpCmdLine,
-                     _In_ int       nCmdShow)
+int APIENTRY wWinMain( _In_ HINSTANCE hInstance,
+                       _In_opt_ HINSTANCE hPrevInstance,
+                       _In_ LPWSTR    lpCmdLine,
+                       _In_ int       nCmdShow )
 {
-    UNREFERENCED_PARAMETER(hPrevInstance);
-    UNREFERENCED_PARAMETER(lpCmdLine);
-
     // TODO: 여기에 코드를 입력합니다.
+    _CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
 
     // 전역 문자열을 초기화합니다.
-    LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
-    LoadStringW(hInstance, IDC_TITANSOULS, szWindowClass, MAX_LOADSTRING);
-    MyRegisterClass(hInstance);
+    LoadStringW( hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING );
+    LoadStringW( hInstance, IDC_TITANSOULS, szWindowClass, MAX_LOADSTRING );
+    MyRegisterClass( hInstance );
 
-    // 애플리케이션 초기화를 수행합니다:
-    if (!InitInstance (hInstance, nCmdShow))
+    // 응용 프로그램 초기화를 수행합니다.
+    if ( !InitInstance ( hInstance, nCmdShow ) )
     {
         return FALSE;
     }
 
-    HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_TITANSOULS));
+    HACCEL hAccelTable = LoadAccelerators( hInstance, MAKEINTRESOURCE( IDC_TITANSOULS ) );
 
     MSG msg;
+    msg.message = WM_NULL;
 
-    // 기본 메시지 루프입니다:
-    while (GetMessage(&msg, nullptr, 0, 0))
+    CMainGame		mainGame;
+    mainGame.Initialize();
+
+    // GetTickCount();
+    // 운영체제가 시작된 이후부터 시간값을 누적하고 있다!
+    // -> 1/1000초 단위로
+
+    DWORD dwTime = GetTickCount();
+
+    while ( msg.message != WM_QUIT )
     {
-        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+        if ( PeekMessage( &msg, nullptr, 0, 0, PM_REMOVE ) )
         {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
+            TranslateMessage( &msg );
+            DispatchMessage( &msg );
+        }
+
+        if ( dwTime + 10 < GetTickCount() )
+        {
+            mainGame.Update();
+            mainGame.Late_Update();
+            mainGame.Render();
+
+            dwTime = GetTickCount();
         }
     }
 
-    return (int) msg.wParam;
+    return (int)msg.wParam;
 }
 
 
@@ -60,121 +79,92 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 //
 //  함수: MyRegisterClass()
 //
-//  용도: 창 클래스를 등록합니다.
+//  목적: 창 클래스를 등록합니다.
 //
-ATOM MyRegisterClass(HINSTANCE hInstance)
+ATOM MyRegisterClass( HINSTANCE hInstance )
 {
     WNDCLASSEXW wcex;
 
-    wcex.cbSize = sizeof(WNDCLASSEX);
+    wcex.cbSize = sizeof( WNDCLASSEX );
 
-    wcex.style          = CS_HREDRAW | CS_VREDRAW;
-    wcex.lpfnWndProc    = WndProc;
-    wcex.cbClsExtra     = 0;
-    wcex.cbWndExtra     = 0;
-    wcex.hInstance      = hInstance;
-    wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_TITANSOULS));
-    wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
-    wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_TITANSOULS);
-    wcex.lpszClassName  = szWindowClass;
-    wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
+    wcex.style = CS_HREDRAW | CS_VREDRAW;
+    wcex.lpfnWndProc = WndProc;
+    wcex.cbClsExtra = 0;
+    wcex.cbWndExtra = 0;
+    wcex.hInstance = hInstance;
+    wcex.hIcon = LoadIcon( hInstance, MAKEINTRESOURCE( IDC_TITANSOULS ) );
+    wcex.hCursor = LoadCursor( nullptr, IDC_ARROW );
+    wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+    wcex.lpszMenuName = NULL;
+    wcex.lpszClassName = szWindowClass;
+    wcex.hIconSm = LoadIcon( wcex.hInstance, MAKEINTRESOURCE( IDI_SMALL ) );
 
-    return RegisterClassExW(&wcex);
+    return RegisterClassExW( &wcex );
 }
 
 //
 //   함수: InitInstance(HINSTANCE, int)
 //
-//   용도: 인스턴스 핸들을 저장하고 주 창을 만듭니다.
+//   목적: 인스턴스 핸들을 저장하고 주 창을 만듭니다.
 //
-//   주석:
+//   설명:
 //
 //        이 함수를 통해 인스턴스 핸들을 전역 변수에 저장하고
 //        주 프로그램 창을 만든 다음 표시합니다.
 //
-BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
+BOOL InitInstance( HINSTANCE hInstance, int nCmdShow )
 {
-   hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
+    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
-   HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+    RECT	rc = { 0, 0, WINCX, WINCY };
 
-   if (!hWnd)
-   {
-      return FALSE;
-   }
+    AdjustWindowRect( &rc, WS_OVERLAPPEDWINDOW, FALSE );
 
-   ShowWindow(hWnd, nCmdShow);
-   UpdateWindow(hWnd);
+    HWND hWnd = CreateWindowW( szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
+                               CW_USEDEFAULT, 0
+                               , rc.right - rc.left, rc.bottom - rc.top
+                               , nullptr, nullptr, hInstance, nullptr );
 
-   return TRUE;
+    if ( !hWnd )
+    {
+        return FALSE;
+    }
+
+    ShowWindow( hWnd, nCmdShow );
+    UpdateWindow( hWnd );
+
+    g_hWnd = hWnd;
+
+    return TRUE;
 }
 
 //
 //  함수: WndProc(HWND, UINT, WPARAM, LPARAM)
 //
-//  용도: 주 창의 메시지를 처리합니다.
+//  목적:  주 창의 메시지를 처리합니다.
 //
-//  WM_COMMAND  - 애플리케이션 메뉴를 처리합니다.
+//  WM_COMMAND  - 응용 프로그램 메뉴를 처리합니다.
 //  WM_PAINT    - 주 창을 그립니다.
 //  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
 //
 //
-LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam )
 {
-    switch (message)
+    switch ( message )
     {
-    case WM_COMMAND:
+    case WM_KEYDOWN:
+        switch ( wParam )
         {
-            int wmId = LOWORD(wParam);
-            // 메뉴 선택을 구문 분석합니다:
-            switch (wmId)
-            {
-            case IDM_ABOUT:
-                DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
-                break;
-            case IDM_EXIT:
-                DestroyWindow(hWnd);
-                break;
-            default:
-                return DefWindowProc(hWnd, message, wParam, lParam);
-            }
-        }
-        break;
-    case WM_PAINT:
-        {
-            PAINTSTRUCT ps;
-            HDC hdc = BeginPaint(hWnd, &ps);
-            // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
-            EndPaint(hWnd, &ps);
+        case VK_ESCAPE:
+            DestroyWindow( hWnd );
+            break;
         }
         break;
     case WM_DESTROY:
-        PostQuitMessage(0);
+        PostQuitMessage( 0 );
         break;
     default:
-        return DefWindowProc(hWnd, message, wParam, lParam);
+        return DefWindowProc( hWnd, message, wParam, lParam );
     }
     return 0;
-}
-
-// 정보 대화 상자의 메시지 처리기입니다.
-INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
-{
-    UNREFERENCED_PARAMETER(lParam);
-    switch (message)
-    {
-    case WM_INITDIALOG:
-        return (INT_PTR)TRUE;
-
-    case WM_COMMAND:
-        if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
-        {
-            EndDialog(hDlg, LOWORD(wParam));
-            return (INT_PTR)TRUE;
-        }
-        break;
-    }
-    return (INT_PTR)FALSE;
 }

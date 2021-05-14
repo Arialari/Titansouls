@@ -13,24 +13,90 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="헤더 파일\99.Default">
+      <UniqueIdentifier>{0307acd0-28c5-4999-acd5-2462f1f62ea9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\00.MainGame">
+      <UniqueIdentifier>{dc35f2a7-2cf9-4306-b4f3-71c8187a15a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\98.Manager">
+      <UniqueIdentifier>{c82fb725-ac06-4a18-8f41-9d1a4a47afd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\98.Manager\01.ObjMgr">
+      <UniqueIdentifier>{29dedd41-0b46-40b1-adbc-6ddccdf23ad0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\01.Obj">
+      <UniqueIdentifier>{55bcf7e6-b180-467d-bd58-1abbd3a317ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\01.Obj\00.Pawn">
+      <UniqueIdentifier>{dd7cd5d7-c952-4e72-b8c5-3d67788ff2d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02.Implement">
+      <UniqueIdentifier>{0fe51d92-1c73-41c5-b46f-ba2091cd4c52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02.Implement\01.IAnimation">
+      <UniqueIdentifier>{3ef07466-450a-4ec8-9015-f3903788b966}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\99.Default</Filter>
     </ClInclude>
     <ClInclude Include="Resource.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\99.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>헤더 파일\99.Default</Filter>
     </ClInclude>
     <ClInclude Include="Titansouls.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\99.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>헤더 파일\99.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame.h">
+      <Filter>소스 파일\00.MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjMgr.h">
+      <Filter>소스 파일\98.Manager\01.ObjMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Obj.h">
+      <Filter>소스 파일\01.Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="Pawn.h">
+      <Filter>소스 파일\01.Obj\00.Pawn</Filter>
+    </ClInclude>
+    <ClInclude Include="Implement.h">
+      <Filter>소스 파일\02.Implement</Filter>
+    </ClInclude>
+    <ClInclude Include="IAnimation.h">
+      <Filter>소스 파일\02.Implement\01.IAnimation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Titansouls.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>헤더 파일\99.Default</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame.cpp">
+      <Filter>소스 파일\00.MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjMgr.cpp">
+      <Filter>소스 파일\98.Manager\01.ObjMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Obj.cpp">
+      <Filter>소스 파일\01.Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="Pawn.cpp">
+      <Filter>소스 파일\01.Obj\00.Pawn</Filter>
+    </ClCompile>
+    <ClCompile Include="Implement.cpp">
+      <Filter>소스 파일\02.Implement</Filter>
+    </ClCompile>
+    <ClCompile Include="IAnimation.cpp">
+      <Filter>소스 파일\02.Implement\01.IAnimation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
