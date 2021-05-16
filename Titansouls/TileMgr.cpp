@@ -57,7 +57,7 @@ void CTileMgr::Picking_Tile(int _iDrawID)
 	if (0 > iIdx || m_vecTile.size() <= (size_t)iIdx)
 		return;
 
-	m_vecTile[iIdx]->Set_DrawID(_iDrawID);
+	m_vecTile[iIdx]->Set_DrawXID(_iDrawID);
 }
 
 void CTileMgr::Save_Tile()
@@ -76,7 +76,7 @@ void CTileMgr::Save_Tile()
 	for (auto& pTile : m_vecTile)
 	{
 		WriteFile(hFile, &pTile->Get_Info(), sizeof(INFO), &dwByte, NULL);
-		WriteFile(hFile, &pTile->Get_DrawID(), sizeof(int), &dwByte, NULL);
+		WriteFile(hFile, &pTile->Get_DrawXID(), sizeof(int), &dwByte, NULL);
 	}
 
 	CloseHandle(hFile);
@@ -109,7 +109,7 @@ void CTileMgr::Load_Tile()
 			break;
 
 		CObj* pObj = CAbstractFactory<CTile>::Create(tTemp.fX, tTemp.fY);
-		pObj->Set_DrawID(iDrawID);
+		pObj->Set_DrawXID(iDrawID);
 
 		m_vecTile.emplace_back(pObj);
 	}

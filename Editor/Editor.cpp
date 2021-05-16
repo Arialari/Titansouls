@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "Framework.h"
 #include "Editor.h"
+#include "MainGame.h"
 
 #define MAX_LOADSTRING 100
 
@@ -43,8 +44,8 @@ int APIENTRY wWinMain( _In_ HINSTANCE hInstance,
     MSG msg;
     msg.message = WM_NULL;
 
-    //CMainGame		mainGame;
-    //mainGame.Initialize();
+    CMainGame		mainGame;
+    mainGame.Initialize();
 
     // GetTickCount();
     // 운영체제가 시작된 이후부터 시간값을 누적하고 있다!
@@ -62,9 +63,9 @@ int APIENTRY wWinMain( _In_ HINSTANCE hInstance,
 
         if ( dwTime + 10 < GetTickCount() )
         {
-            //mainGame.Update();
-            //mainGame.Late_Update();
-            //mainGame.Render();
+            mainGame.Update();
+            mainGame.Late_Update();
+            mainGame.Render();
 
             dwTime = GetTickCount();
         }

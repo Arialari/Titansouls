@@ -2,11 +2,17 @@
 #include "TileMgr.h"
 #include "Tile.h"
 #include "ScrollMgr.h"
+#include "ObjMgr.h"
+#include "BmpMgr.h"
 
 CTileMgr* CTileMgr::m_pInstance = nullptr;
 CTileMgr::CTileMgr()
+	:m_MemDc(nullptr)
 {
-	m_vecTile.reserve(TILEX * TILEY);
+	m_vecBackTile.reserve(TILEX * TILEY);
+	m_vecFoliageTile.reserve( TILEX * TILEY );
+	m_vecCellingTile.reserve( TILEX * TILEY );
+	
 }
 
 
@@ -17,28 +23,68 @@ CTileMgr::~CTileMgr()
 
 void CTileMgr::Initialize()
 {
+	CBmpMgr::Get_Instance()->Insert_Bmp( L"../Image/w_Overworld.bmp", L"Tile" );
 	for (int i = 0; i < TILEY; ++i)
 	{
 		for (int j = 0; j < TILEX; ++j)
 		{
-			float	fX = (float)((PIXELCX >> 1) + (j * PIXELCX));
-			float	fY = (float)((PIXELCY >> 1) + (i * PIXELCY));
+			float	fX = (float)((DEFAULTCX >> 1) + (j * DEFAULTCX));
+			float	fY = (float)((DEFAULTCY >> 1) + (i * DEFAULTCY));
 
-			m_vecTile.emplace_back(CAbstractFactory<CTile>::Create(fX, fY));
+			m_vecBackTile.emplace_back(CAbstractFactory<CTile>::Create(fX, fY));
+			m_vecFoliageTile.emplace_back( CAbstractFactory<CTile>::Create( fX, fY ) );
+			m_vecCellingTile.emplace_back( CAbstractFactory<CTile>::Create( fX, fY ) );
+		}
+	}
+	m_MemDc = CBmpMgr::Get_Instance()->Find_Bmp( L"Tile" );
+}
+
+void CTileMgr::RenderBackGround(HDC _DC)
+{
+	int iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	int iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+
+	int	iCullX = abs( iScrollX / DEFAULTCX );
+	int	iCullY = abs( iScrollY / DEFAULTCY );
+
+	int iCullEndX = iCullX + (WINCX / DEFAULTCX) + 2;
+	int iCullEndY = iCullY + (WINCY / DEFAULTCY) + 2;
+
+
+	for ( int i = iCullY; i < iCullEndY; ++i )
+	{
+		for ( int j = iCullX; j < iCullEndX; ++j )
+		{
+			int iIdx = i * TILEX + j;
+
+			if ( 0 > iIdx || m_vecBackTile.size() <= (size_t)iIdx )
+				continue;
+
+			m_vecBackTile[iIdx]->Render( _DC );
 		}
 	}
 }
 
-void CTileMgr::Render(HDC _DC)
+void CTileMgr::RenderFoliage( HDC _DC )
 {
-	for (auto& pTile : m_vecTile)
-		pTile->Render(_DC);
+	for ( auto& pTile : m_vecFoliageTile )
+		pTile->Render( _DC );
+}
+
+void CTileMgr::RenderCelling( HDC _DC )
+{
+	for ( auto& pTile : m_vecCellingTile )
+		pTile->Render( _DC );
 }
 
 void CTileMgr::Release()
 {
-	for_each(m_vecTile.begin(), m_vecTile.end(), Safe_Delete<CObj*>);
-	m_vecTile.clear();
+	for_each( m_vecBackTile.begin(), m_vecBackTile.end(), Safe_Delete<CObj*>);
+	m_vecBackTile.clear();
+	for_each( m_vecFoliageTile.begin(), m_vecFoliageTile.end(), Safe_Delete<CObj*> );
+	m_vecFoliageTile.clear();
+	for_each( m_vecCellingTile.begin(), m_vecCellingTile.end(), Safe_Delete<CObj*> );
+	m_vecCellingTile.clear();
 }
 
 void CTileMgr::Picking_Tile(int _iDrawID)
@@ -54,10 +100,10 @@ void CTileMgr::Picking_Tile(int _iDrawID)
 
 	int		iIdx = y * TILEX + x;
 
-	if (0 > iIdx || m_vecTile.size() <= (size_t)iIdx)
+	if (0 > iIdx || m_vecBackTile.size() <= (size_t)iIdx)
 		return;
 
-	m_vecTile[iIdx]->Set_DrawID(_iDrawID);
+	m_vecBackTile[iIdx]->Set_DrawXID(_iDrawID);
 }
 
 void CTileMgr::Save_Tile()
@@ -73,10 +119,10 @@ void CTileMgr::Save_Tile()
 
 	DWORD	dwByte = 0;
 
-	for (auto& pTile : m_vecTile)
+	for (auto& pTile : m_vecBackTile )
 	{
 		WriteFile(hFile, &pTile->Get_Info(), sizeof(INFO), &dwByte, NULL);
-		WriteFile(hFile, &pTile->Get_DrawID(), sizeof(int), &dwByte, NULL);
+		WriteFile(hFile, &pTile->Get_DrawXID(), sizeof(int), &dwByte, NULL);
 	}
 
 	CloseHandle(hFile);
@@ -109,9 +155,9 @@ void CTileMgr::Load_Tile()
 			break;
 
 		CObj* pObj = CAbstractFactory<CTile>::Create(tTemp.fX, tTemp.fY);
-		pObj->Set_DrawID(iDrawID);
+		pObj->Set_DrawXID(iDrawID);
 
-		m_vecTile.emplace_back(pObj);
+		m_vecBackTile.emplace_back(pObj);
 	}
 
 	CloseHandle(hFile);

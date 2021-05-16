@@ -28,7 +28,7 @@ void CMainGame::Initialize()
 	CBmpMgr::Get_Instance()->Insert_Bmp( L"../Image/BackBuffer.bmp", L"BackBuffer" );
 	CBmpMgr::Get_Instance()->Insert_Bmp( L"../Image/Back.bmp", L"Back" );
 
-	CSceneMgr::Get_Instance()->Scene_Change( CSceneMgr::STAGE );
+	CSceneMgr::Get_Instance()->Scene_Change( SCENEID::ID::HALLWAY_UNDER );
 }
 
 void CMainGame::Update()

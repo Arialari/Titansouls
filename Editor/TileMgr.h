@@ -12,13 +12,16 @@ private:
 
 public:
 	void Initialize();
-	void Render(HDC _DC);
+	void RenderBackGround(HDC _DC);
+	void RenderFoliage( HDC _DC );
+	void RenderCelling( HDC _DC );
 	void Release();
 
 public:
 	void Picking_Tile(int _iDrawID);
 	void Save_Tile();
 	void Load_Tile();
+	const HDC& Get_DC() const { return m_MemDc; };
 
 public:
 	static CTileMgr* Get_Instance()
@@ -34,7 +37,10 @@ public:
 
 private:
 	static CTileMgr*	m_pInstance;
-	vector<CObj*>		m_vecTile;
+	vector<CObj*>		m_vecBackTile;
+	vector<CObj*>		m_vecFoliageTile;
+	vector<CObj*>		m_vecCellingTile;
+	HDC					m_MemDc;
 };
 
 

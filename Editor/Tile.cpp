@@ -2,9 +2,11 @@
 #include "Tile.h"
 #include "BmpMgr.h"
 #include "ScrollMgr.h"
+#include "TileMgr.h"
 
 
 CTile::CTile()
+	: m_iDrawYID(0)
 {
 }
 
@@ -39,10 +41,14 @@ void CTile::Render(HDC _DC)
 	int	iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
 	int	iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
 
-	HDC hMemDC = CBmpMgr::Get_Instance()->Find_Bmp(L"Tile");
+	HDC hMemDC = CTileMgr::Get_Instance()->Get_DC();
+
+	//BitBlt(_DC, m_tRect.left + iScrollX, m_tRect.top + iScrollY, m_tInfo.iCX, m_tInfo.iCY
+	//	, hMemDC, m_iDrawXID * PIXELCX, m_iDrawYID * PIXELCY, SRCCOPY);
 
 	GdiTransparentBlt(_DC, m_tRect.left + iScrollX, m_tRect.top + iScrollY, m_tInfo.iCX, m_tInfo.iCY
-		, hMemDC, m_iDrawID * PIXELCX, 0, PIXELCX,PIXELCY,RGB(255,0,255));
+		, hMemDC, m_iDrawXID * PIXELCX, m_iDrawYID * PIXELCY, PIXELCX,PIXELCY,RGB(255,255,255));
+	CBmpMgr::Get_Instance();
 }
 
 void CTile::Release()

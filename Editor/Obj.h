@@ -31,13 +31,13 @@ public:
 
 	//Setter
 	inline void Set_ImageKey( const TCHAR* _pImageKey ) { m_pImageKey = _pImageKey; }
-	inline void Set_DrawID( int _iDrawID ) { m_iDrawID = _iDrawID; }
+	inline void Set_DrawXID( int _iDrawXID ) { m_iDrawXID = _iDrawXID; }
 
 public:
 	//Getter
 	const INFO& Get_Info() const { return m_tInfo; }
 	const RECT& Get_Rect() const { return m_tRect; }
-	const int& Get_DrawID() const { return m_iDrawID; }
+	const int& Get_DrawXID() const { return m_iDrawXID; }
 	const RENDERID::ID& Get_RenderID() const { return m_eRenderID; }
 	const vector<RECT>& Get_CollisionRect() const { return m_vecCollisionRect; }
 
@@ -51,7 +51,7 @@ protected:
 	vector<RECT>	m_vecCollisionRect;
 	bool			m_bDead;
 	const TCHAR*	m_pImageKey;
-	int				m_iDrawID;
+	int				m_iDrawXID;
 	RENDERID::ID	m_eRenderID;
 };
 

@@ -5,7 +5,7 @@
 
 CSceneMgr* CSceneMgr::m_pInstance = nullptr;
 CSceneMgr::CSceneMgr()
-	: m_pScene(nullptr), m_ePreScene(END), m_eCurScene(CSceneMgr::END)
+	: m_pScene(nullptr), m_ePreScene( SCENEID::ID::SCENDID_END ), m_eCurScene( SCENEID::ID::SCENDID_END )
 {
 }
 
@@ -35,7 +35,7 @@ void CSceneMgr::Release()
 	SAFE_DELETE(m_pScene);
 }
 
-void CSceneMgr::Scene_Change(SCENEID _eID)
+void CSceneMgr::Scene_Change( SCENEID::ID _eID)
 {
 	m_eCurScene = _eID;
 
@@ -45,10 +45,10 @@ void CSceneMgr::Scene_Change(SCENEID _eID)
 
 		switch (m_eCurScene)
 		{
-		case CSceneMgr::LOGO:
+		case SCENEID::ID::HALLWAY_UNDER:
+			//m_pScene = 
 			break;
-		case CSceneMgr::STAGE:
-			m_pScene = new CStage;
+		case SCENEID::ID::GOL_LATH:
 			break;
 		}
 		m_pScene->Initialize();

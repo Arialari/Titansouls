@@ -49,6 +49,18 @@
     <Filter Include="소스 파일\98.Manager\ScrollMgr">
       <UniqueIdentifier>{a1a9f7e1-6ab1-47d4-b219-095f77a8acc6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\98.Manager\ObjMgr">
+      <UniqueIdentifier>{059538c5-0798-41d8-a2c2-765eed4bae0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\98.Manager\SceneMgr">
+      <UniqueIdentifier>{a50f36c7-912e-43e1-bdbf-1f22c1c8f3e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\03.Scene">
+      <UniqueIdentifier>{8f3e3758-ab72-4757-a4be-278d8c6dd23b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\03.Scene\Hallway">
+      <UniqueIdentifier>{05ecee2d-896a-4d94-8746-4952a33c723a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Editor.h">
@@ -96,6 +108,18 @@
     <ClInclude Include="ScrollMgr.h">
       <Filter>소스 파일\98.Manager\ScrollMgr</Filter>
     </ClInclude>
+    <ClInclude Include="ObjMgr.h">
+      <Filter>소스 파일\98.Manager\ObjMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneMgr.h">
+      <Filter>소스 파일\98.Manager\SceneMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>소스 파일\03.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Hallway.h">
+      <Filter>소스 파일\03.Scene\Hallway</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Editor.cpp">
@@ -133,6 +157,18 @@
     </ClCompile>
     <ClCompile Include="ScrollMgr.cpp">
       <Filter>소스 파일\98.Manager\ScrollMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjMgr.cpp">
+      <Filter>소스 파일\98.Manager\ObjMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneMgr.cpp">
+      <Filter>소스 파일\98.Manager\SceneMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>소스 파일\03.Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Hallway.cpp">
+      <Filter>소스 파일\03.Scene\Hallway</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

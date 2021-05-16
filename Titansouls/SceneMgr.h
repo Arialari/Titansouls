@@ -7,7 +7,6 @@ class CScene;
 class CSceneMgr
 {
 public:
-	enum SCENEID { LOGO, STAGE, EDIT, END };
 
 private:
 	CSceneMgr();
@@ -20,7 +19,7 @@ public:
 	void Release();
 
 public:
-	void Scene_Change(SCENEID _eID);
+	void Scene_Change( SCENEID::ID _eID);
 
 public:
 	static CSceneMgr* Get_Instance()
@@ -39,8 +38,8 @@ private:
 
 	CScene*		m_pScene;
 
-	SCENEID		m_ePreScene;
-	SCENEID		m_eCurScene;
+	SCENEID::ID		m_ePreScene;
+	SCENEID::ID		m_eCurScene;
 };
 
 

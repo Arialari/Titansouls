@@ -42,7 +42,7 @@ void CTile::Render(HDC _DC)
 	HDC hMemDC = CBmpMgr::Get_Instance()->Find_Bmp(L"Tile");
 
 	GdiTransparentBlt(_DC, m_tRect.left + iScrollX, m_tRect.top + iScrollY, m_tInfo.iCX, m_tInfo.iCY
-		, hMemDC, m_iDrawID * PIXELCX, 0, PIXELCX,PIXELCY,RGB(255,0,255));
+		, hMemDC, m_iDrawXID * PIXELCX, 0, PIXELCX,PIXELCY,RGB(255,0,255));
 }
 
 void CTile::Release()

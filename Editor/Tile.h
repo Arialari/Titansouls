@@ -17,8 +17,11 @@ public:
 	virtual void Late_Update() override;
 	virtual void Render(HDC _DC) override;
 	virtual void Release() override;
+	inline void		Set_DrawYID( int _iYId ) { m_iDrawYID = m_iDrawYID; }
+	inline const int& Get_DrawYID() const { return m_iDrawYID; }
 private:
 	virtual void Update_ColisionRect();
+	int				m_iDrawYID;
 };
 
 

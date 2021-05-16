@@ -51,4 +51,15 @@ typedef struct tagHit
 	ECOLLISIONTYPE	eHitType;
 }HITINFO;
 
+typedef struct tagTileInfo
+{
+	int				iMapX;
+	int				iMapY;
+	int				iModelX;
+	int				iModelY;
+	SCENEID::ID		eScene;
+	RENDERID::ID	eRenderId;
+
+}TILEINFO;
+
 #endif // !__STRUCT_H__
