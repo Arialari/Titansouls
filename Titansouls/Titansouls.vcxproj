@@ -148,6 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BmpMgr.h" />
+    <ClInclude Include="CGolLath.h" />
     <ClInclude Include="CollisionMgr.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="IAnimation.h" />
@@ -155,6 +156,7 @@
     <ClInclude Include="KeyMgr.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="MyBitmap.h" />
+    <ClInclude Include="MyMath.h" />
     <ClInclude Include="Obj.h" />
     <ClInclude Include="ObjMgr.h" />
     <ClInclude Include="Pawn.h" />
@@ -168,11 +170,15 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileMgr.h" />
+    <ClInclude Include="Titan.h" />
     <ClInclude Include="Titansouls.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BmpMgr.cpp" />
+    <ClCompile Include="CGolLath.cpp" />
     <ClCompile Include="CollisionMgr.cpp" />
+    <ClCompile Include="MyMath.cpp" />
+    <ClCompile Include="Titan.cpp" />
     <ClCompile Include="IAnimation.cpp" />
     <ClCompile Include="Implement.cpp" />
     <ClCompile Include="KeyMgr.cpp" />

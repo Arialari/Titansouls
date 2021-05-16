@@ -33,7 +33,8 @@ void CObjMgr::Update()
 		}
 	}
 
-//	CCollisionMgr::Collision_Rect( m_listObj[OBJID::BULLET], m_listObj[OBJID::MONSTER] );
+//	CCollisionMgr::Collision_Rect( m_listObj[OBJID::TITAN], m_listObj[OBJID::PLAYER] );
+	CCollisionMgr::Collision_RectEx( m_listObj[OBJID::TITAN], m_listObj[OBJID::PLAYER] );
 	//CCollisionMgr::Collision_Sphere(m_listObj[OBJID::MOUSE], m_listObj[OBJID::MONSTER]);
 }
 
@@ -47,16 +48,25 @@ void CObjMgr::Late_Update()
 
 			if ( m_listObj[i].empty() )
 				break;
+
+			RENDERID::ID eID = pObj->Get_RenderID();
+
+			m_listRender[eID].emplace_back( pObj );
 		}
 	}
 }
 
 void CObjMgr::Render( HDC _DC )
 {
-	for ( int i = 0; i < OBJID::END; ++i )
+	for ( int i = 0; i < RENDERID::END; ++i )
 	{
-		for ( auto& pObj : m_listObj[i] )
+		if ( RENDERID::OBJECT == i )
+			m_listRender[i].sort( CompareY<CObj*> );
+
+		for ( auto& pObj : m_listRender[i] )
 			pObj->Render( _DC );
+
+		m_listRender[i].clear();
 	}
 }
 

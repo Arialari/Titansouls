@@ -70,6 +70,15 @@
     <Filter Include="소스 파일\01.Obj\01.Tile">
       <UniqueIdentifier>{791f964a-6ce0-44e9-b4c1-759e84b8340e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\01.Obj\00.Pawn\01.Titan">
+      <UniqueIdentifier>{44732ddc-b2a8-4584-a38b-47a469218880}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\01.Obj\00.Pawn\01.Titan\Gol_Lath">
+      <UniqueIdentifier>{5b3af0e8-68b4-417f-878c-a46e8647af70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\99.Default\MyMath">
+      <UniqueIdentifier>{b5abcc99-1f19-4f5a-b809-d1d0e8eab348}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -138,6 +147,15 @@
     <ClInclude Include="Tile.h">
       <Filter>소스 파일\01.Obj\01.Tile</Filter>
     </ClInclude>
+    <ClInclude Include="Titan.h">
+      <Filter>소스 파일\01.Obj\00.Pawn\01.Titan</Filter>
+    </ClInclude>
+    <ClInclude Include="CGolLath.h">
+      <Filter>소스 파일\01.Obj\00.Pawn\01.Titan\Gol_Lath</Filter>
+    </ClInclude>
+    <ClInclude Include="MyMath.h">
+      <Filter>헤더 파일\99.Default\MyMath</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Titansouls.cpp">
@@ -196,6 +214,15 @@
     </ClCompile>
     <ClCompile Include="Tile.cpp">
       <Filter>소스 파일\01.Obj\01.Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="Titan.cpp">
+      <Filter>소스 파일\01.Obj\00.Pawn\01.Titan</Filter>
+    </ClCompile>
+    <ClCompile Include="CGolLath.cpp">
+      <Filter>소스 파일\01.Obj\00.Pawn\01.Titan\Gol_Lath</Filter>
+    </ClCompile>
+    <ClCompile Include="MyMath.cpp">
+      <Filter>헤더 파일\99.Default\MyMath</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

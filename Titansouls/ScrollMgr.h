@@ -9,18 +9,23 @@ class CScrollMgr
 private:
 	CScrollMgr();
 	~CScrollMgr();
+public:
+	void	Late_Update();
 
 public:
-	void Add_ScrollX(float _x) { m_fScrollX += _x; }
-	void Add_ScrollY( float _y ) { m_fScrollY += _y; }
-	void Set_ScrollX( float _x ) { m_fScrollX = _x; }
-	void Set_ScrollY( float _y ) { m_fScrollY = _y;	}
+	void Add_ScrollX(float _x) { m_fMoveTargetX += _x; }
+	void Add_ScrollY( float _y ) { m_fMoveTargetY += _y; }
+	void Set_ScrollX( float _x ) { m_fMoveTargetX = _x; }
+	void Set_ScrollY( float _y ) { m_fMoveTargetY = _y;	}
 
 public:
 	float Get_ScrollX() const { return m_fScrollX; }
 	float Get_ScrollY() const { return m_fScrollY; }
+	
+	float Get_TargetScrollX() const { return m_fMoveTargetX; }
+	float Get_TargetScrollY() const { return m_fMoveTargetY; }
 
-public:
+private:
 	void Scroll_Lock();
 
 public:
@@ -40,6 +45,8 @@ private:
 
 	float	m_fScrollX;
 	float	m_fScrollY;
+	float	m_fMoveTargetX;
+	float	m_fMoveTargetY;
 };
 
 

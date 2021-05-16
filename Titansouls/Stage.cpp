@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "ScrollMgr.h"
 #include "TileMgr.h"
+#include "CGolLath.h"
 
 
 CStage::CStage()
@@ -22,6 +23,7 @@ void CStage::Initialize()
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/Background.bmp", L"BackGround");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/w_Overworld.bmp", L"Tile");
 	CObjMgr::Get_Instance()->Add_Object(CAbstractFactory<CPlayer>::Create(), OBJID::PLAYER);
+	CObjMgr::Get_Instance()->Add_Object( CAbstractFactory<CGolLath>::Create(), OBJID::TITAN );
 
 //	CTileMgr::Get_Instance()->Load_Tile();
 }
@@ -34,7 +36,7 @@ void CStage::Update()
 void CStage::Late_Update()
 {
 	CObjMgr::Get_Instance()->Late_Update();
-	CScrollMgr::Get_Instance()->Scroll_Lock();
+	CScrollMgr::Get_Instance()->Late_Update();
 }
 
 void CStage::Render(HDC _DC)

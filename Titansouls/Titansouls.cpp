@@ -61,7 +61,7 @@ int APIENTRY wWinMain( _In_ HINSTANCE hInstance,
             DispatchMessage( &msg );
         }
 
-        if ( dwTime + 10 < GetTickCount() )
+        if ( dwTime + DELTATIME_MS < GetTickCount() )
         {
             mainGame.Update();
             mainGame.Late_Update();

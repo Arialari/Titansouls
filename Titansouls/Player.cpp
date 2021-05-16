@@ -34,6 +34,9 @@ void CPlayer::Initialize()
 	m_eCurState = IDLE;
 	m_pImageKey = L"Player";
 	m_eCurDirection = DIRECTION::N;
+	m_eRenderID = RENDERID::OBJECT;
+	m_vecCollisionRect.reserve( 1 );
+	m_vecCollisionRect.emplace_back( RECT() );
 }
 
 int CPlayer::Update()
@@ -48,6 +51,7 @@ int CPlayer::Update()
 	Update_Animation_Frame();
 
 	Update_Rect();
+	Update_ColisionRect();
 
 	return OBJ_NOEVENT;
 }
@@ -99,6 +103,11 @@ void CPlayer::Render(HDC _DC)
 
 void CPlayer::Release()
 {
+}
+
+void CPlayer::Hit()
+{
+
 }
 
 void CPlayer::Key_Check()
@@ -202,7 +211,9 @@ void CPlayer::State_Change()
 			m_tFrame.ePlayType = FRAME::PLAYTYPE::NO_LOOP;
 			break;
 		case STATE::WALK:
-			m_tFrame.iFrameX = m_tFrame.iStartX = 0;
+			if ( m_tFrame.iFrameX > 6 )
+				m_tFrame.iFrameX = 0;
+			m_tFrame.iStartX = 0;
 			m_tFrame.iEndX = 6;
 			m_tFrame.iModelY = m_eCurDirection;
 			m_tFrame.dwDelay = 100;
@@ -218,7 +229,9 @@ void CPlayer::State_Change()
 			m_tFrame.ePlayType = FRAME::PLAYTYPE::NO_LOOP;
 			break;
 		case STATE::RUN:			
-			m_tFrame.iFrameX = m_tFrame.iStartX = 0;
+			if ( m_tFrame.iFrameX > 6 )
+				m_tFrame.iFrameX = 0;
+			m_tFrame.iStartX = 0;
 			m_tFrame.iEndX = 6;
 			m_tFrame.iModelY = m_eCurDirection;
 			m_tFrame.dwDelay = 80;
@@ -239,8 +252,8 @@ void CPlayer::OffSet()
 {
 	int iOffSetX = WINCX >> 1;
 	int iOffSetY = WINCY >> 1;
-	int iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
-	int iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+	int iScrollX = (int)CScrollMgr::Get_Instance()->Get_TargetScrollX();
+	int iScrollY = (int)CScrollMgr::Get_Instance()->Get_TargetScrollY();
 
 	if ( iOffSetX < (int)(m_tInfo.fX + iScrollX))
 		CScrollMgr::Get_Instance()->Add_ScrollX( iOffSetX - (m_tInfo.fX + iScrollX));
@@ -285,5 +298,13 @@ void CPlayer::Update_Animation_Frame()
 
 		m_tFrame.dwTime = GetTickCount();
 	}
+}
+
+void CPlayer::Update_ColisionRect()
+{
+	m_vecCollisionRect.front().left = (LONG)(m_tInfo.fX - (m_tInfo.iCX >> 1));
+	m_vecCollisionRect.front().top = (LONG)(m_tInfo.fY - (m_tInfo.iCY >> 1));
+	m_vecCollisionRect.front().right = (LONG)(m_tInfo.fX + (m_tInfo.iCX >> 1));
+	m_vecCollisionRect.front().bottom = (LONG)(m_tInfo.fY + (m_tInfo.iCY >> 1));
 }
 

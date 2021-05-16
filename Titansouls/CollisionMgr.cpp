@@ -14,15 +14,44 @@ CCollisionMgr::~CCollisionMgr()
 
 void CCollisionMgr::Collision_Rect( list<CObj*>& _Dst, list<CObj*>& _Src )
 {
-	RECT rc = {};
+
 	for ( auto& pDst : _Dst )
 	{
 		for ( auto& pSrc : _Src )
 		{
-			if ( IntersectRect( &rc, &pDst->Get_Rect(), &pSrc->Get_Rect() ) )
+			
+			if ( IsObj_Overlapped( pDst->Get_CollisionRect(), pSrc->Get_CollisionRect()) )
 			{
 				pDst->Hit();
 				pSrc->Hit();
+			}
+		}
+	}
+}
+
+void CCollisionMgr::Collision_RectEx( list<CObj*>& _Dst, list<CObj*>& _Src )
+{
+	float fX = 0.f, fY = 0.f;
+	for ( auto& pDst : _Dst )
+	{
+		for ( auto& pSrc : _Src )
+		{
+			if ( IsObj_OverlappedEx(pDst->Get_CollisionRect(), pSrc->Get_CollisionRect(),&fX,&fY) )
+			{
+				if ( fX < fY )
+				{
+					if ( pDst->Get_Info().fX < pSrc->Get_Info().fX )
+						pSrc->Add_PosX( fX );
+					else
+						pSrc->Add_PosX( -fX );
+				}
+				else
+				{
+					if ( pDst->Get_Info().fY < pSrc->Get_Info().fY )
+						pSrc->Add_PosY( fY );
+					else
+						pSrc->Add_PosY( -fY );
+				}
 			}
 		}
 	}
@@ -43,6 +72,38 @@ void CCollisionMgr::Collision_Sphere( list<CObj*>& _Dst, list<CObj*>& _Src )
 	}
 }
 
+bool CCollisionMgr::IsObj_Overlapped(const vector<RECT>& _Dst, const vector<RECT>& _Src )
+{
+	RECT rc = {};
+	for ( auto& rectDest : _Dst )
+	{
+		for ( auto& rectSrc : _Src )
+		{
+			if ( IntersectRect( &rc, &rectDest, &rectSrc ) )
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+bool CCollisionMgr::IsObj_OverlappedEx( const vector<RECT>& _Dst, const vector<RECT>& _Src, float* _fX, float* _fY )
+{
+	RECT rc = {};
+	for ( auto& rectDest : _Dst )
+	{
+		for ( auto& rectSrc : _Src )
+		{
+			if ( Check_Rect( rectDest, rectSrc, _fX, _fY) )
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
 bool CCollisionMgr::Check_Sphere( CObj* _Dst, CObj* _Src )
 {
 	float fX = abs( _Dst->Get_Info().fX - _Src->Get_Info().fX );
@@ -54,5 +115,17 @@ bool CCollisionMgr::Check_Sphere( CObj* _Dst, CObj* _Src )
 	if ( fDia <= fDis )
 		return true;
 
+	return false;
+}
+
+bool CCollisionMgr::Check_Rect(const RECT& _Dst,const RECT& _Src, float* _x, float* _y )
+{
+	RECT rc = {};
+	if ( IntersectRect(&rc, &_Dst,&_Src ) )
+	{
+		*_x = rc.right - rc.left;
+		*_y = rc.bottom - rc.top;
+		return true;
+	}
 	return false;
 }

@@ -22,12 +22,14 @@ public:
 	virtual void Late_Update() override;
 	virtual void Render(HDC _DC) override;
 	virtual void Release() override;
+	virtual	void Hit() override;
 
 private:
 	void Key_Check();
 	void State_Change();
 	void OffSet();
 	virtual void Update_Animation_Frame() override;
+	virtual void Update_ColisionRect() override;
 
 private:
 	STATE		m_ePreState;

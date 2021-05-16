@@ -48,3 +48,7 @@ void CTile::Render(HDC _DC)
 void CTile::Release()
 {
 }
+
+void CTile::Update_ColisionRect()
+{
+}

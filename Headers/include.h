@@ -10,5 +10,6 @@
 #include "Enum.h"
 #include "AbstractFactory.h"
 #include "Functor.h"
+#include "../Titansouls/MyMath.h"
 
 #endif // !__INCLUDE_H__

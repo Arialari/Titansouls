@@ -43,4 +43,12 @@ typedef struct tagFrame
 	PLAYTYPE	ePlayType;
 }FRAME;
 
+typedef struct tagHit
+{
+	enum ECOLLISIONTYPE { NO_COLLOSION=1, BLOCK, KILL};
+	int				iX;
+	int				iY;
+	ECOLLISIONTYPE	eHitType;
+}HITINFO;
+
 #endif // !__STRUCT_H__

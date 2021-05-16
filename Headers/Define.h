@@ -3,6 +3,9 @@
 #ifndef __DEFINE_H__
 #define __DEFINE_H__
 
+#define DELTATIME_MS	10
+#define DELTATIME_S		(float)(DELTATIME_MS / 1000.f)
+
 #define WINCX	800
 #define WINCY	600
 
