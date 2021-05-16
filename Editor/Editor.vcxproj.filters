@@ -16,6 +16,39 @@
     <Filter Include="헤더 파일\99.Default">
       <UniqueIdentifier>{94f9e365-3cff-4adf-9317-1441bbc10394}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\98.Manager">
+      <UniqueIdentifier>{b359ca78-9beb-434d-9bea-f3218066d028}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\00.MainGame">
+      <UniqueIdentifier>{ac7569c8-aa97-4e88-88e5-694b3141d95d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\01.Obj">
+      <UniqueIdentifier>{f9c5abb6-f657-4311-b94f-bc26efef305e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\01.Obj\01.Tile">
+      <UniqueIdentifier>{bf52f765-0a0c-45ad-9e65-72396ba1a879}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02.MyBitmap">
+      <UniqueIdentifier>{7372ce71-60ed-47d4-9554-a13cb1e8a32d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\99.Default\MyMath">
+      <UniqueIdentifier>{371071d6-f483-46a9-95b6-aee5d4072f0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\98.Manager\TileMgr">
+      <UniqueIdentifier>{f9deb121-fed5-4b0f-8560-6fc8688adf28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\98.Manager\CollisionMgr">
+      <UniqueIdentifier>{81d69dfb-9668-439a-8c25-f4aaf17b38c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\98.Manager\BmpMgr">
+      <UniqueIdentifier>{6bb5b2e9-de40-4c9b-be96-cd63af6bb038}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\98.Manager\KeyMgr">
+      <UniqueIdentifier>{cb426073-ef7b-49c3-af94-c04f4d08c932}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\98.Manager\ScrollMgr">
+      <UniqueIdentifier>{a1a9f7e1-6ab1-47d4-b219-095f77a8acc6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Editor.h">
@@ -33,6 +66,36 @@
     <ClInclude Include="stdafx.h">
       <Filter>헤더 파일\99.Default</Filter>
     </ClInclude>
+    <ClInclude Include="MainGame.h">
+      <Filter>소스 파일\00.MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Obj.h">
+      <Filter>소스 파일\01.Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>소스 파일\01.Obj\01.Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="MyBitmap.h">
+      <Filter>소스 파일\02.MyBitmap</Filter>
+    </ClInclude>
+    <ClInclude Include="MyMath.h">
+      <Filter>헤더 파일\99.Default\MyMath</Filter>
+    </ClInclude>
+    <ClInclude Include="TileMgr.h">
+      <Filter>소스 파일\98.Manager\TileMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionMgr.h">
+      <Filter>소스 파일\98.Manager\CollisionMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="BmpMgr.h">
+      <Filter>소스 파일\98.Manager\BmpMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyMgr.h">
+      <Filter>소스 파일\98.Manager\KeyMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="ScrollMgr.h">
+      <Filter>소스 파일\98.Manager\ScrollMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Editor.cpp">
@@ -40,6 +103,36 @@
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>헤더 파일\99.Default</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame.cpp">
+      <Filter>소스 파일\00.MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Obj.cpp">
+      <Filter>소스 파일\01.Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>소스 파일\01.Obj\01.Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="MyBitmap.cpp">
+      <Filter>소스 파일\02.MyBitmap</Filter>
+    </ClCompile>
+    <ClCompile Include="MyMath.cpp">
+      <Filter>헤더 파일\99.Default\MyMath</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMgr.cpp">
+      <Filter>소스 파일\98.Manager\TileMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionMgr.cpp">
+      <Filter>소스 파일\98.Manager\CollisionMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="BmpMgr.cpp">
+      <Filter>소스 파일\98.Manager\BmpMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyMgr.cpp">
+      <Filter>소스 파일\98.Manager\KeyMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="ScrollMgr.cpp">
+      <Filter>소스 파일\98.Manager\ScrollMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

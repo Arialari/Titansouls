@@ -29,6 +29,7 @@
 using namespace std;
 
 #include "Include.h"
+#include "MyMath.h"
 
 
 
