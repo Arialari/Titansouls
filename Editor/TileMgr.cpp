@@ -67,14 +67,54 @@ void CTileMgr::RenderBackGround(HDC _DC)
 
 void CTileMgr::RenderFoliage( HDC _DC )
 {
-	for ( auto& pTile : m_vecFoliageTile )
-		pTile->Render( _DC );
+	int iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	int iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+
+	int	iCullX = abs( iScrollX / DEFAULTCX );
+	int	iCullY = abs( iScrollY / DEFAULTCY );
+
+	int iCullEndX = iCullX + (WINCX / DEFAULTCX) + 2;
+	int iCullEndY = iCullY + (WINCY / DEFAULTCY) + 2;
+
+
+	for ( int i = iCullY; i < iCullEndY; ++i )
+	{
+		for ( int j = iCullX; j < iCullEndX; ++j )
+		{
+			int iIdx = i * TILEX + j;
+
+			if ( 0 > iIdx || m_vecFoliageTile.size() <= (size_t)iIdx )
+				continue;
+
+			m_vecFoliageTile[iIdx]->Render( _DC );
+		}
+	}
 }
 
 void CTileMgr::RenderCelling( HDC _DC )
 {
-	for ( auto& pTile : m_vecCellingTile )
-		pTile->Render( _DC );
+	int iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	int iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+
+	int	iCullX = abs( iScrollX / DEFAULTCX );
+	int	iCullY = abs( iScrollY / DEFAULTCY );
+
+	int iCullEndX = iCullX + (WINCX / DEFAULTCX) + 2;
+	int iCullEndY = iCullY + (WINCY / DEFAULTCY) + 2;
+
+
+	for ( int i = iCullY; i < iCullEndY; ++i )
+	{
+		for ( int j = iCullX; j < iCullEndX; ++j )
+		{
+			int iIdx = i * TILEX + j;
+
+			if ( 0 > iIdx || m_vecCellingTile.size() <= (size_t)iIdx )
+				continue;
+
+			m_vecCellingTile[iIdx]->Render( _DC );
+		}
+	}
 }
 
 void CTileMgr::Release()

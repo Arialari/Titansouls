@@ -7,6 +7,7 @@
 #include "ScrollMgr.h"
 #include "BmpMgr.h"
 #include "TileMgr.h"
+#include "UiMgr.h"
 
 
 CMainGame::CMainGame()
@@ -27,7 +28,7 @@ void CMainGame::Initialize()
 	CBmpMgr::Get_Instance()->Insert_Bmp( L"../Image/Back.bmp", L"Back" );
 
 	CSceneMgr::Get_Instance()->Scene_Change( SCENEID::HALLWAY_UNDER );
-
+	CUiMgr::Get_Instance()->Initialize();
 }
 
 void CMainGame::Update()
@@ -49,6 +50,7 @@ void CMainGame::Late_Update()
 {
 	CSceneMgr::Get_Instance()->Late_Update();
 	CScrollMgr::Get_Instance()->Late_Update();
+	
 	//CTileMgr::Get_Instance()->Late_Update();
 }
 
@@ -83,5 +85,6 @@ void CMainGame::Release()
 	CTileMgr::Destroy_Instance();
 	CSceneMgr::Destroy_Instance();
 	CObjMgr::Destroy_Instance();
+	CUiMgr::Destroy_Instance();
 	ReleaseDC( g_hWnd, m_hDC );
 }

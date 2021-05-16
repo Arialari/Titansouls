@@ -164,6 +164,9 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileMgr.h" />
+    <ClInclude Include="Ui.h" />
+    <ClInclude Include="UiButton.h" />
+    <ClInclude Include="UiMgr.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BmpMgr.cpp" />
@@ -185,6 +188,9 @@
     </ClCompile>
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileMgr.cpp" />
+    <ClCompile Include="Ui.cpp" />
+    <ClCompile Include="UiButton.cpp" />
+    <ClCompile Include="UiMgr.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Editor.rc" />

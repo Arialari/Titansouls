@@ -61,6 +61,15 @@
     <Filter Include="소스 파일\03.Scene\Hallway">
       <UniqueIdentifier>{05ecee2d-896a-4d94-8746-4952a33c723a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\98.Manager\UiMgr">
+      <UniqueIdentifier>{44d8f7d5-66da-4ff8-86e2-4c5819f72f17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\04.Ui">
+      <UniqueIdentifier>{469ffb6e-bd54-4d98-bf16-e11411f25ae7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\04.Ui\Botton">
+      <UniqueIdentifier>{8fe50356-fc15-439d-90e9-52eaeeb6d48f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Editor.h">
@@ -120,6 +129,15 @@
     <ClInclude Include="Hallway.h">
       <Filter>소스 파일\03.Scene\Hallway</Filter>
     </ClInclude>
+    <ClInclude Include="UiMgr.h">
+      <Filter>소스 파일\98.Manager\UiMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Ui.h">
+      <Filter>소스 파일\04.Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="UiButton.h">
+      <Filter>소스 파일\04.Ui\Botton</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Editor.cpp">
@@ -169,6 +187,15 @@
     </ClCompile>
     <ClCompile Include="Hallway.cpp">
       <Filter>소스 파일\03.Scene\Hallway</Filter>
+    </ClCompile>
+    <ClCompile Include="UiMgr.cpp">
+      <Filter>소스 파일\98.Manager\UiMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Ui.cpp">
+      <Filter>소스 파일\04.Ui</Filter>
+    </ClCompile>
+    <ClCompile Include="UiButton.cpp">
+      <Filter>소스 파일\04.Ui\Botton</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

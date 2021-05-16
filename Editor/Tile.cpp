@@ -48,7 +48,6 @@ void CTile::Render(HDC _DC)
 
 	GdiTransparentBlt(_DC, m_tRect.left + iScrollX, m_tRect.top + iScrollY, m_tInfo.iCX, m_tInfo.iCY
 		, hMemDC, m_iDrawXID * PIXELCX, m_iDrawYID * PIXELCY, PIXELCX,PIXELCY,RGB(255,255,255));
-	CBmpMgr::Get_Instance();
 }
 
 void CTile::Release()
