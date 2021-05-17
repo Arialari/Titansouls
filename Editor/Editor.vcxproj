@@ -166,6 +166,7 @@
     <ClInclude Include="TileMgr.h" />
     <ClInclude Include="Ui.h" />
     <ClInclude Include="UiButton.h" />
+    <ClInclude Include="UiLayout.h" />
     <ClInclude Include="UiMgr.h" />
   </ItemGroup>
   <ItemGroup>
@@ -190,6 +191,7 @@
     <ClCompile Include="TileMgr.cpp" />
     <ClCompile Include="Ui.cpp" />
     <ClCompile Include="UiButton.cpp" />
+    <ClCompile Include="UiLayout.cpp" />
     <ClCompile Include="UiMgr.cpp" />
   </ItemGroup>
   <ItemGroup>

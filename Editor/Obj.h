@@ -18,12 +18,12 @@ public:
 
 public:
 	//Init SET
-	inline void Set_Pos( float _x, float _y ) { m_tInfo.fX = _x; m_tInfo.fY = _y; }
-	inline void Set_PosX( float _x ) { m_tInfo.fX = _x; }
-	inline void Set_PosY( float _y ) { m_tInfo.fY = _y; }
-	inline void Add_Pos( float _x, float _y ) { m_tInfo.fX += _x; m_tInfo.fY += _y; }
-	inline void Add_PosX( float _x ) { m_tInfo.fX += _x; }
-	inline void Add_PosY( float _y ) { m_tInfo.fY += _y; }
+	virtual void Set_Pos( float _x, float _y ) { m_tInfo.fX = _x; m_tInfo.fY = _y; }
+	virtual void Set_PosX( float _x ) { m_tInfo.fX = _x; }
+	virtual void Set_PosY( float _y ) { m_tInfo.fY = _y; }
+	virtual void Add_Pos( float _x, float _y ) { m_tInfo.fX += _x; m_tInfo.fY += _y; }
+	virtual void Add_PosX( float _x ) { m_tInfo.fX += _x; }
+	virtual void Add_PosY( float _y ) { m_tInfo.fY += _y; }
 	inline void SetReserveCollisionRect( int _i ) { m_vecCollisionRect.reserve( _i ); }
 
 	//Functions

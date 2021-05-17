@@ -67,7 +67,10 @@
     <Filter Include="소스 파일\04.Ui">
       <UniqueIdentifier>{469ffb6e-bd54-4d98-bf16-e11411f25ae7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\04.Ui\Botton">
+    <Filter Include="소스 파일\04.Ui\UiLayout">
+      <UniqueIdentifier>{4f6d283e-7cfa-4aa8-8b5d-672e5fa2531c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\04.Ui\UiButton">
       <UniqueIdentifier>{8fe50356-fc15-439d-90e9-52eaeeb6d48f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -136,7 +139,10 @@
       <Filter>소스 파일\04.Ui</Filter>
     </ClInclude>
     <ClInclude Include="UiButton.h">
-      <Filter>소스 파일\04.Ui\Botton</Filter>
+      <Filter>소스 파일\04.Ui\UiButton</Filter>
+    </ClInclude>
+    <ClInclude Include="UiLayout.h">
+      <Filter>소스 파일\04.Ui\UiLayout</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -195,7 +201,10 @@
       <Filter>소스 파일\04.Ui</Filter>
     </ClCompile>
     <ClCompile Include="UiButton.cpp">
-      <Filter>소스 파일\04.Ui\Botton</Filter>
+      <Filter>소스 파일\04.Ui\UiButton</Filter>
+    </ClCompile>
+    <ClCompile Include="UiLayout.cpp">
+      <Filter>소스 파일\04.Ui\UiLayout</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
