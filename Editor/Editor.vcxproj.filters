@@ -76,6 +76,12 @@
     <Filter Include="소스 파일\04.Ui\UiImage">
       <UniqueIdentifier>{9b0b6ac7-c7e2-4b30-b6a2-b4a476ac13de}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\05.Implement">
+      <UniqueIdentifier>{9e97dbdc-752b-483f-87d7-e7252895c45b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\05.Implement\01.IAnimation">
+      <UniqueIdentifier>{42273c50-e194-44b7-8cf4-7e77bdbedbf4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Editor.h">
@@ -150,6 +156,12 @@
     <ClInclude Include="UiImage.h">
       <Filter>소스 파일\04.Ui\UiImage</Filter>
     </ClInclude>
+    <ClInclude Include="Implement.h">
+      <Filter>소스 파일\05.Implement</Filter>
+    </ClInclude>
+    <ClInclude Include="IAnimation.h">
+      <Filter>소스 파일\05.Implement\01.IAnimation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Editor.cpp">
@@ -214,6 +226,12 @@
     </ClCompile>
     <ClCompile Include="UiImage.cpp">
       <Filter>소스 파일\04.Ui\UiImage</Filter>
+    </ClCompile>
+    <ClCompile Include="Implement.cpp">
+      <Filter>소스 파일\05.Implement</Filter>
+    </ClCompile>
+    <ClCompile Include="IAnimation.cpp">
+      <Filter>소스 파일\05.Implement\01.IAnimation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

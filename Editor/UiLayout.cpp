@@ -11,10 +11,9 @@ CUiLayout::~CUiLayout()
 
 void CUiLayout::Initialize()
 {
-	m_tInfo.iCX = 100;
-	m_tInfo.iCY = 100;
 
 	m_eRenderID = RENDERID::UI;
+	m_eUiType = UI_TYPE::LAYOUT;
 }
 
 int CUiLayout::Update()
@@ -32,6 +31,8 @@ void CUiLayout::Late_Update()
 void CUiLayout::Render( HDC _DC )
 {
 	Update_Rect();
+	Update_Hover();
+
 //	Rectangle( _DC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom );
 }
 

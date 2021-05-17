@@ -44,7 +44,7 @@ void CMainGame::Update()
 		CScrollMgr::Get_Instance()->Add_ScrollY( -5.f );
 	CSceneMgr::Get_Instance()->Update();
 	CUiMgr::Get_Instance()->Update();
-	//CTileMgr::Get_Instance()->Update();
+	CTileMgr::Get_Instance()->Update();
 }
 
 void CMainGame::Late_Update()

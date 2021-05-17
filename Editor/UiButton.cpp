@@ -20,6 +20,7 @@ void CUiButton::Initialize()
 
 	m_pImageKey = L"UIButton";
 	m_eRenderID = RENDERID::UI;
+	m_eUiType = UI_TYPE::BUTTON;
 }
 
 int CUiButton::Update()
@@ -39,8 +40,8 @@ void CUiButton::Late_Update()
 
 void CUiButton::Render( HDC _DC )
 {
-	/*if ( !m_bIsVisible )
-		return;*/
+	if ( !m_bIsVisible )
+		return;
 
 	Update_Rect();
 

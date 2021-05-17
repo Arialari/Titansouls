@@ -7,7 +7,7 @@
 
 CTileMgr* CTileMgr::m_pInstance = nullptr;
 CTileMgr::CTileMgr()
-	:m_MemDc(nullptr)
+	:m_MemDc( nullptr ), m_tPaintPoint( {} ), m_tPaintEndX(0)
 {
 	m_vecBackTile.reserve(TILEX * TILEY);
 	m_vecFoliageTile.reserve( TILEX * TILEY );
@@ -37,6 +37,17 @@ void CTileMgr::Initialize()
 		}
 	}
 	m_MemDc = CBmpMgr::Get_Instance()->Find_Bmp( L"Tile" );
+
+	m_tFrame.iFrameX = m_tFrame.iStartX = 0;
+	m_tFrame.iEndX = 3628800-1;
+	m_tFrame.dwDelay = (DWORD)200.f;
+	m_tFrame.dwTime = GetTickCount();
+	m_tFrame.ePlayType = FRAME::LOOP;
+}
+
+void CTileMgr::Update()
+{
+	Update_Animation_Frame();
 }
 
 void CTileMgr::RenderBackGround(HDC _DC)
@@ -127,23 +138,40 @@ void CTileMgr::Release()
 	m_vecCellingTile.clear();
 }
 
-void CTileMgr::Picking_Tile(int _iDrawID)
+void CTileMgr::Update_Animation_Frame()
+{
+	if ( m_tFrame.dwTime + m_tFrame.dwDelay < GetTickCount() )
+	{
+		++m_tFrame.iFrameX;
+		CTile::Set_iFrameIdx( m_tFrame.iFrameX );
+
+		if ( m_tFrame.iStartX >= m_tFrame.iEndX )
+			m_tFrame.iStartX = m_tFrame.iFrameX;
+
+		m_tFrame.dwTime = GetTickCount();
+	}
+
+}
+
+void CTileMgr::Picking_Tile()
 {
 	POINT	pt = {};
 	GetCursorPos(&pt);
 	ScreenToClient(g_hWnd, &pt);
 
 	pt.x -= (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	pt.y -= (int)CScrollMgr::Get_Instance()->Get_ScrollY();
 
-	int		x = pt.x / PIXELCX;
-	int		y = pt.y / PIXELCY;
+	int		x = pt.x / DEFAULTCX;
+	int		y = pt.y / DEFAULTCY;
 
 	int		iIdx = y * TILEX + x;
 
 	if (0 > iIdx || m_vecBackTile.size() <= (size_t)iIdx)
 		return;
 
-	m_vecBackTile[iIdx]->Set_DrawXID(_iDrawID);
+	static_cast<CTile*>(m_vecBackTile[iIdx])->Set_DrawID(m_tPaintPoint.x, m_tPaintPoint.y);
+	static_cast<CTile*>(m_vecBackTile[iIdx])->Set_iFrameEndX( m_tPaintEndX );
 }
 
 void CTileMgr::Save_Tile()

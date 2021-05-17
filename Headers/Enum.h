@@ -16,6 +16,9 @@ namespace SCENEID
 {
 	enum ID { HALLWAY_UNDER, SLUDGE, BARIN_FREEZE, EYE_CUBE, GOL_LATH, SCENDID_END };
 }
-
+namespace UI_TYPE
+{
+	enum ID { LAYOUT, BUTTON, IMAGE, UI_TYPE_END };
+}
 
 #endif // !__ENUM_H__

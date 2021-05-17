@@ -3,7 +3,7 @@
 #include "KeyMgr.h"
 
 CUi::CUi()
-	:m_bIsVisible(false), m_bIsHoverd(false),m_fRelatedX(0.f), m_fRelatedY(0.f), m_pAttachingUI(nullptr)
+	:m_bIsVisible(false), m_bIsHoverd(false),m_fRelatedX(0.f), m_fRelatedY(0.f), m_pAttachingUI(nullptr), m_eUiType(UI_TYPE::UI_TYPE_END)
 {
 }
 
@@ -53,6 +53,13 @@ void CUi::Add_PosY( float _y )
 	m_tInfo.fY += _y;
 	for ( auto& pUi : m_vecAttachedUI )
 		pUi->Add_PosY( _y );
+}
+
+void CUi::Set_IsVisible( bool _bIsVisible )
+{
+	m_bIsVisible = _bIsVisible;
+	for ( auto& pUi : m_vecAttachedUI )
+		pUi->Set_IsVisible( _bIsVisible );
 }
 
 void CUi::AttachUi( CUi* _pAttachedUi, float _fRelatedX, float _fRelatedY )

@@ -3,8 +3,8 @@
 #ifndef __TILEMGR_H__
 #define __TILEMGR_H__
 
-
-class CTileMgr
+#include "IAnimation.h"
+class CTileMgr : public IAnimation
 {
 private:
 	CTileMgr();
@@ -12,17 +12,21 @@ private:
 
 public:
 	void Initialize();
+	void Update();
 	void RenderBackGround(HDC _DC);
 	void RenderFoliage( HDC _DC );
 	void RenderCelling( HDC _DC );
 	void Release();
 
+	virtual void Update_Animation_Frame() override;
+
 public:
-	void Picking_Tile(int _iDrawID);
+	void Picking_Tile();
 	void Save_Tile();
 	void Load_Tile();
 	const HDC& Get_DC() const { return m_MemDc; };
-
+	inline void Set_PaintPoint( int _x, int _y ) { m_tPaintPoint.x = _x; m_tPaintPoint.y = _y; }
+	inline void Set_PaintEndX( int _x ) { m_tPaintEndX = _x; }
 public:
 	static CTileMgr* Get_Instance()
 	{
@@ -41,6 +45,8 @@ private:
 	vector<CObj*>		m_vecFoliageTile;
 	vector<CObj*>		m_vecCellingTile;
 	HDC					m_MemDc;
+	POINT				m_tPaintPoint;
+	int					m_tPaintEndX;
 };
 
 
