@@ -23,12 +23,15 @@ public:
 public:
 	void Create_Tile();
 	void Picking_Tile();
+	void Set_FileName( const TCHAR* _pName ) { m_pFileName = _pName; }
 	void Save_Tile();
 	bool Load_Tile();
 	const HDC& Get_DC() const { return m_MemDc; };
 	inline void Set_PaintPoint( int _x, int _y ) { m_tPaintPoint.x = _x; m_tPaintPoint.y = _y; }
 	inline void Set_PaintEndX( int _x ) { m_tPaintEndX = _x; }
 	inline void Set_TileLength( int _x, int _y ) { m_iTileX = _x; m_iTileY = _y; }
+	inline const int& Get_TileLengthX() { return m_iTileX; }
+	inline const int& Get_TileLengthY() { return m_iTileY; }
 public:
 	static CTileMgr* Get_Instance()
 	{
@@ -52,6 +55,7 @@ private:
 	HDC					m_MemDc;
 	POINT				m_tPaintPoint;
 	int					m_tPaintEndX;
+	const TCHAR*		m_pFileName;
 };
 
 

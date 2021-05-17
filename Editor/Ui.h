@@ -32,10 +32,10 @@ public:
 protected:
 	void			Update_Hover();
 	//Default is False
-	bool	m_bIsVisible;
-	bool	m_bIsHoverd;
-	float	m_fRelatedX;
-	float	m_fRelatedY;
+	bool				m_bIsVisible;
+	bool				m_bIsHoverd;
+	float				m_fRelatedX;
+	float				m_fRelatedY;
 	vector<CUi*>	m_vecAttachedUI;
 	CUi*			m_pAttachingUI;
 	UI_TYPE::ID			m_eUiType;

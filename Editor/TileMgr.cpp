@@ -4,10 +4,11 @@
 #include "ScrollMgr.h"
 #include "ObjMgr.h"
 #include "BmpMgr.h"
+#include "KeyMgr.h"
 
 CTileMgr* CTileMgr::m_pInstance = nullptr;
 CTileMgr::CTileMgr()
-	:m_MemDc( nullptr ), m_tPaintPoint( {} ), m_tPaintEndX(0), m_iTileX(0), m_iTileY(0)
+	:m_MemDc( nullptr ), m_tPaintPoint( {} ), m_tPaintEndX(0), m_iTileX(0), m_iTileY(0), m_pFileName(nullptr)
 {
 
 	
@@ -33,6 +34,8 @@ void CTileMgr::Initialize()
 
 void CTileMgr::Update()
 {
+	if ( CKeyMgr::Get_Instance()->Key_Pressing( VK_CONTROL ) && CKeyMgr::Get_Instance()->Key_Pressing( 'S' ) )
+		Save_Tile();
 	Update_Animation_Frame();
 }
 
@@ -186,7 +189,11 @@ void CTileMgr::Picking_Tile()
 
 void CTileMgr::Save_Tile()
 {
-	HANDLE hFile = CreateFile(L"../Data/Tile.dat", GENERIC_WRITE
+	TCHAR szBuff[32] = L"../Data/";
+	TCHAR szEnd[8] = L".dat";
+	lstrcat( szBuff, m_pFileName );
+	lstrcat( szBuff, szEnd );
+	HANDLE hFile = CreateFile( szBuff, GENERIC_WRITE
 		, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	if (INVALID_HANDLE_VALUE == hFile)
@@ -201,6 +208,7 @@ void CTileMgr::Save_Tile()
 	{
 		WriteFile(hFile, &pTile->Get_Info(), sizeof(INFO), &dwByte, NULL);
 		WriteFile(hFile, &pTile->Get_DrawXID(), sizeof(int), &dwByte, NULL);
+		WriteFile(hFile, &pTile->Get_DrawXID(), sizeof(int), &dwByte, NULL);
 	}
 
 	CloseHandle(hFile);
@@ -209,7 +217,11 @@ void CTileMgr::Save_Tile()
 
 bool CTileMgr::Load_Tile()
 {
-	HANDLE hFile = CreateFile(L"../Data/Tile.dat", GENERIC_READ
+	TCHAR szBuff[32] = L"../Data/";
+	TCHAR szEnd[8] = L".dat";
+	lstrcat( szBuff, m_pFileName );
+	lstrcat( szBuff, szEnd );
+	HANDLE hFile = CreateFile( szBuff, GENERIC_READ
 		, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	if (INVALID_HANDLE_VALUE == hFile)
