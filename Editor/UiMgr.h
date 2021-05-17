@@ -11,6 +11,7 @@ private:
 	~CUiMgr();
 public:
 	void Initialize();
+	void Update();
 	static CUiMgr* Get_Instance()
 	{
 		if ( !m_pInstance )

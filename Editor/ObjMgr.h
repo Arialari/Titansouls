@@ -19,6 +19,7 @@ public:
 
 public:
 	CObj* Get_Player() const { return m_listObj[OBJID::PLAYER].front(); }
+	const list<CObj*>& Get_ListUi() const { return m_listObj[OBJID::UI]; }
 	CObj* Get_Target( CObj* _pObj, OBJID::ID _eID ) const;
 
 public:

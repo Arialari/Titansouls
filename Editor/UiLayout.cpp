@@ -1,8 +1,20 @@
 #include "stdafx.h"
 #include "UiLayout.h"
 
+CUiLayout::CUiLayout()
+{
+}
+
+CUiLayout::~CUiLayout()
+{
+}
+
 void CUiLayout::Initialize()
 {
+	m_tInfo.iCX = 100;
+	m_tInfo.iCY = 100;
+
+	m_eRenderID = RENDERID::UI;
 }
 
 int CUiLayout::Update()
@@ -19,6 +31,8 @@ void CUiLayout::Late_Update()
 
 void CUiLayout::Render( HDC _DC )
 {
+	Update_Rect();
+//	Rectangle( _DC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom );
 }
 
 void CUiLayout::Release()
@@ -29,51 +43,8 @@ void CUiLayout::Update_ColisionRect()
 {
 }
 
-void CUiLayout::Set_Pos( float _x, float _y )
+void CUiLayout::OnEvent( EVENT_CODE _eEventCode )
 {
-	m_tInfo.fX = _x;
-	m_tInfo.fY = _y;
-	for ( auto& pUi : m_vecHavingUI )
-		pUi->Set_Pos( _x, _y );
+	m_vecAttachedUI.back()->OnEvent( _eEventCode );
 }
 
-void CUiLayout::Set_PosX( float _x )
-{
-	m_tInfo.fX = _x;
-	for ( auto& pUi : m_vecHavingUI )
-		pUi->Set_PosX( _x );
-}
-
-void CUiLayout::Set_PosY( float _y )
-{
-	m_tInfo.fY = _y;
-	for ( auto& pUi : m_vecHavingUI )
-		pUi->Set_PosY( _y );
-}
-
-void CUiLayout::Add_Pos( float _x, float _y )
-{
-	m_tInfo.fX += _x;
-	m_tInfo.fY += _y;
-	for ( auto& pUi : m_vecHavingUI )
-		pUi->Add_Pos( _x, _y );
-}
-
-void CUiLayout::Add_PosX( float _x )
-{
-	m_tInfo.fX += _x;
-	for ( auto& pUi : m_vecHavingUI )
-		pUi->Add_PosX( _x );
-}
-
-void CUiLayout::Add_PosY( float _y )
-{
-	m_tInfo.fY += _y;
-	for ( auto& pUi : m_vecHavingUI )
-		pUi->Add_PosY( _y );
-}
-
-void CUiLayout::AttachUi( CUi* pCUi )
-{
-	m_vecHavingUI.emplace_back( pCUi );
-}

@@ -46,7 +46,7 @@ void CSceneMgr::Scene_Change( SCENEID::ID _eID)
 		switch (m_eCurScene)
 		{
 		case SCENEID::ID::HALLWAY_UNDER:
-			//m_pScene = 
+			m_pScene = new CStage;
 			break;
 		case SCENEID::ID::GOL_LATH:
 			break;

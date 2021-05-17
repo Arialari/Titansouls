@@ -43,6 +43,7 @@ void CMainGame::Update()
 	if ( CKeyMgr::Get_Instance()->Key_Pressing( VK_DOWN ) )
 		CScrollMgr::Get_Instance()->Add_ScrollY( -5.f );
 	CSceneMgr::Get_Instance()->Update();
+	CUiMgr::Get_Instance()->Update();
 	//CTileMgr::Get_Instance()->Update();
 }
 

@@ -73,6 +73,9 @@
     <Filter Include="소스 파일\04.Ui\UiButton">
       <UniqueIdentifier>{8fe50356-fc15-439d-90e9-52eaeeb6d48f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\04.Ui\UiImage">
+      <UniqueIdentifier>{9b0b6ac7-c7e2-4b30-b6a2-b4a476ac13de}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Editor.h">
@@ -144,6 +147,9 @@
     <ClInclude Include="UiLayout.h">
       <Filter>소스 파일\04.Ui\UiLayout</Filter>
     </ClInclude>
+    <ClInclude Include="UiImage.h">
+      <Filter>소스 파일\04.Ui\UiImage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Editor.cpp">
@@ -205,6 +211,9 @@
     </ClCompile>
     <ClCompile Include="UiLayout.cpp">
       <Filter>소스 파일\04.Ui\UiLayout</Filter>
+    </ClCompile>
+    <ClCompile Include="UiImage.cpp">
+      <Filter>소스 파일\04.Ui\UiImage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

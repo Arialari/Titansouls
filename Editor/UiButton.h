@@ -16,8 +16,13 @@ public:
     virtual void Render( HDC _DC ) override;
     virtual void Release() override;
     virtual void Update_ColisionRect() override;
-private:
+    void Set_EventCode( EVENT_CODE _eCode ) { m_eEventCode = _eCode; }
+    virtual void Hit() override;
 
+    // CUi을(를) 통해 상속됨
+    virtual void OnEvent( EVENT_CODE _eEventCode ) override;
+private:
+    EVENT_CODE m_eEventCode;
 };
 
 #endif // !__UIBUTTON_H__

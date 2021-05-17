@@ -13,16 +13,12 @@ public:
 	virtual void Render( HDC _DC ) override;
 	virtual void Release() override;
 	virtual void Update_ColisionRect() override;
+	// CUi을(를) 통해 상속됨
+	virtual void OnEvent( EVENT_CODE _eEventCode ) override;
 public:
-	virtual void	Set_Pos( float _x, float _y );
-	virtual void	Set_PosX( float _x );
-	virtual void	Set_PosY( float _y );
-	virtual void	Add_Pos( float _x, float _y );
-	virtual void	Add_PosX( float _x );
-	virtual void	Add_PosY( float _y );
-	inline void		ReserveAttachSize( int _c ) { m_vecHavingUI.reserve( _c ); }
-	void			AttachUi( CUi* pCUi);
+
 private:
-	vector<CUi*>	m_vecHavingUI;
+	
+
 };
 

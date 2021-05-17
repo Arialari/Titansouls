@@ -72,6 +72,21 @@ void CCollisionMgr::Collision_Sphere( list<CObj*>& _Dst, list<CObj*>& _Src )
 	}
 }
 
+CObj* CCollisionMgr::Collision_Mouse( const list<CObj*>& _Dst, POINT& _point )
+{
+	RECT rc = {};
+	RECT rcPoint = { _point.x,_point.y,_point.x,_point.y };
+	for ( auto& pDst : _Dst )
+	{
+		if ( IntersectRect( &rc, &pDst->Get_Rect(), &rcPoint ) )
+		{
+			pDst->Hit();
+			return pDst;
+		}
+	}
+	return nullptr;
+}
+
 bool CCollisionMgr::IsObj_Overlapped(const vector<RECT>& _Dst, const vector<RECT>& _Src )
 {
 	RECT rc = {};
