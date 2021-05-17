@@ -7,11 +7,9 @@
 
 CTileMgr* CTileMgr::m_pInstance = nullptr;
 CTileMgr::CTileMgr()
-	:m_MemDc( nullptr ), m_tPaintPoint( {} ), m_tPaintEndX(0)
+	:m_MemDc( nullptr ), m_tPaintPoint( {} ), m_tPaintEndX(0), m_iTileX(0), m_iTileY(0)
 {
-	m_vecBackTile.reserve(TILEX * TILEY);
-	m_vecFoliageTile.reserve( TILEX * TILEY );
-	m_vecCellingTile.reserve( TILEX * TILEY );
+
 	
 }
 
@@ -23,19 +21,7 @@ CTileMgr::~CTileMgr()
 
 void CTileMgr::Initialize()
 {
-	CBmpMgr::Get_Instance()->Insert_Bmp( L"../Image/w_Overworld.bmp", L"Tile" );
-	for (int i = 0; i < TILEY; ++i)
-	{
-		for (int j = 0; j < TILEX; ++j)
-		{
-			float	fX = (float)((DEFAULTCX >> 1) + (j * DEFAULTCX));
-			float	fY = (float)((DEFAULTCY >> 1) + (i * DEFAULTCY));
-
-			m_vecBackTile.emplace_back(CAbstractFactory<CTile>::Create(fX, fY));
-			m_vecFoliageTile.emplace_back( CAbstractFactory<CTile>::Create( fX, fY ) );
-			m_vecCellingTile.emplace_back( CAbstractFactory<CTile>::Create( fX, fY ) );
-		}
-	}
+	
 	m_MemDc = CBmpMgr::Get_Instance()->Find_Bmp( L"Tile" );
 
 	m_tFrame.iFrameX = m_tFrame.iStartX = 0;
@@ -66,7 +52,7 @@ void CTileMgr::RenderBackGround(HDC _DC)
 	{
 		for ( int j = iCullX; j < iCullEndX; ++j )
 		{
-			int iIdx = i * TILEX + j;
+			int iIdx = i * m_iTileX + j;
 
 			if ( 0 > iIdx || m_vecBackTile.size() <= (size_t)iIdx )
 				continue;
@@ -92,7 +78,7 @@ void CTileMgr::RenderFoliage( HDC _DC )
 	{
 		for ( int j = iCullX; j < iCullEndX; ++j )
 		{
-			int iIdx = i * TILEX + j;
+			int iIdx = i * m_iTileX + j;
 
 			if ( 0 > iIdx || m_vecFoliageTile.size() <= (size_t)iIdx )
 				continue;
@@ -118,7 +104,7 @@ void CTileMgr::RenderCelling( HDC _DC )
 	{
 		for ( int j = iCullX; j < iCullEndX; ++j )
 		{
-			int iIdx = i * TILEX + j;
+			int iIdx = i * m_iTileX + j;
 
 			if ( 0 > iIdx || m_vecCellingTile.size() <= (size_t)iIdx )
 				continue;
@@ -153,6 +139,30 @@ void CTileMgr::Update_Animation_Frame()
 
 }
 
+void CTileMgr::Create_Tile()
+{
+	m_vecBackTile.reserve( m_iTileX * m_iTileY );
+	m_vecFoliageTile.reserve( m_iTileX * m_iTileY );
+	m_vecCellingTile.reserve( m_iTileX * m_iTileY );
+
+	if ( !Load_Tile() )
+	{
+
+		for ( int i = 0; i < m_iTileY; ++i )
+		{
+			for ( int j = 0; j < m_iTileX; ++j )
+			{
+				float	fX = (float)((DEFAULTCX >> 1) + (j * DEFAULTCX));
+				float	fY = (float)((DEFAULTCY >> 1) + (i * DEFAULTCY));
+
+				m_vecBackTile.emplace_back( CAbstractFactory<CTile>::Create( fX, fY ) );
+				m_vecFoliageTile.emplace_back( CAbstractFactory<CTile>::Create( fX, fY ) );
+				m_vecCellingTile.emplace_back( CAbstractFactory<CTile>::Create( fX, fY ) );
+			}
+		}
+	}
+}
+
 void CTileMgr::Picking_Tile()
 {
 	POINT	pt = {};
@@ -165,7 +175,7 @@ void CTileMgr::Picking_Tile()
 	int		x = pt.x / DEFAULTCX;
 	int		y = pt.y / DEFAULTCY;
 
-	int		iIdx = y * TILEX + x;
+	int		iIdx = y * m_iTileX + x;
 
 	if (0 > iIdx || m_vecBackTile.size() <= (size_t)iIdx)
 		return;
@@ -197,7 +207,7 @@ void CTileMgr::Save_Tile()
 	MessageBox(g_hWnd, L"저장 성공!", L"성공", MB_OK);
 }
 
-void CTileMgr::Load_Tile()
+bool CTileMgr::Load_Tile()
 {
 	HANDLE hFile = CreateFile(L"../Data/Tile.dat", GENERIC_READ
 		, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
@@ -205,7 +215,7 @@ void CTileMgr::Load_Tile()
 	if (INVALID_HANDLE_VALUE == hFile)
 	{
 		MessageBox(g_hWnd, L"불러오기 실패!", L"실패", MB_OK);
-		return;
+		return false;
 	}
 
 	Release();
@@ -230,4 +240,5 @@ void CTileMgr::Load_Tile()
 
 	CloseHandle(hFile);
 	MessageBox(g_hWnd, L"불러오기 성공!", L"성공", MB_OK);
+	return true;
 }

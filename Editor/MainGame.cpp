@@ -26,6 +26,7 @@ void CMainGame::Initialize()
 	m_hDC = GetDC( g_hWnd );
 	CBmpMgr::Get_Instance()->Insert_Bmp( L"../Image/BackBuffer.bmp", L"BackBuffer" );
 	CBmpMgr::Get_Instance()->Insert_Bmp( L"../Image/Back.bmp", L"Back" );
+	CBmpMgr::Get_Instance()->Insert_Bmp( L"../Image/w_Overworld.bmp", L"Tile" );
 
 	CSceneMgr::Get_Instance()->Scene_Change( SCENEID::HALLWAY_UNDER );
 	CUiMgr::Get_Instance()->Initialize();

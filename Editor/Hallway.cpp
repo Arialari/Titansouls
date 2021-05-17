@@ -14,7 +14,11 @@ CHallway::~CHallway()
 
 void CHallway::Initialize()
 {
+	m_iTileX = 80;
+	m_iTileY = 500;
 	CTileMgr::Get_Instance()->Initialize();
+	CTileMgr::Get_Instance()->Set_TileLength( m_iTileX, m_iTileY );
+	CTileMgr::Get_Instance()->Create_Tile();
 }
 
 void CHallway::Update()

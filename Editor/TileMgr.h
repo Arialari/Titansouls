@@ -21,12 +21,14 @@ public:
 	virtual void Update_Animation_Frame() override;
 
 public:
+	void Create_Tile();
 	void Picking_Tile();
 	void Save_Tile();
-	void Load_Tile();
+	bool Load_Tile();
 	const HDC& Get_DC() const { return m_MemDc; };
 	inline void Set_PaintPoint( int _x, int _y ) { m_tPaintPoint.x = _x; m_tPaintPoint.y = _y; }
 	inline void Set_PaintEndX( int _x ) { m_tPaintEndX = _x; }
+	inline void Set_TileLength( int _x, int _y ) { m_iTileX = _x; m_iTileY = _y; }
 public:
 	static CTileMgr* Get_Instance()
 	{
@@ -41,6 +43,9 @@ public:
 
 private:
 	static CTileMgr*	m_pInstance;
+	int					m_iTileX;
+	int					m_iTileY;
+
 	vector<CObj*>		m_vecBackTile;
 	vector<CObj*>		m_vecFoliageTile;
 	vector<CObj*>		m_vecCellingTile;
