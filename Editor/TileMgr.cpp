@@ -204,11 +204,13 @@ void CTileMgr::Save_Tile()
 
 	DWORD	dwByte = 0;
 
-	for (auto& pTile : m_vecBackTile )
+	for (auto& pTileObj : m_vecBackTile )
 	{
+		CTile* pTile = static_cast<CTile*>(pTileObj);
 		WriteFile(hFile, &pTile->Get_Info(), sizeof(INFO), &dwByte, NULL);
 		WriteFile(hFile, &pTile->Get_DrawXID(), sizeof(int), &dwByte, NULL);
-		WriteFile(hFile, &pTile->Get_DrawXID(), sizeof(int), &dwByte, NULL);
+		WriteFile(hFile, &pTile->Get_DrawYID(), sizeof(int), &dwByte, NULL);
+		WriteFile( hFile, &pTile->Get_iFrameEndX(), sizeof( int ), &dwByte, NULL );
 	}
 
 	CloseHandle(hFile);
@@ -234,23 +236,43 @@ bool CTileMgr::Load_Tile()
 
 	DWORD	dwByte = 0;
 	INFO	tTemp = {};
-	int		iDrawID = 0;
+	int		iDrawXID = 0;
+	int		iDrawYID = 0;
+	int		iFrameEndX = 0;
 
 	while (true)
 	{
 		ReadFile(hFile, &tTemp, sizeof(INFO), &dwByte, NULL);
-		ReadFile(hFile, &iDrawID, sizeof(int), &dwByte, NULL);
+		ReadFile(hFile, &iDrawXID, sizeof(int), &dwByte, NULL);
+		ReadFile( hFile, &iDrawYID, sizeof( int ), &dwByte, NULL );
+		ReadFile( hFile, &iFrameEndX, sizeof( int ), &dwByte, NULL );
+
 
 		if (0 == dwByte)
 			break;
 
 		CObj* pObj = CAbstractFactory<CTile>::Create(tTemp.fX, tTemp.fY);
-		pObj->Set_DrawXID(iDrawID);
+		CTile* pTile = static_cast<CTile*>(pObj);
+		pTile->Set_DrawXID( iDrawXID );
+		pTile->Set_DrawYID( iDrawYID );
+		pTile->Set_iFrameEndX( iFrameEndX );
 
-		m_vecBackTile.emplace_back(pObj);
+		m_vecBackTile.emplace_back( pTile );
 	}
 
-	CloseHandle(hFile);
-	MessageBox(g_hWnd, L"불러오기 성공!", L"성공", MB_OK);
-	return true;
+	CloseHandle( hFile );
+
+	if ( m_vecBackTile.size() == (m_iTileX * m_iTileY) )
+	{
+		
+		MessageBox( g_hWnd, L"불러오기 성공!", L"성공", MB_OK );
+		return true;
+	}
+	else
+	{
+		Release();
+		MessageBox( g_hWnd, L"불러오기 정상적이지 않음!", L"비정상", MB_OK );
+		return false;
+	}
+		
 }
