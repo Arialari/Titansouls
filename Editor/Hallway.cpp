@@ -36,9 +36,9 @@ void CHallway::Late_Update()
 void CHallway::Render( HDC _DC )
 {
 	CTileMgr::Get_Instance()->RenderBackGround( _DC );
-	//CTileMgr::Get_Instance()->RenderFoliage( _DC );
+	CTileMgr::Get_Instance()->RenderFoliage( _DC );
 	CObjMgr::Get_Instance()->Render( _DC );
-	//CTileMgr::Get_Instance()->RenderCelling( _DC );
+	CTileMgr::Get_Instance()->RenderCelling( _DC );
 }
 
 void CHallway::Release()

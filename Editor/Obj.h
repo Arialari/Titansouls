@@ -27,11 +27,13 @@ public:
 	inline void SetReserveCollisionRect( int _i ) { m_vecCollisionRect.reserve( _i ); }
 
 	//Functions
-	virtual void Hit() { m_bDead = true; }
+	virtual void		Hit() { m_bDead = true; }
 
 	//Setter
-	inline void Set_ImageKey( const TCHAR* _pImageKey ) { m_pImageKey = _pImageKey; }
-	inline void Set_DrawXID( int _iDrawXID ) { m_iDrawXID = _iDrawXID; }
+	inline void			Set_ImageKey( const TCHAR* _pImageKey ) { m_pImageKey = _pImageKey; }
+	inline void			Set_DrawXID( int _iDrawXID ) { m_iDrawXID = _iDrawXID; }
+	inline void			Set_IsRender( bool _bIsRender ) { m_bIsRender = _bIsRender; }
+	inline const bool&	Get_IsRender() const { return m_bIsRender; }
 
 public:
 	//Getter
@@ -53,6 +55,7 @@ protected:
 	const TCHAR*	m_pImageKey;
 	int				m_iDrawXID;
 	RENDERID::ID	m_eRenderID;
+	bool			m_bIsRender;
 };
 
 #endif // !__OBJ_H__

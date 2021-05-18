@@ -6,7 +6,7 @@
 
 int CTile::m_iFrameIdx = 0;
 CTile::CTile()
-	: m_iDrawYID(0), m_iFrameEndX(0), m_bIsRender(true)
+	: m_iDrawYID(0), m_iFrameEndX(0), m_bIsAlphaRender(false)
 {
 }
 
@@ -50,12 +50,29 @@ void CTile::Render(HDC _DC)
 
 		HDC hMemDC = CTileMgr::Get_Instance()->Get_DC();
 
-		//BitBlt(_DC, m_tRect.left + iScrollX, m_tRect.top + iScrollY, m_tInfo.iCX, m_tInfo.iCY
-		//	, hMemDC, m_iDrawXID * PIXELCX, m_iDrawYID * PIXELCY, SRCCOPY);
+		//if ( m_bIsAlphaRender )
+		//{
+		//	BLENDFUNCTION tBlendFunction;
+		//	tBlendFunction.AlphaFormat = 0;
+		//	tBlendFunction.BlendFlags = 0;
+		//	tBlendFunction.BlendOp = 0;
+		//	tBlendFunction.SourceConstantAlpha = 0;
+		//	AlphaBlend(_DC, m_tRect.left + iScrollX, m_tRect.top + iScrollY, m_tInfo.iCX, m_tInfo.iCY
+		//				, hMemDC, (m_iDrawXID + iFrameX) * PIXELCX, m_iDrawYID * PIXELCY
+		//				, PIXELCX, PIXELCY, tBlendFunction);
+		//	GdiTransparentBlt( _DC, m_tRect.left + iScrollX, m_tRect.top + iScrollY, m_tInfo.iCX, m_tInfo.iCY
+		//					   , hMemDC, (m_iDrawXID + iFrameX) * PIXELCX, m_iDrawYID * PIXELCY
+		//					   , PIXELCX, PIXELCY, RGB( 255, 255, 255 ) );
+		//}
+		//else
+		//{
+			//BitBlt(_DC, m_tRect.left + iScrollX, m_tRect.top + iScrollY, m_tInfo.iCX, m_tInfo.iCY
+			//	, hMemDC, m_iDrawXID * PIXELCX, m_iDrawYID * PIXELCY, SRCCOPY);
+			GdiTransparentBlt( _DC, m_tRect.left + iScrollX, m_tRect.top + iScrollY, m_tInfo.iCX, m_tInfo.iCY
+							   , hMemDC, (m_iDrawXID + iFrameX) * PIXELCX, m_iDrawYID * PIXELCY
+							   , PIXELCX, PIXELCY, RGB( 255, 255, 255 ) );
+		//}
 
-		GdiTransparentBlt( _DC, m_tRect.left + iScrollX, m_tRect.top + iScrollY, m_tInfo.iCX, m_tInfo.iCY
-						   , hMemDC, (m_iDrawXID + iFrameX) * PIXELCX, m_iDrawYID * PIXELCY
-						   , PIXELCX, PIXELCY, RGB( 255, 255, 255 ) );
 	}
 
 }

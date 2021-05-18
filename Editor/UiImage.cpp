@@ -5,7 +5,7 @@
 #include "KeyMgr.h"
 
 CUiImage::CUiImage()
-	: m_tModelInfo( {} ), m_iModelEndX(0), m_iModelIntervalX(3)
+	: m_tModelInfo( {} ), m_iModelEndX(0), m_iModelIntervalX(8)
 {
 }
 
@@ -16,8 +16,8 @@ CUiImage::~CUiImage()
 void CUiImage::Initialize()
 {
 	m_eRenderID = RENDERID::UI;
-	m_tModelInfo.iCX = 10;
-	m_tModelInfo.iCY = 10;
+	m_tModelInfo.iCX = 16;
+	m_tModelInfo.iCY = 16;
 	m_eUiType = UI_TYPE::IMAGE;
 }
 
@@ -84,10 +84,12 @@ void CUiImage::OnEvent( EVENT_CODE _eEventCode )
 			m_tModelInfo.fY -= 1.f;
 		break;
 	case CUi::MOVE_RIGHT:
-		m_tModelInfo.fX += 1.f;
+		if ( m_tModelInfo.fX < 30.f )
+			m_tModelInfo.fX += 1.f;
 		break;
 	case CUi::MOVE_DOWN:
-		m_tModelInfo.fY += 1.f;
+		if ( m_tModelInfo.fY < 6.f )
+			m_tModelInfo.fY += 1.f;
 		break;
 	case CUi::NO_EVENT:
 	default:

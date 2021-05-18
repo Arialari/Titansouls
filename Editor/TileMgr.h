@@ -6,6 +6,8 @@
 #include "IAnimation.h"
 class CTileMgr : public IAnimation
 {
+public :
+	enum TILE_LAYER {BACKGROUND, FOLIAGE, CELLING, TILE_LAYER_END };
 private:
 	CTileMgr();
 	~CTileMgr();
@@ -50,13 +52,12 @@ private:
 	int					m_iTileX;
 	int					m_iTileY;
 
-	vector<CObj*>		m_vecBackTile;
-	vector<CObj*>		m_vecFoliageTile;
-	vector<CObj*>		m_vecCellingTile;
+	vector<CObj*>		m_vecTile[TILE_LAYER_END];
 	HDC					m_MemDc;
 	POINT				m_tPaintPoint;
 	int					m_tPaintEndX;
 	const TCHAR*		m_pFileName;
+	TILE_LAYER			m_ePaintLayer;
 };
 
 

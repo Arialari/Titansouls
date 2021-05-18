@@ -35,6 +35,16 @@ public:
 		return pObj;
 	}
 
+	static CObj* Create( float _x, float _y, bool _bIsRender )
+	{
+		CObj* pObj = new T;
+		pObj->Initialize();
+		pObj->Set_Pos( _x, _y );
+		pObj->Set_IsRender( _bIsRender );
+
+		return pObj;
+	}
+
 	static CObj* Create(CObj* _pTarget)
 	{
 		CObj* pObj = new T;
