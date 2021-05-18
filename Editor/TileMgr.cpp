@@ -8,7 +8,7 @@
 
 CTileMgr* CTileMgr::m_pInstance = nullptr;
 CTileMgr::CTileMgr()
-	:m_MemDc( nullptr ), m_tPaintPoint( {} ), m_tPaintEndX(0), m_iTileX(0), m_iTileY(0), m_pFileName(nullptr), m_ePaintLayer(TILE_LAYER_END)
+	:m_MemDc( nullptr ), m_tPaintPoint( {} ), m_tPaintEndX(0), m_iTileX(0), m_iTileY(0), m_pFileName(nullptr), m_ePaintLayer(TILE_LAYER_END), m_bPaintIsBlock(false)
 {
 
 	
@@ -17,7 +17,6 @@ CTileMgr::CTileMgr()
 
 CTileMgr::~CTileMgr()
 {
-	Save_Tile();
 	Release();
 }
 
@@ -40,8 +39,14 @@ void CTileMgr::Update()
 	Update_Animation_Frame();
 }
 
-void CTileMgr::RenderBackGround(HDC _DC)
+void CTileMgr::RenderPaintingLayerTile(HDC _DC)
 {
+	if ( m_ePaintLayer == TILE_LAYER::TILE_LAYER_END )
+	{
+		RenderTile( _DC );
+		return;
+	}
+
 	int iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
 	int iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
 
@@ -58,64 +63,42 @@ void CTileMgr::RenderBackGround(HDC _DC)
 		{
 			int iIdx = i * m_iTileX + j;
 
-			if ( 0 > iIdx || m_vecTile[TILE_LAYER::BACKGROUND].size() <= (size_t)iIdx )
+			if ( 0 > iIdx || m_vecTile[m_ePaintLayer].size() <= (size_t)iIdx )
 				continue;
 
-			m_vecTile[TILE_LAYER::BACKGROUND][iIdx]->Render( _DC );
+			m_vecTile[m_ePaintLayer][iIdx]->Render( _DC );
 		}
 	}
 }
 
-void CTileMgr::RenderFoliage( HDC _DC )
+void CTileMgr::RenderTile( HDC _DC )
 {
-	int iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
-	int iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
-
-	int	iCullX = abs( iScrollX / DEFAULTCX );
-	int	iCullY = abs( iScrollY / DEFAULTCY );
-
-	int iCullEndX = iCullX + (WINCX / DEFAULTCX) + 2;
-	int iCullEndY = iCullY + (WINCY / DEFAULTCY) + 2;
-
-
-	for ( int i = iCullY; i < iCullEndY; ++i )
+	for ( int iTileLayer = 0; iTileLayer < TILE_LAYER::TILE_LAYER_END; ++iTileLayer )
 	{
-		for ( int j = iCullX; j < iCullEndX; ++j )
+		int iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+		int iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+
+		int	iCullX = abs( iScrollX / DEFAULTCX );
+		int	iCullY = abs( iScrollY / DEFAULTCY );
+
+		int iCullEndX = iCullX + (WINCX / DEFAULTCX) + 2;
+		int iCullEndY = iCullY + (WINCY / DEFAULTCY) + 2;
+
+
+		for ( int i = iCullY; i < iCullEndY; ++i )
 		{
-			int iIdx = i * m_iTileX + j;
+			for ( int j = iCullX; j < iCullEndX; ++j )
+			{
+				int iIdx = i * m_iTileX + j;
 
-			if ( 0 > iIdx || m_vecTile[TILE_LAYER::FOLIAGE].size() <= (size_t)iIdx )
-				continue;
+				if ( 0 > iIdx || m_vecTile[iTileLayer].size() <= (size_t)iIdx )
+					continue;
 
-			m_vecTile[TILE_LAYER::FOLIAGE][iIdx]->Render( _DC );
+				m_vecTile[iTileLayer][iIdx]->Render( _DC );
+			}
 		}
 	}
-}
 
-void CTileMgr::RenderCelling( HDC _DC )
-{
-	int iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
-	int iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
-
-	int	iCullX = abs( iScrollX / DEFAULTCX );
-	int	iCullY = abs( iScrollY / DEFAULTCY );
-
-	int iCullEndX = iCullX + (WINCX / DEFAULTCX) + 2;
-	int iCullEndY = iCullY + (WINCY / DEFAULTCY) + 2;
-
-
-	for ( int i = iCullY; i < iCullEndY; ++i )
-	{
-		for ( int j = iCullX; j < iCullEndX; ++j )
-		{
-			int iIdx = i * m_iTileX + j;
-
-			if ( 0 > iIdx || m_vecTile[TILE_LAYER::CELLING].size() <= (size_t)iIdx )
-				continue;
-
-			m_vecTile[TILE_LAYER::CELLING][iIdx]->Render( _DC );
-		}
-	}
 }
 
 void CTileMgr::Release()
@@ -167,7 +150,7 @@ void CTileMgr::Create_Tile()
 	}
 }
 
-void CTileMgr::Picking_Tile()
+void CTileMgr::Picking_Tile( bool _bIsRender )
 {
 	if ( m_ePaintLayer == TILE_LAYER_END )
 		return;
@@ -185,9 +168,14 @@ void CTileMgr::Picking_Tile()
 
 	if (0 > iIdx || m_vecTile[m_ePaintLayer].size() <= (size_t)iIdx)
 		return;
-	
-	static_cast<CTile*>(m_vecTile[m_ePaintLayer][iIdx])->Set_DrawID(m_tPaintPoint.x, m_tPaintPoint.y);
-	static_cast<CTile*>(m_vecTile[m_ePaintLayer][iIdx])->Set_iFrameEndX( m_tPaintEndX );
+	if ( _bIsRender )
+	{
+		static_cast<CTile*>(m_vecTile[m_ePaintLayer][iIdx])->Set_DrawID( m_tPaintPoint.x, m_tPaintPoint.y );
+		static_cast<CTile*>(m_vecTile[m_ePaintLayer][iIdx])->Set_iFrameEndX( m_tPaintEndX );
+		static_cast<CTile*>(m_vecTile[TILE_LAYER::BACKGROUND][iIdx])->Set_IsBlock( m_bPaintIsBlock );
+	}		
+	static_cast<CTile*>(m_vecTile[m_ePaintLayer][iIdx])->Set_IsRender( _bIsRender );
+
 }
 
 void CTileMgr::Save_Tile()
@@ -230,6 +218,7 @@ void CTileMgr::Save_Tile()
 		WriteFile( hFileBack, &pTile->Get_DrawYID(), sizeof(int), &dwByte, NULL);
 		WriteFile( hFileBack, &pTile->Get_iFrameEndX(), sizeof( int ), &dwByte, NULL );
 		WriteFile( hFileBack, &pTile->Get_IsRender(), sizeof( bool ), &dwByte, NULL );
+		WriteFile( hFileBack, &pTile->Get_IsBlock(), sizeof( bool ), &dwByte, NULL );
 	}
 	for ( auto& pTileObj : m_vecTile[TILE_LAYER::FOLIAGE] )
 	{
@@ -293,6 +282,7 @@ bool CTileMgr::Load_Tile()
 	int		iDrawYID = 0;
 	int		iFrameEndX = 0;
 	bool	bIsRender = false;
+	bool	bIsBlock = false;
 
 	while (true)
 	{
@@ -301,6 +291,7 @@ bool CTileMgr::Load_Tile()
 		ReadFile( hFileBack, &iDrawYID, sizeof( int ), &dwByte, NULL );
 		ReadFile( hFileBack, &iFrameEndX, sizeof( int ), &dwByte, NULL );
 		ReadFile( hFileBack, &bIsRender, sizeof( bool ), &dwByte, NULL );
+		ReadFile( hFileBack, &bIsBlock, sizeof( bool ), &dwByte, NULL );
 
 
 		if (0 == dwByte)
@@ -312,6 +303,7 @@ bool CTileMgr::Load_Tile()
 		pTile->Set_DrawYID( iDrawYID );
 		pTile->Set_iFrameEndX( iFrameEndX );
 		pTile->Set_IsRender( bIsRender );
+		pTile->Set_IsBlock( bIsBlock );
 
 		m_vecTile[TILE_LAYER::BACKGROUND].emplace_back( pTile );
 	}
@@ -322,7 +314,6 @@ bool CTileMgr::Load_Tile()
 		ReadFile( hFileFoliage, &iDrawYID, sizeof( int ), &dwByte, NULL );
 		ReadFile( hFileFoliage, &iFrameEndX, sizeof( int ), &dwByte, NULL );
 		ReadFile( hFileFoliage, &bIsRender, sizeof( bool ), &dwByte, NULL );
-
 
 		if ( 0 == dwByte )
 			break;

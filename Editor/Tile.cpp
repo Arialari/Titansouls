@@ -3,10 +3,11 @@
 #include "BmpMgr.h"
 #include "ScrollMgr.h"
 #include "TileMgr.h"
+#include "UiMgr.h"
 
 int CTile::m_iFrameIdx = 0;
 CTile::CTile()
-	: m_iDrawYID(0), m_iFrameEndX(0), m_bIsAlphaRender(false)
+	: m_iDrawYID(0), m_iFrameEndX(0), m_bIsAlphaRender(false), m_bIsBlock(false)
 {
 }
 
@@ -36,13 +37,13 @@ void CTile::Late_Update()
 
 void CTile::Render(HDC _DC)
 {
-
+	int	iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	int	iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
 	if ( m_bIsRender )
 	{
 		Update_Rect();
 
-		int	iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
-		int	iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+
 
 		int iFrameX = 0;
 		if ( m_iFrameEndX )
@@ -73,6 +74,19 @@ void CTile::Render(HDC _DC)
 							   , PIXELCX, PIXELCY, RGB( 255, 255, 255 ) );
 		//}
 
+
+	}
+	if ( CUiMgr::Get_Instance()->Get_IsCollisionVisible() )
+	{
+		if ( m_bIsBlock )
+		{
+			MoveToEx( _DC, m_tRect.left + iScrollX, m_tRect.top + iScrollY, NULL );
+			LineTo( _DC, m_tRect.right + iScrollX, m_tRect.top + iScrollY );
+			LineTo( _DC, m_tRect.right + iScrollX, m_tRect.bottom + iScrollY );
+			LineTo( _DC, m_tRect.left + iScrollX, m_tRect.bottom + iScrollY );
+			LineTo( _DC, m_tRect.left + iScrollX, m_tRect.top + iScrollY );
+			LineTo( _DC, m_tRect.right + iScrollX, m_tRect.bottom + iScrollY );
+		}
 	}
 
 }

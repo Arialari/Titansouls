@@ -1,14 +1,4 @@
-﻿  BrainFreezeScene.cpp
-  EyecubeScene.cpp
-  GolSetScene.cpp
-  Hallway.cpp
-  MainGame.cpp
-  SceneMgr.cpp
-  ScrollMgr.cpp
-  SludgeScene.cpp
+﻿  MainGame.cpp
   Tile.cpp
-  TileMgr.cpp
-  UiImage.cpp
-  UiMgr.cpp
   코드를 생성하고 있습니다...
   Editor.vcxproj -> D:\Study\Polio\Titansouls\Debug\Editor.exe

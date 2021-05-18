@@ -36,13 +36,13 @@ void CMainGame::Update()
 {
 	
 	if ( CKeyMgr::Get_Instance()->Key_Pressing( 'D' ) )
-		CScrollMgr::Get_Instance()->Add_ScrollX( -10.f );
+		CScrollMgr::Get_Instance()->Add_ScrollX( -20.f );
 	if ( CKeyMgr::Get_Instance()->Key_Pressing( 'A' ) )
-		CScrollMgr::Get_Instance()->Add_ScrollX( 10.f );
+		CScrollMgr::Get_Instance()->Add_ScrollX( 20.f );
 	if ( CKeyMgr::Get_Instance()->Key_Pressing( 'W' ) )
-		CScrollMgr::Get_Instance()->Add_ScrollY( 10.f );
+		CScrollMgr::Get_Instance()->Add_ScrollY( 20.f );
 	if ( CKeyMgr::Get_Instance()->Key_Pressing( 'S' ) )
-		CScrollMgr::Get_Instance()->Add_ScrollY( -10.f );
+		CScrollMgr::Get_Instance()->Add_ScrollY( -20.f );
 	if ( CKeyMgr::Get_Instance()->Key_Pressing( VK_RIGHT ) )
 	{
 		CSceneMgr::Get_Instance()->Scene_ChangeToNext();
@@ -77,18 +77,51 @@ void CMainGame::Render()
 	CSceneMgr::Get_Instance()->Render( hBack );
 
 	BitBlt( m_hDC, 0, 0, WINCX, WINCY, hBack, 0, 0, SRCCOPY );
+	//-------------------DEBUG--------------------------------
+
 
 	++m_iFPS;
-	if ( m_dwFPSTime + 1000 < GetTickCount() )
+	static int iPrevFPS = 0;
+	if ( m_dwFPSTime + 20 < GetTickCount() )
 	{
-		TCHAR		szFPS[64] = L"";
-		swprintf_s( szFPS, L"FPS: %d // Scene : ", m_iFPS );
-		lstrcat( szFPS, CTileMgr::Get_Instance()->Get_FileName());
-		SetWindowText( g_hWnd, szFPS );
+		if ( m_dwFPSTime + 1000 < GetTickCount() )
+		{
+			iPrevFPS = m_iFPS;
+			m_iFPS = 0;
+			m_dwFPSTime = GetTickCount();
+		}
 
-		m_iFPS = 0;
-		m_dwFPSTime = GetTickCount();
+		POINT	pt = {};
+		GetCursorPos( &pt );
+		ScreenToClient( g_hWnd, &pt );
+
+		pt.x -= (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+		pt.y -= (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+
+		int		x = pt.x / DEFAULTCX;
+		int		y = pt.y / DEFAULTCY;
+
+		bool bIsBlock = CTileMgr::Get_Instance()->Get_PaintIsBlock();
+
+		TCHAR		szFPS[128] = L"";
+		swprintf_s( szFPS, L"FPS: %d // Scene : ", iPrevFPS );
+		lstrcat( szFPS, CTileMgr::Get_Instance()->Get_FileName() );
+		TCHAR		szLayerName[64] = L"";
+		swprintf_s( szLayerName, L" // Layer : %d ", CTileMgr::Get_Instance()->Get_TileLayer() );
+		TCHAR		szMouseXY[64] = L"";
+		swprintf_s( szMouseXY, L" // X : %d, Y : %d ", x, y );
+		TCHAR		szIsBlock[32] = L"";
+		if( bIsBlock )
+			swprintf_s( szIsBlock, L" // IsBlock : True" );
+		else
+			swprintf_s( szIsBlock, L" // IsBlock : False" );
+
+		lstrcat( szFPS, szLayerName );
+		lstrcat( szFPS, szMouseXY );
+		lstrcat( szFPS, szIsBlock );
+		SetWindowText( g_hWnd, szFPS );
 	}
+
 }
 
 void CMainGame::Release()

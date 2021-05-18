@@ -15,16 +15,15 @@ private:
 public:
 	void Initialize();
 	void Update();
-	void RenderBackGround(HDC _DC);
-	void RenderFoliage( HDC _DC );
-	void RenderCelling( HDC _DC );
+	void RenderPaintingLayerTile( HDC _DC );
+	void RenderTile( HDC _DC );
 	void Release();
 
 	virtual void Update_Animation_Frame() override;
 
 public:
 	void Create_Tile();
-	void Picking_Tile();
+	void Picking_Tile(bool _bIsRender);
 	void Set_FileName( const TCHAR* _pName ) { m_pFileName = _pName; }
 	void Save_Tile();
 	bool Load_Tile();
@@ -35,6 +34,10 @@ public:
 	inline const int& Get_TileLengthX() const { return m_iTileX; }
 	inline const int& Get_TileLengthY() const { return m_iTileY; }
 	inline const TCHAR* Get_FileName() const { return m_pFileName; }
+	inline void Set_TileLayer( TILE_LAYER _eTile ) { m_ePaintLayer = _eTile;  }
+	inline const TILE_LAYER& Get_TileLayer() { return m_ePaintLayer; }
+	inline void Toggle_PaintIsBlock() { m_bPaintIsBlock = !m_bPaintIsBlock; }
+	inline const bool& Get_PaintIsBlock() { return m_bPaintIsBlock; }
 public:
 	static CTileMgr* Get_Instance()
 	{
@@ -58,6 +61,7 @@ private:
 	int					m_tPaintEndX;
 	const TCHAR*		m_pFileName;
 	TILE_LAYER			m_ePaintLayer;
+	bool				m_bPaintIsBlock;
 };
 
 

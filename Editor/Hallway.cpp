@@ -15,7 +15,7 @@ CHallway::~CHallway()
 void CHallway::Initialize()
 {
 	m_iTileX = 80;
-	m_iTileY = 500;
+	m_iTileY = 200;
 	m_pFileName = L"HallWay";
 	CTileMgr::Get_Instance()->Initialize();
 	CTileMgr::Get_Instance()->Set_TileLength( m_iTileX, m_iTileY );
@@ -35,10 +35,10 @@ void CHallway::Late_Update()
 
 void CHallway::Render( HDC _DC )
 {
-	CTileMgr::Get_Instance()->RenderBackGround( _DC );
-	CTileMgr::Get_Instance()->RenderFoliage( _DC );
+	CTileMgr::Get_Instance()->RenderPaintingLayerTile( _DC );
+//	CTileMgr::Get_Instance()->RenderFoliage( _DC );
 	CObjMgr::Get_Instance()->Render( _DC );
-	CTileMgr::Get_Instance()->RenderCelling( _DC );
+//	CTileMgr::Get_Instance()->RenderCelling( _DC );
 }
 
 void CHallway::Release()
