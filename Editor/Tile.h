@@ -29,6 +29,7 @@ private:
 	int					m_iDrawYID;
 	static int			m_iFrameIdx;
 	int					m_iFrameEndX;
+	bool				m_bIsRender;
 };
 
 

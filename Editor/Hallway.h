@@ -9,7 +9,7 @@ class CHallway :
 {
 public:
     CHallway();
-    ~CHallway();
+    virtual ~CHallway();
 
 public:
 	virtual void Initialize() override;

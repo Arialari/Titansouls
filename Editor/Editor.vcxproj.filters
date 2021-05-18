@@ -58,9 +58,6 @@
     <Filter Include="소스 파일\03.Scene">
       <UniqueIdentifier>{8f3e3758-ab72-4757-a4be-278d8c6dd23b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\03.Scene\Hallway">
-      <UniqueIdentifier>{05ecee2d-896a-4d94-8746-4952a33c723a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\98.Manager\UiMgr">
       <UniqueIdentifier>{44d8f7d5-66da-4ff8-86e2-4c5819f72f17}</UniqueIdentifier>
     </Filter>
@@ -81,6 +78,21 @@
     </Filter>
     <Filter Include="소스 파일\05.Implement\01.IAnimation">
       <UniqueIdentifier>{42273c50-e194-44b7-8cf4-7e77bdbedbf4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\03.Scene\01.Sludge">
+      <UniqueIdentifier>{314cf815-1f7e-4af8-b494-78070c85213b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\03.Scene\00.Hallway">
+      <UniqueIdentifier>{05ecee2d-896a-4d94-8746-4952a33c723a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\03.Scene\02.BrainFreeze">
+      <UniqueIdentifier>{d77e4757-e02e-40fa-9571-fb9162abe9f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\03.Scene\03.EyeCube">
+      <UniqueIdentifier>{30b8ea03-26ac-420b-b8da-18ffbdf369ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\03.Scene\04.Gol_Set">
+      <UniqueIdentifier>{970c1850-3d9d-44bb-87ec-4a764565d2aa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -139,7 +151,7 @@
       <Filter>소스 파일\03.Scene</Filter>
     </ClInclude>
     <ClInclude Include="Hallway.h">
-      <Filter>소스 파일\03.Scene\Hallway</Filter>
+      <Filter>소스 파일\03.Scene\00.Hallway</Filter>
     </ClInclude>
     <ClInclude Include="UiMgr.h">
       <Filter>소스 파일\98.Manager\UiMgr</Filter>
@@ -161,6 +173,18 @@
     </ClInclude>
     <ClInclude Include="IAnimation.h">
       <Filter>소스 파일\05.Implement\01.IAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="SludgeScene.h">
+      <Filter>소스 파일\03.Scene\01.Sludge</Filter>
+    </ClInclude>
+    <ClInclude Include="BrainFreezeScene.h">
+      <Filter>소스 파일\03.Scene\02.BrainFreeze</Filter>
+    </ClInclude>
+    <ClInclude Include="GolSetScene.h">
+      <Filter>소스 파일\03.Scene\04.Gol_Set</Filter>
+    </ClInclude>
+    <ClInclude Include="EyecubeScene.h">
+      <Filter>소스 파일\03.Scene\03.EyeCube</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -210,7 +234,7 @@
       <Filter>소스 파일\03.Scene</Filter>
     </ClCompile>
     <ClCompile Include="Hallway.cpp">
-      <Filter>소스 파일\03.Scene\Hallway</Filter>
+      <Filter>소스 파일\03.Scene\00.Hallway</Filter>
     </ClCompile>
     <ClCompile Include="UiMgr.cpp">
       <Filter>소스 파일\98.Manager\UiMgr</Filter>
@@ -232,6 +256,18 @@
     </ClCompile>
     <ClCompile Include="IAnimation.cpp">
       <Filter>소스 파일\05.Implement\01.IAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="SludgeScene.cpp">
+      <Filter>소스 파일\03.Scene\01.Sludge</Filter>
+    </ClCompile>
+    <ClCompile Include="BrainFreezeScene.cpp">
+      <Filter>소스 파일\03.Scene\02.BrainFreeze</Filter>
+    </ClCompile>
+    <ClCompile Include="GolSetScene.cpp">
+      <Filter>소스 파일\03.Scene\04.Gol_Set</Filter>
+    </ClCompile>
+    <ClCompile Include="EyecubeScene.cpp">
+      <Filter>소스 파일\03.Scene\03.EyeCube</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

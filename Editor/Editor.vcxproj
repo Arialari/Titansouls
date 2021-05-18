@@ -146,9 +146,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BmpMgr.h" />
+    <ClInclude Include="BrainFreezeScene.h" />
     <ClInclude Include="CollisionMgr.h" />
     <ClInclude Include="Editor.h" />
+    <ClInclude Include="EyecubeScene.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="GolSetScene.h" />
     <ClInclude Include="Hallway.h" />
     <ClInclude Include="IAnimation.h" />
     <ClInclude Include="Implement.h" />
@@ -162,6 +165,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneMgr.h" />
     <ClInclude Include="ScrollMgr.h" />
+    <ClInclude Include="SludgeScene.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Tile.h" />
@@ -174,6 +178,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BmpMgr.cpp" />
+    <ClCompile Include="BrainFreezeScene.cpp" />
+    <ClCompile Include="EyecubeScene.cpp" />
+    <ClCompile Include="GolSetScene.cpp" />
     <ClCompile Include="Hallway.cpp" />
     <ClCompile Include="CollisionMgr.cpp" />
     <ClCompile Include="Editor.cpp" />
@@ -188,6 +195,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneMgr.cpp" />
     <ClCompile Include="ScrollMgr.cpp" />
+    <ClCompile Include="SludgeScene.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

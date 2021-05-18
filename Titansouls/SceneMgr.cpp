@@ -48,7 +48,7 @@ void CSceneMgr::Scene_Change( SCENEID::ID _eID)
 		case SCENEID::ID::HALLWAY_UNDER:
 			m_pScene = new CStage;
 			break;
-		case SCENEID::ID::GOL_LATH:
+		case SCENEID::ID::GOL_SET:
 			break;
 		}
 		m_pScene->Initialize();

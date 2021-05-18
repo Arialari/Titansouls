@@ -6,7 +6,7 @@
 
 int CTile::m_iFrameIdx = 0;
 CTile::CTile()
-	: m_iDrawYID(0), m_iFrameEndX(0)
+	: m_iDrawYID(0), m_iFrameEndX(0), m_bIsRender(true)
 {
 }
 
@@ -36,23 +36,28 @@ void CTile::Late_Update()
 
 void CTile::Render(HDC _DC)
 {
-	Update_Rect();
 
-	int	iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
-	int	iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+	if ( m_bIsRender )
+	{
+		Update_Rect();
 
-	int iFrameX = 0;
-	if( m_iFrameEndX )
-		iFrameX = m_iFrameIdx % m_iFrameEndX;
+		int	iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+		int	iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
 
-	HDC hMemDC = CTileMgr::Get_Instance()->Get_DC();
+		int iFrameX = 0;
+		if ( m_iFrameEndX )
+			iFrameX = m_iFrameIdx % m_iFrameEndX;
 
-	//BitBlt(_DC, m_tRect.left + iScrollX, m_tRect.top + iScrollY, m_tInfo.iCX, m_tInfo.iCY
-	//	, hMemDC, m_iDrawXID * PIXELCX, m_iDrawYID * PIXELCY, SRCCOPY);
+		HDC hMemDC = CTileMgr::Get_Instance()->Get_DC();
 
-	GdiTransparentBlt(_DC, m_tRect.left + iScrollX, m_tRect.top + iScrollY, m_tInfo.iCX, m_tInfo.iCY
-						, hMemDC, (m_iDrawXID+ iFrameX) * PIXELCX, m_iDrawYID * PIXELCY
-					   , PIXELCX,PIXELCY,RGB(255,255,255));
+		//BitBlt(_DC, m_tRect.left + iScrollX, m_tRect.top + iScrollY, m_tInfo.iCX, m_tInfo.iCY
+		//	, hMemDC, m_iDrawXID * PIXELCX, m_iDrawYID * PIXELCY, SRCCOPY);
+
+		GdiTransparentBlt( _DC, m_tRect.left + iScrollX, m_tRect.top + iScrollY, m_tInfo.iCX, m_tInfo.iCY
+						   , hMemDC, (m_iDrawXID + iFrameX) * PIXELCX, m_iDrawYID * PIXELCY
+						   , PIXELCX, PIXELCY, RGB( 255, 255, 255 ) );
+	}
+
 }
 
 void CTile::Release()

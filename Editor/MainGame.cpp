@@ -35,14 +35,25 @@ void CMainGame::Initialize()
 void CMainGame::Update()
 {
 	
+	if ( CKeyMgr::Get_Instance()->Key_Pressing( 'D' ) )
+		CScrollMgr::Get_Instance()->Add_ScrollX( -10.f );
+	if ( CKeyMgr::Get_Instance()->Key_Pressing( 'A' ) )
+		CScrollMgr::Get_Instance()->Add_ScrollX( 10.f );
+	if ( CKeyMgr::Get_Instance()->Key_Pressing( 'W' ) )
+		CScrollMgr::Get_Instance()->Add_ScrollY( 10.f );
+	if ( CKeyMgr::Get_Instance()->Key_Pressing( 'S' ) )
+		CScrollMgr::Get_Instance()->Add_ScrollY( -10.f );
 	if ( CKeyMgr::Get_Instance()->Key_Pressing( VK_RIGHT ) )
-		CScrollMgr::Get_Instance()->Add_ScrollX( -5.f );
+	{
+		CSceneMgr::Get_Instance()->Scene_ChangeToNext();
+		return;
+	}
 	if ( CKeyMgr::Get_Instance()->Key_Pressing( VK_LEFT ) )
-		CScrollMgr::Get_Instance()->Add_ScrollX( 5.f );
-	if ( CKeyMgr::Get_Instance()->Key_Pressing( VK_UP ) )
-		CScrollMgr::Get_Instance()->Add_ScrollY( 5.f );
-	if ( CKeyMgr::Get_Instance()->Key_Pressing( VK_DOWN ) )
-		CScrollMgr::Get_Instance()->Add_ScrollY( -5.f );
+	{
+		CSceneMgr::Get_Instance()->Scene_ChangeToPrev();
+		return;
+	}
+
 	CSceneMgr::Get_Instance()->Update();
 	CUiMgr::Get_Instance()->Update();
 	CTileMgr::Get_Instance()->Update();
@@ -70,8 +81,9 @@ void CMainGame::Render()
 	++m_iFPS;
 	if ( m_dwFPSTime + 1000 < GetTickCount() )
 	{
-		TCHAR		szFPS[16] = L"";
-		swprintf_s( szFPS, L"FPS: %d", m_iFPS );
+		TCHAR		szFPS[64] = L"";
+		swprintf_s( szFPS, L"FPS: %d // Scene : ", m_iFPS );
+		lstrcat( szFPS, CTileMgr::Get_Instance()->Get_FileName());
 		SetWindowText( g_hWnd, szFPS );
 
 		m_iFPS = 0;

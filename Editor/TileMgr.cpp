@@ -17,6 +17,7 @@ CTileMgr::CTileMgr()
 
 CTileMgr::~CTileMgr()
 {
+	Save_Tile();
 	Release();
 }
 

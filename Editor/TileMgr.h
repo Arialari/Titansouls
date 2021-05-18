@@ -30,8 +30,9 @@ public:
 	inline void Set_PaintPoint( int _x, int _y ) { m_tPaintPoint.x = _x; m_tPaintPoint.y = _y; }
 	inline void Set_PaintEndX( int _x ) { m_tPaintEndX = _x; }
 	inline void Set_TileLength( int _x, int _y ) { m_iTileX = _x; m_iTileY = _y; }
-	inline const int& Get_TileLengthX() { return m_iTileX; }
-	inline const int& Get_TileLengthY() { return m_iTileY; }
+	inline const int& Get_TileLengthX() const { return m_iTileX; }
+	inline const int& Get_TileLengthY() const { return m_iTileY; }
+	inline const TCHAR* Get_FileName() const { return m_pFileName; }
 public:
 	static CTileMgr* Get_Instance()
 	{
