@@ -45,11 +45,13 @@ void CMainGame::Update()
 		CScrollMgr::Get_Instance()->Add_ScrollY( -20.f );
 	if ( CKeyMgr::Get_Instance()->Key_Pressing( VK_RIGHT ) )
 	{
+		CTileMgr::Get_Instance()->Save_Tile();
 		CSceneMgr::Get_Instance()->Scene_ChangeToNext();
 		return;
 	}
 	if ( CKeyMgr::Get_Instance()->Key_Pressing( VK_LEFT ) )
 	{
+		CTileMgr::Get_Instance()->Save_Tile();
 		CSceneMgr::Get_Instance()->Scene_ChangeToPrev();
 		return;
 	}
