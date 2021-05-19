@@ -20,6 +20,8 @@ public:
 
 public:
 	void Scene_Change( SCENEID::ID _eID);
+	void Scene_ChangeToNext();
+	void Scene_ChangeToPrev();
 
 public:
 	static CSceneMgr* Get_Instance()

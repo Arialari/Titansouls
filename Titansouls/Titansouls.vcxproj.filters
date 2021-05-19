@@ -79,6 +79,24 @@
     <Filter Include="헤더 파일\99.Default\MyMath">
       <UniqueIdentifier>{b5abcc99-1f19-4f5a-b809-d1d0e8eab348}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\04.Scene\02.BrainFreeze">
+      <UniqueIdentifier>{08e2e232-dc77-47cc-aad1-164f46f5b169}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\04.Scene\03.EyeCube">
+      <UniqueIdentifier>{70760d51-2344-429e-a2e0-d031c8673d7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\04.Scene\04.GolSet">
+      <UniqueIdentifier>{899e003b-9d13-4a96-8924-77f5eaab3653}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\04.Scene\01.Sludge">
+      <UniqueIdentifier>{4aea7deb-9a8a-4ad4-98f9-f63a532e5208}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\04.Scene\00.Hallway">
+      <UniqueIdentifier>{6f771a0a-6cb6-45e0-9aec-42baa53d3678}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\98.Manager\UIMgr">
+      <UniqueIdentifier>{93f8d625-b6a1-4049-b01b-9b65fded69f0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -156,6 +174,24 @@
     <ClInclude Include="MyMath.h">
       <Filter>헤더 파일\99.Default\MyMath</Filter>
     </ClInclude>
+    <ClInclude Include="UiMgr.h">
+      <Filter>소스 파일\98.Manager\UIMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Hallway.h">
+      <Filter>소스 파일\04.Scene\00.Hallway</Filter>
+    </ClInclude>
+    <ClInclude Include="BrainFreezeScene.h">
+      <Filter>소스 파일\04.Scene\02.BrainFreeze</Filter>
+    </ClInclude>
+    <ClInclude Include="EyecubeScene.h">
+      <Filter>소스 파일\04.Scene\03.EyeCube</Filter>
+    </ClInclude>
+    <ClInclude Include="GolSetScene.h">
+      <Filter>소스 파일\04.Scene\04.GolSet</Filter>
+    </ClInclude>
+    <ClInclude Include="SludgeScene.h">
+      <Filter>소스 파일\04.Scene\01.Sludge</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Titansouls.cpp">
@@ -223,6 +259,24 @@
     </ClCompile>
     <ClCompile Include="MyMath.cpp">
       <Filter>헤더 파일\99.Default\MyMath</Filter>
+    </ClCompile>
+    <ClCompile Include="UiMgr.cpp">
+      <Filter>소스 파일\98.Manager\UIMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Hallway.cpp">
+      <Filter>소스 파일\04.Scene\00.Hallway</Filter>
+    </ClCompile>
+    <ClCompile Include="BrainFreezeScene.cpp">
+      <Filter>소스 파일\04.Scene\02.BrainFreeze</Filter>
+    </ClCompile>
+    <ClCompile Include="EyecubeScene.cpp">
+      <Filter>소스 파일\04.Scene\03.EyeCube</Filter>
+    </ClCompile>
+    <ClCompile Include="GolSetScene.cpp">
+      <Filter>소스 파일\04.Scene\04.GolSet</Filter>
+    </ClCompile>
+    <ClCompile Include="SludgeScene.cpp">
+      <Filter>소스 파일\04.Scene\01.Sludge</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

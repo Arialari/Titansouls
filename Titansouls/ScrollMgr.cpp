@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "ScrollMgr.h"
+#include "TileMgr.h"
 
 CScrollMgr* CScrollMgr::m_pInstance = nullptr;
 CScrollMgr::CScrollMgr()
@@ -21,15 +22,27 @@ void CScrollMgr::Late_Update()
 
 void CScrollMgr::Scroll_Lock()
 {
-	if (0 < m_fScrollX)
+	int iTileX = CTileMgr::Get_Instance()->Get_TileLengthX();
+	int iTileY = CTileMgr::Get_Instance()->Get_TileLengthY();
+
+	if ( 0 < m_fMoveTargetX )
+		m_fMoveTargetX = 0.f;
+	if ( 0 < m_fScrollX )
 		m_fScrollX = 0.f;
 
-	if((WINCX - (TILEX * DEFAULTCX)) > m_fScrollX)
-		m_fScrollX = (float)(WINCX - (TILEX * DEFAULTCX));
+	if((WINCX - (iTileX * DEFAULTCX)) > m_fMoveTargetX )
+		m_fMoveTargetX = (float)(WINCX - (iTileX * DEFAULTCX));
+	if ( (WINCX - (iTileX * DEFAULTCX)) > m_fScrollX )
+		m_fScrollX = (float)(WINCX - (iTileX * DEFAULTCX));
 
+	if ( 0 < m_fMoveTargetY )
+		m_fMoveTargetY = 0.f;
 	if ( 0 < m_fScrollY )
 		m_fScrollY = 0.f;
 
-	if ( (WINCY - (TILEY * DEFAULTCY)) > m_fScrollY )
-		m_fScrollY = (float)(WINCY - (TILEY * DEFAULTCY));
+	if ( (WINCY - (iTileY * DEFAULTCY)) > m_fMoveTargetY )
+		m_fMoveTargetY = (float)(WINCY - (iTileY * DEFAULTCY));
+	if ( (WINCY - (iTileY * DEFAULTCY)) > m_fScrollY )
+		m_fScrollY = (float)(WINCY - (iTileY * DEFAULTCY));
 }
+

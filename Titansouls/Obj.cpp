@@ -3,7 +3,7 @@
 
 
 CObj::CObj()
-	: m_bDead( false ), m_pImageKey( nullptr ), m_iDrawXID( 0 ), m_eRenderID(RENDERID::END)
+	: m_bDead( false ), m_pImageKey( nullptr ), m_iDrawXID( 0 ), m_eRenderID(RENDERID::END), m_bIsRender( true )
 {
 	ZeroMemory( &m_tInfo, sizeof( m_tInfo ) );
 	ZeroMemory( &m_tRect, sizeof( m_tRect ) );

@@ -24,8 +24,8 @@ void CPlayer::Initialize()
 	CBmpMgr::Get_Instance()->Insert_Bmp( L"../Image/p_Bow.bmp", L"Bow" );
 	CBmpMgr::Get_Instance()->Insert_Bmp( L"../Image/p_Arrow.bmp", L"Arrow" );
 
-	m_tInfo.fX = 400.f;
-	m_tInfo.fY = 300.f;
+	m_tInfo.fX = 38.f* DEFAULTCX;
+	m_tInfo.fY = 184.f * DEFAULTCY;
 	m_tInfo.iCX = DEFAULTCX;
 	m_tInfo.iCY = DEFAULTCY;
 

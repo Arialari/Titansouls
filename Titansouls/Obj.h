@@ -18,20 +18,22 @@ public:
 
 public:
 	//Init SET
-	inline void Set_Pos( float _x, float _y ) { m_tInfo.fX = _x; m_tInfo.fY = _y; }
-	inline void Set_PosX( float _x ) { m_tInfo.fX = _x; }
-	inline void Set_PosY( float _y ) { m_tInfo.fY = _y; }
-	inline void Add_Pos( float _x, float _y ) { m_tInfo.fX += _x; m_tInfo.fY += _y; }
-	inline void Add_PosX( float _x ) { m_tInfo.fX += _x; }
-	inline void Add_PosY( float _y ) { m_tInfo.fY += _y; }
+	virtual void Set_Pos( float _x, float _y ) { m_tInfo.fX = _x; m_tInfo.fY = _y; }
+	virtual void Set_PosX( float _x ) { m_tInfo.fX = _x; }
+	virtual void Set_PosY( float _y ) { m_tInfo.fY = _y; }
+	virtual void Add_Pos( float _x, float _y ) { m_tInfo.fX += _x; m_tInfo.fY += _y; }
+	virtual void Add_PosX( float _x ) { m_tInfo.fX += _x; }
+	virtual void Add_PosY( float _y ) { m_tInfo.fY += _y; }
 	inline void SetReserveCollisionRect( int _i ) { m_vecCollisionRect.reserve( _i ); }
 
 	//Functions
-	virtual void Hit() { m_bDead = true; }
+	virtual void		Hit() { m_bDead = true; }
 
 	//Setter
-	inline void Set_ImageKey( const TCHAR* _pImageKey ) { m_pImageKey = _pImageKey; }
-	inline void Set_DrawXID( int _iDrawID ) { m_iDrawXID = _iDrawID; }
+	inline void			Set_ImageKey( const TCHAR* _pImageKey ) { m_pImageKey = _pImageKey; }
+	inline void			Set_DrawXID( int _iDrawXID ) { m_iDrawXID = _iDrawXID; }
+	inline void			Set_IsRender( bool _bIsRender ) { m_bIsRender = _bIsRender; }
+	inline const bool&	Get_IsRender() const { return m_bIsRender; }
 
 public:
 	//Getter
@@ -53,6 +55,7 @@ protected:
 	const TCHAR*	m_pImageKey;
 	int				m_iDrawXID;
 	RENDERID::ID	m_eRenderID;
+	bool			m_bIsRender;
 };
 
 #endif // !__OBJ_H__

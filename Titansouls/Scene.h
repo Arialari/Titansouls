@@ -15,6 +15,12 @@ public:
 	virtual void Late_Update() = 0;
 	virtual void Render(HDC _DC) = 0;
 	virtual void Release() = 0;
+	const int&		Get_TileX() const { return m_iTileX; }
+	const int&		Get_TileY() const { return m_iTileY; }
+protected:
+	int					m_iTileX;
+	int					m_iTileY;
+	const TCHAR*		m_pFileName;
 };
 
 #endif // !__SCENE_H__

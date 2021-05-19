@@ -148,9 +148,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BmpMgr.h" />
+    <ClInclude Include="BrainFreezeScene.h" />
     <ClInclude Include="CGolLath.h" />
     <ClInclude Include="CollisionMgr.h" />
+    <ClInclude Include="EyecubeScene.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="GolSetScene.h" />
+    <ClInclude Include="Hallway.h" />
     <ClInclude Include="IAnimation.h" />
     <ClInclude Include="Implement.h" />
     <ClInclude Include="KeyMgr.h" />
@@ -165,6 +169,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneMgr.h" />
     <ClInclude Include="ScrollMgr.h" />
+    <ClInclude Include="SludgeScene.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -172,12 +177,18 @@
     <ClInclude Include="TileMgr.h" />
     <ClInclude Include="Titan.h" />
     <ClInclude Include="Titansouls.h" />
+    <ClInclude Include="UiMgr.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BmpMgr.cpp" />
+    <ClCompile Include="BrainFreezeScene.cpp" />
     <ClCompile Include="CGolLath.cpp" />
     <ClCompile Include="CollisionMgr.cpp" />
+    <ClCompile Include="EyecubeScene.cpp" />
+    <ClCompile Include="GolSetScene.cpp" />
+    <ClCompile Include="Hallway.cpp" />
     <ClCompile Include="MyMath.cpp" />
+    <ClCompile Include="SludgeScene.cpp" />
     <ClCompile Include="Titan.cpp" />
     <ClCompile Include="IAnimation.cpp" />
     <ClCompile Include="Implement.cpp" />
@@ -199,6 +210,7 @@
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileMgr.cpp" />
     <ClCompile Include="Titansouls.cpp" />
+    <ClCompile Include="UiMgr.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Titansouls.rc" />
