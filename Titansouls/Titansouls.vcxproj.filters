@@ -195,6 +195,9 @@
     <ClInclude Include="SludgeScene.h">
       <Filter>소스 파일\04.Scene\01.Sludge</Filter>
     </ClInclude>
+    <ClInclude Include="Arrow.h">
+      <Filter>소스 파일\01.Obj\03.Arrow</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Titansouls.cpp">
@@ -280,6 +283,9 @@
     </ClCompile>
     <ClCompile Include="SludgeScene.cpp">
       <Filter>소스 파일\04.Scene\01.Sludge</Filter>
+    </ClCompile>
+    <ClCompile Include="Arrow.cpp">
+      <Filter>소스 파일\01.Obj\03.Arrow</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

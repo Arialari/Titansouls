@@ -4,11 +4,13 @@
 #include "KeyMgr.h"
 #include "ScrollMgr.h"
 #include "BmpMgr.h"
+#include "Arrow.h"
 
 
 CPlayer::CPlayer()
 	: m_ePreState( STATE_END ), m_eCurState( STATE_END ), m_eCurDirection(DIRECTION::DIRECTION_END)
-	, m_fRunSpeed(4.f), m_fWalkSpeed(2.0f), m_fRollSpeed(6.0f)
+	, m_fRunSpeed(4.f), m_fWalkSpeed(2.0f), m_fRollSpeed(6.0f), m_pArrow(nullptr), m_bHoldArrow(true), m_bIsAiming(false)
+	, m_fAimGaze(0.f)
 {
 }
 
@@ -37,6 +39,10 @@ void CPlayer::Initialize()
 	m_eRenderID = RENDERID::OBJECT;
 	m_vecCollisionRect.reserve( 1 );
 	m_vecCollisionRect.emplace_back( RECT() );
+
+	m_pArrow = static_cast<CArrow*>(CAbstractFactory<CArrow>::Create());
+	m_pArrow->Set_Pos( m_tInfo.fX, m_tInfo.fY );
+	CObjMgr::Get_Instance()->Add_Object( m_pArrow, OBJID::ARROW );
 }
 
 int CPlayer::Update()
@@ -47,9 +53,10 @@ int CPlayer::Update()
 
 	Key_Check();
 	OffSet();
+	Update_Aim();
 	State_Change();
 	Update_Animation_Frame();
-
+	
 	Update_Rect();
 	Update_ColisionRect();
 
@@ -85,16 +92,18 @@ void CPlayer::Render(HDC _DC)
 					   , m_tFrame.iFrameX * PIXELCX, m_tFrame.iModelY * PIXELCY
 					   , PIXELCX, PIXELCY
 					   , RGB( 255, 0, 255 ) );
+	if ( m_bHoldArrow )
+	{
+		hMemDC = CBmpMgr::Get_Instance()->Find_Bmp( L"Arrow" );
 
-	hMemDC = CBmpMgr::Get_Instance()->Find_Bmp( L"Arrow" );
-
-	GdiTransparentBlt( _DC
-					   , m_tRect.left + iScrollX, m_tRect.top + iScrollY
-					   , m_tInfo.iCX, m_tInfo.iCY
-					   , hMemDC
-					   , m_tFrame.iFrameX * PIXELCX, m_tFrame.iModelY * PIXELCY
-					   , PIXELCX, PIXELCY
-					   , RGB( 255, 0, 255 ) );
+		GdiTransparentBlt( _DC
+						   , m_tRect.left + iScrollX, m_tRect.top + iScrollY
+						   , m_tInfo.iCX, m_tInfo.iCY
+						   , hMemDC
+						   , m_tFrame.iFrameX * PIXELCX, m_tFrame.iModelY * PIXELCY
+						   , PIXELCX, PIXELCY
+						   , RGB( 255, 0, 255 ) );
+	}
 
 	//TCHAR		szBuff[16] = L"";
 	//swprintf_s( szBuff, L"Frame X : %d", m_tFrame.iFrameX );
@@ -106,21 +115,31 @@ void CPlayer::Release()
 {
 }
 
-void CPlayer::OnBlocked()
+void CPlayer::OnBlocked( DIRECTION _eDir )
 {
-
 }
 
 void CPlayer::Key_Check()
 {
 	bool bIsAim = false;
+	bool bIsReturning = false;
 	if ( m_eCurState != STATE::ROLL )
 	{
 		if ( CKeyMgr::Get_Instance()->Key_Pressing( 'C' ) )
 		{
 			m_fSpeed = 0.f;
-			m_eCurState = STATE::AIM;
-			bIsAim = true;
+			if ( m_bHoldArrow )
+			{
+				m_eCurState = STATE::AIM;
+				bIsAim = true;
+				m_pArrow->Set_IsRender( true );
+			}
+			else
+			{
+				m_eCurState = STATE::RETURN;
+				bIsReturning = true;
+			}
+			
 		}
 		else if ( CKeyMgr::Get_Instance()->Key_Down( 'X' ) )
 		{
@@ -137,7 +156,6 @@ void CPlayer::Key_Check()
 			m_fSpeed = m_fWalkSpeed;
 			m_eCurState = STATE::WALK;
 		}
-
 
 		m_fVelocityX = 0.f;
 		m_fVelocityY = 0.f;
@@ -194,13 +212,14 @@ void CPlayer::Key_Check()
 
 	}
 
-	if ( m_fVelocityX == 0.f && m_fVelocityY == 0.f && !bIsAim )
+	if ( m_fVelocityX == 0.f && m_fVelocityY == 0.f && !bIsAim && !bIsReturning )
 	{
 		m_eCurState = STATE::IDLE;
 	}
 		
 	m_tInfo.fX += m_fVelocityX;
 	m_tInfo.fY += m_fVelocityY;
+	m_bIsAiming = bIsAim;
 }
 
 void CPlayer::State_Change()
@@ -260,6 +279,13 @@ void CPlayer::State_Change()
 			m_tFrame.dwDelay = MAXDWORD;
 			m_tFrame.dwTime = GetTickCount();
 			m_tFrame.ePlayType = FRAME::PLAYTYPE::NO_LOOP;
+		case STATE::RETURN:
+			m_tFrame.iFrameX = m_tFrame.iStartX = 15;
+			m_tFrame.iEndX = 15;
+			m_tFrame.iModelY = m_eCurDirection;
+			m_tFrame.dwDelay = MAXDWORD;
+			m_tFrame.dwTime = GetTickCount();
+			m_tFrame.ePlayType = FRAME::PLAYTYPE::NO_LOOP;
 			break;
 		}
 		m_ePreState = m_eCurState;
@@ -285,6 +311,30 @@ void CPlayer::OffSet()
 
 	if ( iOffSetY > ( int )( m_tInfo.fY + iScrollY ) )
 		CScrollMgr::Get_Instance()->Add_ScrollY( iOffSetY - (m_tInfo.fY + iScrollY) );
+}
+
+void CPlayer::Update_Aim()
+{
+	if ( m_bIsAiming && m_bHoldArrow )
+	{
+		if ( m_fAimGaze < 1.f )
+			m_fAimGaze += 0.10f;
+		else
+			m_fAimGaze = 1.f;
+		m_pArrow->Set_Pos( m_tInfo.fX, m_tInfo.fY );
+		m_pArrow->Set_IsRender( true );
+	}
+	else
+	{
+		if ( m_fAimGaze > 0.f )
+		{
+			m_pArrow->Shoot( m_fAimGaze );
+			m_bHoldArrow = false;
+		}
+			
+		m_fAimGaze = 0.f;
+	}
+		
 }
 
 void CPlayer::Update_Animation_Frame()

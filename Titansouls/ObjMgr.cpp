@@ -20,6 +20,8 @@ void CObjMgr::Update()
 {
 	for ( int i = 0; i < OBJID::END; ++i )
 	{
+		if ( i == OBJID::BACKGROUND )
+			continue;
 		auto iter = m_listObj[i].begin();
 		for ( ; iter != m_listObj[i].end(); )
 		{
@@ -36,6 +38,7 @@ void CObjMgr::Update()
 	}
 
 	CCollisionMgr::Collision_BackGroundEx( m_listObj[OBJID::PLAYER] );
+	CCollisionMgr::Collision_BackGroundEx( m_listObj[OBJID::ARROW] );
 	CCollisionMgr::Collision_RectEx( m_listObj[OBJID::TITAN], m_listObj[OBJID::PLAYER] );
 	//CCollisionMgr::Collision_Sphere(m_listObj[OBJID::MOUSE], m_listObj[OBJID::MONSTER]);
 }

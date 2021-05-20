@@ -21,4 +21,6 @@ namespace UI_TYPE
 	enum ID { LAYOUT, BUTTON, IMAGE, UI_TYPE_END };
 }
 
+enum DIRECTION { E, N, W, S, SE, SW, NW, NE, DIRECTION_END };
+
 #endif // !__ENUM_H__

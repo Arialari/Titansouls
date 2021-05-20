@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Arrow.h" />
     <ClInclude Include="BmpMgr.h" />
     <ClInclude Include="BrainFreezeScene.h" />
     <ClInclude Include="CGolLath.h" />
@@ -180,6 +181,7 @@
     <ClInclude Include="UiMgr.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Arrow.cpp" />
     <ClCompile Include="BmpMgr.cpp" />
     <ClCompile Include="BrainFreezeScene.cpp" />
     <ClCompile Include="CGolLath.cpp" />

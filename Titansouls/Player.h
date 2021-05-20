@@ -6,11 +6,12 @@
 
 #include "Pawn.h"
 #include "IAnimation.h"
+class CArrow;
 class CPlayer : public CPawn
 {
 public:
-	enum STATE { IDLE, WALK, ROLL, RUN, AIM, DEAD, STATE_END };
-	enum DIRECTION { E, N, W, S, SE, SW, NW, NE, DIRECTION_END};
+	enum STATE { IDLE, WALK, ROLL, RUN, AIM, RETURN, DEAD, STATE_END };
+	
 
 public:
 	CPlayer();
@@ -22,12 +23,13 @@ public:
 	virtual void Late_Update() override;
 	virtual void Render(HDC _DC) override;
 	virtual void Release() override;
-	virtual	void OnBlocked() override;
+	virtual void OnBlocked( DIRECTION _eDir ) override;
 
 private:
 	void Key_Check();
 	void State_Change();
 	void OffSet();
+	void Update_Aim();
 	virtual void Update_Animation_Frame() override;
 	virtual void Update_ColisionRect() override;
 
@@ -39,6 +41,10 @@ private:
 	const float		m_fRunSpeed;
 	const float		m_fWalkSpeed;
 	const float		m_fRollSpeed;
+	CArrow*		m_pArrow;
+	bool		m_bHoldArrow;
+	bool		m_bIsAiming;
+	float		m_fAimGaze;
 };
 
 #endif // !__PLAYER_H__

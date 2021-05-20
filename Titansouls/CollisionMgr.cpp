@@ -43,18 +43,34 @@ void CCollisionMgr::Collision_RectEx( list<CObj*>& _Dst, list<CObj*>& _Src )
 				if ( fX < fY )
 				{
 					if ( pDst->Get_Info().fX < pSrc->Get_Info().fX )
+					{
 						pSrc->Add_PosX( fX );
+						pSrc->OnBlocked(DIRECTION::W);
+						continue;
+					}
 					else
+					{
 						pSrc->Add_PosX( -fX );
+						pSrc->OnBlocked( DIRECTION::E );
+						continue;
+					}
 				}
 				else
 				{
 					if ( pDst->Get_Info().fY < pSrc->Get_Info().fY )
+					{
 						pSrc->Add_PosY( fY );
+						pSrc->OnBlocked( DIRECTION::N );
+						continue;
+					}
 					else
+					{
 						pSrc->Add_PosY( -fY );
+						pSrc->OnBlocked( DIRECTION::S );
+						continue;
+					}
 				}
-				pSrc->OnBlocked();
+				
 			}
 		}
 	}
@@ -85,19 +101,37 @@ void CCollisionMgr::Collision_BackGroundEx( list<CObj*>& _Src )
 						if ( fX < fY )
 						{
 							if ( pTile->Get_Info().fX < pObj->Get_Info().fX )
+							{
 								pObj->Add_PosX( fX );
+								pObj->OnBlocked( DIRECTION::W );
+								i = iCollisionCheckY + 3;
+								j = iCollisionCheckX + 3;
+							}
 							else
+							{
 								pObj->Add_PosX( -fX );
+								pObj->OnBlocked( DIRECTION::E );
+								i = iCollisionCheckY + 3;
+								j = iCollisionCheckX + 3;
+							}
 						}
 						else
 						{
 							if ( pTile->Get_Info().fY < pObj->Get_Info().fY )
+							{
 								pObj->Add_PosY( fY );
+								pObj->OnBlocked( DIRECTION::N );
+								i = iCollisionCheckY + 3;
+								j = iCollisionCheckX + 3;
+							}
 							else
+							{
 								pObj->Add_PosY( -fY );
+								pObj->OnBlocked( DIRECTION::S );
+								i = iCollisionCheckY + 3;
+								j = iCollisionCheckX + 3;
+							}
 						}
-						
-						pObj->OnBlocked();
 					}
 				}
 			}
