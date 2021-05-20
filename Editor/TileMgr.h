@@ -16,6 +16,7 @@ public:
 	void Update();
 	void RenderPaintingLayerTile( HDC _DC );
 	void RenderTile( HDC _DC );
+	void RenderPaintingTile( HDC _DC );
 	void Release();
 
 	virtual void Update_Animation_Frame() override;

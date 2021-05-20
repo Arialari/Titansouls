@@ -67,6 +67,43 @@ void CTileMgr::RenderTile( HDC _DC )
 	}
 }
 
+void CTileMgr::RenderPaintingTile( HDC _DC )
+{
+	
+	int iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	int iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+
+	int	iCullX = abs( iScrollX / DEFAULTCX );
+	int	iCullY = abs( iScrollY / DEFAULTCY );
+
+	int iCullEndX = iCullX + (WINCX / DEFAULTCX) + 2;
+	int iCullEndY = iCullY + (WINCY / DEFAULTCY) + 2;
+
+
+	for ( int i = iCullY; i < iCullEndY; ++i )
+	{
+		for ( int j = iCullX; j < iCullEndX; ++j )
+		{
+			int iIdx = i * m_iTileX + j;
+
+			if ( 0 > iIdx || m_vecTile.size() <= (size_t)iIdx )
+				continue;
+			if ( m_bGonnaPick )
+			{
+				if ( m_ePaintRenderID == RENDERID::BACKGROUND )
+				{
+					if ( m_vecTile[iIdx]->Get_RenderID() == RENDERID::BACKGROUND )
+						m_vecTile[iIdx]->Render( _DC );
+				}
+				else
+					m_vecTile[iIdx]->Render( _DC );
+			}
+			else
+				m_vecTile[iIdx]->Render( _DC );
+		}
+	}
+}
+
 void CTileMgr::Release()
 {
 	for_each( m_vecTile.begin(), m_vecTile.end(), Safe_Delete<CObj*> );
@@ -160,7 +197,7 @@ void CTileMgr::Save_Tile()
 		WriteFile( hFileBack, &pTile->Get_DrawXID(), sizeof(int), &dwByte, NULL);
 		WriteFile( hFileBack, &pTile->Get_DrawYID(), sizeof(int), &dwByte, NULL);
 		WriteFile( hFileBack, &pTile->Get_iFrameEndX(), sizeof( int ), &dwByte, NULL );
-		WriteFile( hFileBack, &pTile->Get_IsRender(), sizeof( bool ), &dwByte, NULL );
+		WriteFile( hFileBack, &pTile->Get_RenderID(), sizeof( RENDERID::ID ), &dwByte, NULL );
 		WriteFile( hFileBack, &pTile->Get_IsBlock(), sizeof( bool ), &dwByte, NULL );
 	}
 
@@ -191,7 +228,7 @@ bool CTileMgr::Load_Tile()
 	int		iDrawXID = 0;
 	int		iDrawYID = 0;
 	int		iFrameEndX = 0;
-	bool	bIsRender = false;
+	RENDERID::ID	eRenderId = RENDERID::BACKGROUND;
 	bool	bIsBlock = false;
 
 	while (true)
@@ -200,7 +237,7 @@ bool CTileMgr::Load_Tile()
 		ReadFile( hFileBack, &iDrawXID, sizeof(int), &dwByte, NULL);
 		ReadFile( hFileBack, &iDrawYID, sizeof( int ), &dwByte, NULL );
 		ReadFile( hFileBack, &iFrameEndX, sizeof( int ), &dwByte, NULL );
-		ReadFile( hFileBack, &bIsRender, sizeof( bool ), &dwByte, NULL );
+		ReadFile( hFileBack, &eRenderId, sizeof( RENDERID::ID ), &dwByte, NULL );
 		ReadFile( hFileBack, &bIsBlock, sizeof( bool ), &dwByte, NULL );
 
 
@@ -212,7 +249,7 @@ bool CTileMgr::Load_Tile()
 		pTile->Set_DrawXID( iDrawXID );
 		pTile->Set_DrawYID( iDrawYID );
 		pTile->Set_iFrameEndX( iFrameEndX );
-		pTile->Set_IsRender( bIsRender );
+		pTile->Set_eRenderId( eRenderId );
 		pTile->Set_IsBlock( bIsBlock );
 
 		m_vecTile.emplace_back( pTile );

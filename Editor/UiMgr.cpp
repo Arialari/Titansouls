@@ -125,7 +125,7 @@ void CUiMgr::KeyCheck()
 	if ( CKeyMgr::Get_Instance()->Key_Down( VK_UP ) )
 	{
 		RENDERID::ID iTileRenderId = CTileMgr::Get_Instance()->Get_PaintRenderId();
-		if( iTileRenderId = RENDERID::BACKGROUND )
+		if( iTileRenderId == RENDERID::BACKGROUND )
 			CTileMgr::Get_Instance()->Set_PaintRenderId( RENDERID::CELLING );
 		else
 			CTileMgr::Get_Instance()->Set_PaintRenderId( RENDERID::BACKGROUND );
@@ -133,7 +133,7 @@ void CUiMgr::KeyCheck()
 	if ( CKeyMgr::Get_Instance()->Key_Down( VK_DOWN ) )
 	{
 		RENDERID::ID iTileRenderId = CTileMgr::Get_Instance()->Get_PaintRenderId();
-		if ( iTileRenderId = RENDERID::BACKGROUND )
+		if ( iTileRenderId == RENDERID::BACKGROUND )
 			CTileMgr::Get_Instance()->Set_PaintRenderId( RENDERID::CELLING );
 		else
 			CTileMgr::Get_Instance()->Set_PaintRenderId( RENDERID::BACKGROUND );

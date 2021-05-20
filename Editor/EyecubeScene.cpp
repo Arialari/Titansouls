@@ -35,7 +35,7 @@ void CEyecubeScene::Late_Update()
 
 void CEyecubeScene::Render( HDC _DC )
 {
-	CTileMgr::Get_Instance()->RenderTile( _DC );
+	CTileMgr::Get_Instance()->RenderPaintingTile( _DC );
 	//CTileMgr::Get_Instance()->RenderFoliage( _DC );
 	CObjMgr::Get_Instance()->Render( _DC );
 	//CTileMgr::Get_Instance()->RenderCelling( _DC );
