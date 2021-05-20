@@ -17,7 +17,7 @@ public:
     virtual void Release() override;
     virtual void Update_ColisionRect() override;
     void Set_EventCode( EVENT_CODE _eCode ) { m_eEventCode = _eCode; }
-    virtual void Hit() override;
+    virtual void OnBlocked() override;
 
     // CUi을(를) 통해 상속됨
     virtual void OnEvent( EVENT_CODE _eEventCode ) override;

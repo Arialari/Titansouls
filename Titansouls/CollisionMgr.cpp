@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "CollisionMgr.h"
 #include "Obj.h"
+#include "TileMgr.h"
+#include "Tile.h"
 
 
 CCollisionMgr::CCollisionMgr()
@@ -22,8 +24,8 @@ void CCollisionMgr::Collision_Rect( list<CObj*>& _Dst, list<CObj*>& _Src )
 			
 			if ( IsObj_Overlapped( pDst->Get_CollisionRect(), pSrc->Get_CollisionRect()) )
 			{
-				pDst->Hit();
-				pSrc->Hit();
+				pDst->OnBlocked();
+				pSrc->OnBlocked();
 			}
 		}
 	}
@@ -52,6 +54,52 @@ void CCollisionMgr::Collision_RectEx( list<CObj*>& _Dst, list<CObj*>& _Src )
 					else
 						pSrc->Add_PosY( -fY );
 				}
+				pSrc->OnBlocked();
+			}
+		}
+	}
+}
+
+void CCollisionMgr::Collision_BackGroundEx( list<CObj*>& _Src )
+{
+	for ( auto& pObj : _Src )
+	{
+		
+		int iTileX = CTileMgr::Get_Instance()->Get_TileLengthX();
+		int iPosX = (int)pObj->Get_Info().fX;
+		int iPosY = (int)pObj->Get_Info().fY;
+
+		int	iCollisionCheckX = abs( iPosX / DEFAULTCX ) - 1;
+		int	iCollisionCheckY = abs( iPosY / DEFAULTCY ) - 1;
+		for ( int i = iCollisionCheckY; i < iCollisionCheckY + 3; ++i )
+		{
+			for ( int j = iCollisionCheckX; j < iCollisionCheckX + 3; ++j )
+			{
+				int iIdx = i * iTileX + j;
+				CTile* pTile = static_cast<CTile*>(CTileMgr::Get_Instance()->Get_vecTile()[iIdx]);
+				if ( pTile->Get_IsBlock() )
+				{
+					float fX, fY;
+					if ( IsObj_OverlappedEx( pObj->Get_CollisionRect(), pTile->Get_CollisionRect(), &fX, &fY ) )
+					{
+						if ( fX < fY )
+						{
+							if ( pTile->Get_Info().fX < pObj->Get_Info().fX )
+								pObj->Add_PosX( fX );
+							else
+								pObj->Add_PosX( -fX );
+						}
+						else
+						{
+							if ( pTile->Get_Info().fY < pObj->Get_Info().fY )
+								pObj->Add_PosY( fY );
+							else
+								pObj->Add_PosY( -fY );
+						}
+						
+						pObj->OnBlocked();
+					}
+				}
 			}
 		}
 	}
@@ -65,8 +113,8 @@ void CCollisionMgr::Collision_Sphere( list<CObj*>& _Dst, list<CObj*>& _Src )
 		{
 			if ( Check_Sphere( pDst, pSrc ) )
 			{
-				pDst->Hit();
-				pSrc->Hit();
+				pDst->OnBlocked();
+				pSrc->OnBlocked();
 			}
 		}
 	}

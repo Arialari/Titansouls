@@ -22,6 +22,8 @@ void CTile::Initialize()
 	m_tInfo.iCX = DEFAULTCX;
 	m_tInfo.iCY = DEFAULTCY;
 	m_eRenderID = RENDERID::BACKGROUND;
+	m_vecCollisionRect.reserve( 1 );
+	m_vecCollisionRect.emplace_back( RECT() );
 }
 
 int CTile::Update()
@@ -43,7 +45,7 @@ void CTile::Render(HDC _DC)
 	if ( m_bIsRender )
 	{
 		Update_Rect();
-
+		Update_ColisionRect();
 
 
 		int iFrameX = 0;
@@ -96,6 +98,16 @@ void CTile::Release()
 {
 }
 
+void CTile::Setting_Done()
+{
+	Update_Rect();
+	Update_ColisionRect();
+}
+
 void CTile::Update_ColisionRect()
 {
+	m_vecCollisionRect.front().left = (LONG)(m_tInfo.fX - (m_tInfo.iCX >> 1));
+	m_vecCollisionRect.front().top = (LONG)(m_tInfo.fY - (m_tInfo.iCY >> 1));
+	m_vecCollisionRect.front().right = (LONG)(m_tInfo.fX + (m_tInfo.iCX >> 1));
+	m_vecCollisionRect.front().bottom = (LONG)(m_tInfo.fY + (m_tInfo.iCY >> 1));
 }

@@ -8,7 +8,7 @@
 
 CPlayer::CPlayer()
 	: m_ePreState( STATE_END ), m_eCurState( STATE_END ), m_eCurDirection(DIRECTION::DIRECTION_END)
-	, m_fRunSpeed(3.f), m_fWalkSpeed(15.5f), m_fRollSpeed(4.5f)
+	, m_fRunSpeed(4.f), m_fWalkSpeed(2.0f), m_fRollSpeed(6.0f)
 {
 }
 
@@ -62,6 +62,7 @@ void CPlayer::Late_Update()
 
 void CPlayer::Render(HDC _DC)
 {
+	Update_Rect();
 	int iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
 	int iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
 
@@ -105,17 +106,23 @@ void CPlayer::Release()
 {
 }
 
-void CPlayer::Hit()
+void CPlayer::OnBlocked()
 {
 
 }
 
 void CPlayer::Key_Check()
 {
-
+	bool bIsAim = false;
 	if ( m_eCurState != STATE::ROLL )
 	{
-		if ( CKeyMgr::Get_Instance()->Key_Down( 'X' ) )
+		if ( CKeyMgr::Get_Instance()->Key_Pressing( 'C' ) )
+		{
+			m_fSpeed = 0.f;
+			m_eCurState = STATE::AIM;
+			bIsAim = true;
+		}
+		else if ( CKeyMgr::Get_Instance()->Key_Down( 'X' ) )
 		{
 			m_fSpeed = m_fRollSpeed;
 			m_eCurState = STATE::ROLL;
@@ -124,7 +131,7 @@ void CPlayer::Key_Check()
 		{
 			m_fSpeed = m_fRunSpeed;
 			m_eCurState = STATE::RUN;
-		}
+		}		
 		else
 		{
 			m_fSpeed = m_fWalkSpeed;
@@ -187,7 +194,7 @@ void CPlayer::Key_Check()
 
 	}
 
-	if ( m_fVelocityX == 0.f && m_fVelocityY == 0.f )
+	if ( m_fVelocityX == 0.f && m_fVelocityY == 0.f && !bIsAim )
 	{
 		m_eCurState = STATE::IDLE;
 	}
@@ -239,8 +246,20 @@ void CPlayer::State_Change()
 			m_tFrame.ePlayType = FRAME::PLAYTYPE::LOOP;
 			break;
 		case STATE::AIM:
+			m_tFrame.iFrameX = m_tFrame.iStartX = 14;
+			m_tFrame.iEndX = 14;
+			m_tFrame.iModelY = m_eCurDirection;
+			m_tFrame.dwDelay = MAXDWORD;
+			m_tFrame.dwTime = GetTickCount();
+			m_tFrame.ePlayType = FRAME::PLAYTYPE::NO_LOOP;
 			break;
 		case STATE::DEAD:
+			m_tFrame.iFrameX = m_tFrame.iStartX = 13;
+			m_tFrame.iEndX = 13;
+			m_tFrame.iModelY = m_eCurDirection;
+			m_tFrame.dwDelay = MAXDWORD;
+			m_tFrame.dwTime = GetTickCount();
+			m_tFrame.ePlayType = FRAME::PLAYTYPE::NO_LOOP;
 			break;
 		}
 		m_ePreState = m_eCurState;

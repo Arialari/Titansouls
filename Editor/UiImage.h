@@ -19,7 +19,7 @@ public:
     virtual void Update_ColisionRect() override;
     virtual void Set_ImageSize( int _cx, int _cy ) { m_tInfo.iCX = _cx; m_tInfo.iCY = _cy; }
     virtual void OnEvent( EVENT_CODE _eEventCode ) override;
-    virtual void Hit() override;
+    virtual void OnBlocked() override;
 private:
     INFO          m_tModelInfo;
     int           m_iModelEndX;

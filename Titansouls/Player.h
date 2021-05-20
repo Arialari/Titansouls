@@ -22,7 +22,7 @@ public:
 	virtual void Late_Update() override;
 	virtual void Render(HDC _DC) override;
 	virtual void Release() override;
-	virtual	void Hit() override;
+	virtual	void OnBlocked() override;
 
 private:
 	void Key_Check();

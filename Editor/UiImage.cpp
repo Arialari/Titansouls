@@ -97,7 +97,7 @@ void CUiImage::OnEvent( EVENT_CODE _eEventCode )
 	}
 }
 
-void CUiImage::Hit()
+void CUiImage::OnBlocked()
 {
 	POINT	pt = {};
 	GetCursorPos( &pt );

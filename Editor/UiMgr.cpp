@@ -86,7 +86,7 @@ void CUiMgr::KeyCheck()
 			{
 				if ( pUi->Get_IsHovered() && pUi->Get_IsVisible() )
 				{
-					pUi->Hit();
+					pUi->OnBlocked();
 					break;
 				}
 			}

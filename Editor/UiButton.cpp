@@ -63,7 +63,7 @@ void CUiButton::Update_ColisionRect()
 {
 }
 
-void CUiButton::Hit()
+void CUiButton::OnBlocked()
 {
 	if(m_pAttachingUI )
 		m_pAttachingUI->OnEvent( m_eEventCode );

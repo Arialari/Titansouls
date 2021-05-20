@@ -16,6 +16,7 @@ public:
 	virtual void		Late_Update() override;
 	virtual void		Render(HDC _DC) override;
 	virtual void		Release() override;
+	void				Setting_Done();
 	inline void			Set_DrawYID( int _iYId ) { m_iDrawYID = _iYId; }
 	inline void			Set_DrawID( int _iXId, int _iYId ) { m_iDrawXID = _iXId; m_iDrawYID = _iYId; }
 	inline const int&	Get_DrawYID() const { return m_iDrawYID; }

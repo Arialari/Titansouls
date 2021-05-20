@@ -35,7 +35,7 @@ void CObjMgr::Update()
 		}
 	}
 
-//	CCollisionMgr::Collision_Rect( m_listObj[OBJID::TITAN], m_listObj[OBJID::PLAYER] );
+	CCollisionMgr::Collision_BackGroundEx( m_listObj[OBJID::PLAYER] );
 	CCollisionMgr::Collision_RectEx( m_listObj[OBJID::TITAN], m_listObj[OBJID::PLAYER] );
 	//CCollisionMgr::Collision_Sphere(m_listObj[OBJID::MOUSE], m_listObj[OBJID::MONSTER]);
 }

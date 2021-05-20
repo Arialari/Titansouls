@@ -252,7 +252,7 @@ bool CTileMgr::Load_Tile()
 		pTile->Set_iFrameEndX( iFrameEndX );
 		pTile->Set_eRenderId( eRenderId );
 		pTile->Set_IsBlock( bIsBlock );
-
+		pTile->Setting_Done();
 		m_vecTile.emplace_back( pTile );
 		CObjMgr::Get_Instance()->Add_Object( pTile, OBJID::BACKGROUND );
 	}

@@ -52,11 +52,7 @@ void CHallway::Render( HDC _DC )
 
 	BitBlt( _DC, 0, 0, WINCX, WINCY, hMemDC, -iScrollX, -iScrollY, SRCCOPY );
 
-	//	CTileMgr::Get_Instance()->Render(_DC);
-//	CTileMgr::Get_Instance()->RenderTile( _DC );
-//	CTileMgr::Get_Instance()->RenderFoliage( _DC );
 	CObjMgr::Get_Instance()->Render( _DC );
-//	CTileMgr::Get_Instance()->RenderCelling( _DC );
 
 }
 
