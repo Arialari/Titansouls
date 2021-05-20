@@ -26,6 +26,7 @@ void CEyecubeScene::Initialize()
 void CEyecubeScene::Update()
 {
 	CObjMgr::Get_Instance()->Update();
+	CTileMgr::Get_Instance()->Update();
 }
 
 void CEyecubeScene::Late_Update()

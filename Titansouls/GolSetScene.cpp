@@ -26,6 +26,7 @@ void CGolSetScene::Initialize()
 void CGolSetScene::Update()
 {
 	CObjMgr::Get_Instance()->Update();
+	CTileMgr::Get_Instance()->Update();
 }
 
 void CGolSetScene::Late_Update()

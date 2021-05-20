@@ -26,6 +26,7 @@ void CSludgeScene::Initialize()
 void CSludgeScene::Update()
 {
 	CObjMgr::Get_Instance()->Update();
+	CTileMgr::Get_Instance()->Update();
 }
 void CSludgeScene::Late_Update()
 {

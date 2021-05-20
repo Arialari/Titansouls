@@ -26,6 +26,7 @@ void CBrainFreezeScene::Initialize()
 void CBrainFreezeScene::Update()
 {
 	CObjMgr::Get_Instance()->Update();
+	CTileMgr::Get_Instance()->Update();
 }
 
 void CBrainFreezeScene::Late_Update()

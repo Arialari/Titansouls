@@ -9,6 +9,7 @@
 #include "BmpMgr.h"
 #include "SceneMgr.h"
 #include "TileMgr.h"
+#include "UiMgr.h"
 
 
 CMainGame::CMainGame()
@@ -71,7 +72,7 @@ void CMainGame::Release()
 	CBmpMgr::Destroy_Instance();
 	CSceneMgr::Destroy_Instance();
 	CTileMgr::Destroy_Instance();
-
+	CUiMgr::Destroy_Instance();
 	CObjMgr::Destroy_Instance();
 	ReleaseDC( g_hWnd, m_hDC );
 }
