@@ -24,6 +24,9 @@ public:
 public:
 	void Delete_ObjID( OBJID::ID _eID );
 
+private:
+	void Late_Update_BackGround();
+
 public:
 	static CObjMgr* Get_Instance()
 	{

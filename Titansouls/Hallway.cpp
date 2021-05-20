@@ -39,8 +39,9 @@ void CHallway::Update()
 
 void CHallway::Late_Update()
 {
-	CObjMgr::Get_Instance()->Late_Update();
+	// 스크롤 먼저 업데이트 안해주면 타일 컬링에 문제생깁니다.
 	CScrollMgr::Get_Instance()->Late_Update();
+	CObjMgr::Get_Instance()->Late_Update();
 }
 
 void CHallway::Render( HDC _DC )
@@ -52,7 +53,7 @@ void CHallway::Render( HDC _DC )
 	BitBlt( _DC, 0, 0, WINCX, WINCY, hMemDC, -iScrollX, -iScrollY, SRCCOPY );
 
 	//	CTileMgr::Get_Instance()->Render(_DC);
-	CTileMgr::Get_Instance()->RenderPaintingLayerTile( _DC );
+//	CTileMgr::Get_Instance()->RenderTile( _DC );
 //	CTileMgr::Get_Instance()->RenderFoliage( _DC );
 	CObjMgr::Get_Instance()->Render( _DC );
 //	CTileMgr::Get_Instance()->RenderCelling( _DC );

@@ -23,7 +23,8 @@ public:
 	inline const int&	Get_iFrameEndX() const { return m_iFrameEndX; }
 	inline void			Set_IsBlock( bool _IsBlock ) { m_bIsBlock = _IsBlock; }
 	inline const bool&	Get_IsBlock() const { return m_bIsBlock; }
-	inline static void	Set_iFrameIdx( int _iFrameIdx ) { m_iFrameIdx = _iFrameIdx; }
+	static void			Set_iFrameIdx( int _iFrameIdx ) { m_iFrameIdx = _iFrameIdx; }
+	inline void			Set_eRenderId( RENDERID::ID _eId ) { m_eRenderID = _eId; }
 	
 protected:
 	virtual void		Update_ColisionRect();

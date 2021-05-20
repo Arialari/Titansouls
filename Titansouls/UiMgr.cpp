@@ -78,19 +78,19 @@ void CUiMgr::KeyCheck()
 	//{
 	//	m_vecUi[UI_TYPE::LAYOUT].front()->Toggle_IsVisible();
 	//}
-	if ( CKeyMgr::Get_Instance()->Key_Down( VK_UP ) )
-	{
-		int iTileLayer = (CTileMgr::Get_Instance()->Get_TileLayer() + 1) % (CTileMgr::TILE_LAYER::TILE_LAYER_END + 1);
-		CTileMgr::Get_Instance()->Set_TileLayer( (CTileMgr::TILE_LAYER)iTileLayer );
-	}
-	if ( CKeyMgr::Get_Instance()->Key_Down( VK_DOWN ) )
-	{
-		int iTileLayer = (CTileMgr::Get_Instance()->Get_TileLayer() - 1);
-		if ( iTileLayer < 0 )
-			CTileMgr::Get_Instance()->Set_TileLayer( CTileMgr::TILE_LAYER::TILE_LAYER_END );
-		else
-			CTileMgr::Get_Instance()->Set_TileLayer( (CTileMgr::TILE_LAYER)iTileLayer );
-	}
+	//if ( CKeyMgr::Get_Instance()->Key_Down( VK_UP ) )
+	//{
+	//	int iTileLayer = (CTileMgr::Get_Instance()->Get_TileLayer() + 1) % (CTileMgr::TILE_LAYER::TILE_LAYER_END + 1);
+	//	CTileMgr::Get_Instance()->Set_TileLayer( (CTileMgr::TILE_LAYER)iTileLayer );
+	//}
+	//if ( CKeyMgr::Get_Instance()->Key_Down( VK_DOWN ) )
+	//{
+	//	int iTileLayer = (CTileMgr::Get_Instance()->Get_TileLayer() - 1);
+	//	if ( iTileLayer < 0 )
+	//		CTileMgr::Get_Instance()->Set_TileLayer( CTileMgr::TILE_LAYER::TILE_LAYER_END );
+	//	else
+	//		CTileMgr::Get_Instance()->Set_TileLayer( (CTileMgr::TILE_LAYER)iTileLayer );
+	//}
 	if ( CKeyMgr::Get_Instance()->Key_Down( VK_F1 ) )
 		m_bIsCollisionVisible = !m_bIsCollisionVisible;
 }

@@ -5,7 +5,7 @@
 
 namespace OBJID
 {
-	enum ID { BACKGROUND, PLAYER, TITAN, BULLET, UI, MOUSE, END };
+	enum ID { BACKGROUND, PLAYER, TITAN, ARROW, UI, END };
 }
 
 namespace RENDERID

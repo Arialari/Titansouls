@@ -8,7 +8,7 @@
 
 CPlayer::CPlayer()
 	: m_ePreState( STATE_END ), m_eCurState( STATE_END ), m_eCurDirection(DIRECTION::DIRECTION_END)
-	, m_fRunSpeed(3.f), m_fWalkSpeed(1.5f), m_fRollSpeed(4.5f)
+	, m_fRunSpeed(3.f), m_fWalkSpeed(15.5f), m_fRollSpeed(4.5f)
 {
 }
 

@@ -36,7 +36,7 @@ void CGolSetScene::Late_Update()
 
 void CGolSetScene::Render( HDC _DC )
 {
-	CTileMgr::Get_Instance()->RenderPaintingLayerTile( _DC );
+	CTileMgr::Get_Instance()->RenderTile( _DC );
 	//CTileMgr::Get_Instance()->RenderFoliage( _DC );
 	CObjMgr::Get_Instance()->Render( _DC );
 	//CTileMgr::Get_Instance()->RenderCelling( _DC );

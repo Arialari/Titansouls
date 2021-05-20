@@ -2,6 +2,8 @@
 #include "ObjMgr.h"
 #include "Obj.h"
 #include "CollisionMgr.h"
+#include "ScrollMgr.h"
+#include "TileMgr.h"
 
 CObjMgr* CObjMgr::m_pInstance = nullptr;
 CObjMgr::CObjMgr()
@@ -42,6 +44,11 @@ void CObjMgr::Late_Update()
 {
 	for ( int i = 0; i < OBJID::END; ++i )
 	{
+		if ( i == OBJID::BACKGROUND )
+		{
+			Late_Update_BackGround();
+			continue;
+		}
 		for ( auto& pObj : m_listObj[i] )
 		{
 			pObj->Late_Update();
@@ -50,6 +57,7 @@ void CObjMgr::Late_Update()
 				break;
 
 			RENDERID::ID eID = pObj->Get_RenderID();
+
 
 			m_listRender[eID].emplace_back( pObj );
 		}
@@ -108,4 +116,41 @@ void CObjMgr::Delete_ObjID( OBJID::ID _eID )
 {
 	for_each( m_listObj[_eID].begin(), m_listObj[_eID].end(), Safe_Delete<CObj*> );
 	m_listObj[_eID].clear();
+}
+
+void CObjMgr::Late_Update_BackGround()
+{
+	if ( m_listObj[OBJID::BACKGROUND].empty() )
+		return;
+
+	int iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	int iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+
+	int	iCullX = abs( iScrollX / DEFAULTCX );
+	int	iCullY = abs( iScrollY / DEFAULTCY );
+
+	int iCullEndX = iCullX + (WINCX / DEFAULTCX) + 2;
+	int iCullEndY = iCullY + (WINCY / DEFAULTCY) + 2;
+
+	const vector<CObj*> vecTile = CTileMgr::Get_Instance()->Get_vecTile();
+	int iTileX = CTileMgr::Get_Instance()->Get_TileLengthX();
+
+	for ( int i = iCullY; i < iCullEndY; ++i )
+	{
+		for ( int j = iCullX; j < iCullEndX; ++j )
+		{
+			int iIdx = i * iTileX + j;
+
+			if ( 0 > iIdx || vecTile.size() <= (size_t)iIdx )
+				continue;
+			//타일은 Late_Update 할게 없음;
+			//vecTile[iIdx]->Late_Update();
+
+			RENDERID::ID eID = vecTile[iIdx]->Get_RenderID();
+
+			m_listRender[eID].emplace_back( vecTile[iIdx] );
+
+		}
+	}
+
 }
