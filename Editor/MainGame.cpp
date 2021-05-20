@@ -109,7 +109,10 @@ void CMainGame::Render()
 		swprintf_s( szFPS, L"FPS: %d // Scene : ", iPrevFPS );
 		lstrcat( szFPS, CTileMgr::Get_Instance()->Get_FileName() );
 		TCHAR		szLayerName[64] = L"";
-		swprintf_s( szLayerName, L" // Layer : %d ", CTileMgr::Get_Instance()->Get_TileLayer() );
+		if ( CTileMgr::Get_Instance()->Get_PaintRenderId() == RENDERID::BACKGROUND )
+			swprintf_s( szLayerName, L" // Layer : BackGround ");
+		else if ( CTileMgr::Get_Instance()->Get_PaintRenderId() == RENDERID::CELLING )
+			swprintf_s( szLayerName, L" // Layer : Celling " );
 		TCHAR		szMouseXY[64] = L"";
 		swprintf_s( szMouseXY, L" // X : %d, Y : %d ", x, y );
 		TCHAR		szIsBlock[32] = L"";
@@ -117,10 +120,16 @@ void CMainGame::Render()
 			swprintf_s( szIsBlock, L" // IsBlock : True" );
 		else
 			swprintf_s( szIsBlock, L" // IsBlock : False" );
+		TCHAR		szGonngPick[32] = L"";
+		if ( CTileMgr::Get_Instance()->Get_bGonnaPick() )
+			swprintf_s( szGonngPick, L" // GonngPick : True" );
+		else
+			swprintf_s( szGonngPick, L" // GonngPick : False" );
 
 		lstrcat( szFPS, szLayerName );
 		lstrcat( szFPS, szMouseXY );
 		lstrcat( szFPS, szIsBlock );
+		lstrcat( szFPS, szGonngPick );
 		SetWindowText( g_hWnd, szFPS );
 	}
 

@@ -21,6 +21,7 @@ void CTile::Initialize()
 {
 	m_tInfo.iCX = DEFAULTCX;
 	m_tInfo.iCY = DEFAULTCY;
+	m_eRenderID = RENDERID::BACKGROUND;
 }
 
 int CTile::Update()

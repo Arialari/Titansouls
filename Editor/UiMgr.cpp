@@ -111,9 +111,9 @@ void CUiMgr::KeyCheck()
 		if ( !bIsHitUi )
 			CTileMgr::Get_Instance()->Picking_Tile( true );
 	}
-	if ( CKeyMgr::Get_Instance()->Key_Pressing( VK_RBUTTON ) )
+	if ( CKeyMgr::Get_Instance()->Key_Down( VK_RBUTTON ) )
 	{
-		CTileMgr::Get_Instance()->Picking_Tile( false );
+		CTileMgr::Get_Instance()->Toggle_bGonnaPick();
 	}
 	if ( CKeyMgr::Get_Instance()->Key_Down( 'B' ) )
 		CTileMgr::Get_Instance()->Toggle_PaintIsBlock();
@@ -124,16 +124,19 @@ void CUiMgr::KeyCheck()
 	}
 	if ( CKeyMgr::Get_Instance()->Key_Down( VK_UP ) )
 	{
-		int iTileLayer = (CTileMgr::Get_Instance()->Get_TileLayer() + 1) % (CTileMgr::TILE_LAYER::TILE_LAYER_END + 1);
-		CTileMgr::Get_Instance()->Set_TileLayer( (CTileMgr::TILE_LAYER)iTileLayer );
+		RENDERID::ID iTileRenderId = CTileMgr::Get_Instance()->Get_PaintRenderId();
+		if( iTileRenderId = RENDERID::BACKGROUND )
+			CTileMgr::Get_Instance()->Set_PaintRenderId( RENDERID::CELLING );
+		else
+			CTileMgr::Get_Instance()->Set_PaintRenderId( RENDERID::BACKGROUND );
 	}
 	if ( CKeyMgr::Get_Instance()->Key_Down( VK_DOWN ) )
 	{
-		int iTileLayer = (CTileMgr::Get_Instance()->Get_TileLayer() - 1);
-		if ( iTileLayer < 0 )
-			CTileMgr::Get_Instance()->Set_TileLayer( CTileMgr::TILE_LAYER::TILE_LAYER_END );
+		RENDERID::ID iTileRenderId = CTileMgr::Get_Instance()->Get_PaintRenderId();
+		if ( iTileRenderId = RENDERID::BACKGROUND )
+			CTileMgr::Get_Instance()->Set_PaintRenderId( RENDERID::CELLING );
 		else
-			CTileMgr::Get_Instance()->Set_TileLayer( (CTileMgr::TILE_LAYER)iTileLayer );
+			CTileMgr::Get_Instance()->Set_PaintRenderId( RENDERID::BACKGROUND );
 	}
 	if ( CKeyMgr::Get_Instance()->Key_Down( VK_F1 ) )
 		m_bIsCollisionVisible = !m_bIsCollisionVisible;

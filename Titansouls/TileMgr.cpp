@@ -8,7 +8,7 @@
 
 CTileMgr* CTileMgr::m_pInstance = nullptr;
 CTileMgr::CTileMgr()
-	:m_MemDc( nullptr ), m_tPaintPoint( {} ), m_tPaintEndX(0), m_iTileX(0), m_iTileY(0), m_pFileName(nullptr), m_ePaintLayer(TILE_LAYER_END), m_bPaintIsBlock(false)
+	:m_MemDc( nullptr ), m_tPaintPoint( {} ), m_tPaintEndX(0), m_iTileX(0), m_iTileY(0), m_pFileName(nullptr), m_ePaintLayer(TILE_LAYER::BACKGROUND), m_bPaintIsBlock(false)
 {
 
 	

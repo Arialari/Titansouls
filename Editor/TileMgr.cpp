@@ -8,7 +8,8 @@
 
 CTileMgr* CTileMgr::m_pInstance = nullptr;
 CTileMgr::CTileMgr()
-	:m_MemDc( nullptr ), m_tPaintPoint( {} ), m_tPaintEndX(0), m_iTileX(0), m_iTileY(0), m_pFileName(nullptr), m_ePaintLayer(TILE_LAYER_END), m_bPaintIsBlock(false)
+	:m_MemDc( nullptr ), m_tPaintPoint( {} ), m_tPaintEndX(0), m_ePaintRenderID(RENDERID::BACKGROUND)
+	, m_iTileX(0), m_iTileY(0), m_pFileName(nullptr), m_bPaintIsBlock(false), m_bGonnaPick(false)
 {
 
 	
@@ -39,13 +40,8 @@ void CTileMgr::Update()
 	Update_Animation_Frame();
 }
 
-void CTileMgr::RenderPaintingLayerTile(HDC _DC)
+void CTileMgr::RenderTile( HDC _DC )
 {
-	if ( m_ePaintLayer == TILE_LAYER::TILE_LAYER_END )
-	{
-		RenderTile( _DC );
-		return;
-	}
 
 	int iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
 	int iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
@@ -63,51 +59,18 @@ void CTileMgr::RenderPaintingLayerTile(HDC _DC)
 		{
 			int iIdx = i * m_iTileX + j;
 
-			if ( 0 > iIdx || m_vecTile[m_ePaintLayer].size() <= (size_t)iIdx )
+			if ( 0 > iIdx || m_vecTile.size() <= (size_t)iIdx )
 				continue;
 
-			m_vecTile[m_ePaintLayer][iIdx]->Render( _DC );
+			m_vecTile[iIdx]->Render( _DC );
 		}
 	}
-}
-
-void CTileMgr::RenderTile( HDC _DC )
-{
-	for ( int iTileLayer = 0; iTileLayer < TILE_LAYER::TILE_LAYER_END; ++iTileLayer )
-	{
-		int iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
-		int iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
-
-		int	iCullX = abs( iScrollX / DEFAULTCX );
-		int	iCullY = abs( iScrollY / DEFAULTCY );
-
-		int iCullEndX = iCullX + (WINCX / DEFAULTCX) + 2;
-		int iCullEndY = iCullY + (WINCY / DEFAULTCY) + 2;
-
-
-		for ( int i = iCullY; i < iCullEndY; ++i )
-		{
-			for ( int j = iCullX; j < iCullEndX; ++j )
-			{
-				int iIdx = i * m_iTileX + j;
-
-				if ( 0 > iIdx || m_vecTile[iTileLayer].size() <= (size_t)iIdx )
-					continue;
-
-				m_vecTile[iTileLayer][iIdx]->Render( _DC );
-			}
-		}
-	}
-
 }
 
 void CTileMgr::Release()
 {
-	for ( auto& vector : m_vecTile )
-	{
-		for_each( vector.begin(), vector.end(), Safe_Delete<CObj*> );
-		vector.clear();
-	}
+	for_each( m_vecTile.begin(), m_vecTile.end(), Safe_Delete<CObj*> );
+	m_vecTile.clear();
 }
 
 void CTileMgr::Update_Animation_Frame()
@@ -127,10 +90,8 @@ void CTileMgr::Update_Animation_Frame()
 
 void CTileMgr::Create_Tile()
 {
-	for ( auto& vector : m_vecTile )
-	{
-		vector.reserve( m_iTileX * m_iTileY );
-	}
+	m_vecTile.reserve( m_iTileX * m_iTileY );
+
 
 	if ( !Load_Tile() )
 	{
@@ -142,9 +103,7 @@ void CTileMgr::Create_Tile()
 				float	fX = (float)((DEFAULTCX >> 1) + (j * DEFAULTCX));
 				float	fY = (float)((DEFAULTCY >> 1) + (i * DEFAULTCY));
 
-				m_vecTile[TILE_LAYER::BACKGROUND].emplace_back( CAbstractFactory<CTile>::Create( fX, fY ) );
-				m_vecTile[TILE_LAYER::FOLIAGE].emplace_back( CAbstractFactory<CTile>::Create( fX, fY, false ) );
-				m_vecTile[TILE_LAYER::CELLING].emplace_back( CAbstractFactory<CTile>::Create( fX, fY, false ) );
+				m_vecTile.emplace_back( CAbstractFactory<CTile>::Create( fX, fY ) );
 			}
 		}
 	}
@@ -152,7 +111,7 @@ void CTileMgr::Create_Tile()
 
 void CTileMgr::Picking_Tile( bool _bIsRender )
 {
-	if ( m_ePaintLayer == TILE_LAYER_END )
+	if ( !m_bGonnaPick )
 		return;
 	POINT	pt = {};
 	GetCursorPos(&pt);
@@ -166,15 +125,13 @@ void CTileMgr::Picking_Tile( bool _bIsRender )
 
 	int		iIdx = y * m_iTileX + x;
 
-	if (0 > iIdx || m_vecTile[m_ePaintLayer].size() <= (size_t)iIdx)
+	if (0 > iIdx || m_vecTile.size() <= (size_t)iIdx)
 		return;
-	if ( _bIsRender )
-	{
-		static_cast<CTile*>(m_vecTile[m_ePaintLayer][iIdx])->Set_DrawID( m_tPaintPoint.x, m_tPaintPoint.y );
-		static_cast<CTile*>(m_vecTile[m_ePaintLayer][iIdx])->Set_iFrameEndX( m_tPaintEndX );
-		static_cast<CTile*>(m_vecTile[TILE_LAYER::BACKGROUND][iIdx])->Set_IsBlock( m_bPaintIsBlock );
-	}		
-	static_cast<CTile*>(m_vecTile[m_ePaintLayer][iIdx])->Set_IsRender( _bIsRender );
+
+	static_cast<CTile*>(m_vecTile[iIdx])->Set_DrawID( m_tPaintPoint.x, m_tPaintPoint.y );
+	static_cast<CTile*>(m_vecTile[iIdx])->Set_iFrameEndX( m_tPaintEndX );
+	static_cast<CTile*>(m_vecTile[iIdx])->Set_IsBlock( m_bPaintIsBlock );
+	static_cast<CTile*>(m_vecTile[iIdx])->Set_eRenderId( m_ePaintRenderID );
 
 }
 
@@ -187,22 +144,8 @@ void CTileMgr::Save_Tile()
 	HANDLE hFileBack = CreateFile( szBuffBack, GENERIC_WRITE
 		, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 
-	TCHAR szBuffFoliage[64] = L"../Data/";
-	TCHAR szEndFoliage[32] = L"Foliage.dat";
-	lstrcat( szBuffFoliage, m_pFileName );
-	lstrcat( szBuffFoliage, szEndFoliage );
-	HANDLE hFileFoliage = CreateFile( szBuffFoliage, GENERIC_WRITE
-							   , NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
 
-	TCHAR szBuffCelling[64] = L"../Data/";
-	TCHAR szEndCelling[32] = L"Celling.dat";
-	lstrcat( szBuffCelling, m_pFileName );
-	lstrcat( szBuffCelling, szEndCelling );
-	HANDLE hFileCelling = CreateFile( szBuffCelling, GENERIC_WRITE
-							   , NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
-
-
-	if (INVALID_HANDLE_VALUE == hFileBack || INVALID_HANDLE_VALUE == hFileFoliage || INVALID_HANDLE_VALUE  == hFileCelling )
+	if (INVALID_HANDLE_VALUE == hFileBack )
 	{
 		MessageBox(g_hWnd, L"저장 실패!", L"실패", MB_OK);
 		return;
@@ -210,7 +153,7 @@ void CTileMgr::Save_Tile()
 
 	DWORD	dwByte = 0;
 
-	for (auto& pTileObj : m_vecTile[TILE_LAYER::BACKGROUND] )
+	for (auto& pTileObj : m_vecTile )
 	{
 		CTile* pTile = static_cast<CTile*>(pTileObj);
 		WriteFile( hFileBack, &pTile->Get_Info(), sizeof(INFO), &dwByte, NULL);
@@ -220,28 +163,9 @@ void CTileMgr::Save_Tile()
 		WriteFile( hFileBack, &pTile->Get_IsRender(), sizeof( bool ), &dwByte, NULL );
 		WriteFile( hFileBack, &pTile->Get_IsBlock(), sizeof( bool ), &dwByte, NULL );
 	}
-	for ( auto& pTileObj : m_vecTile[TILE_LAYER::FOLIAGE] )
-	{
-		CTile* pTile = static_cast<CTile*>(pTileObj);
-		WriteFile( hFileFoliage, &pTile->Get_Info(), sizeof( INFO ), &dwByte, NULL );
-		WriteFile( hFileFoliage, &pTile->Get_DrawXID(), sizeof( int ), &dwByte, NULL );
-		WriteFile( hFileFoliage, &pTile->Get_DrawYID(), sizeof( int ), &dwByte, NULL );
-		WriteFile( hFileFoliage, &pTile->Get_iFrameEndX(), sizeof( int ), &dwByte, NULL );
-		WriteFile( hFileFoliage, &pTile->Get_IsRender(), sizeof( bool ), &dwByte, NULL );
-	}
-	for ( auto& pTileObj : m_vecTile[TILE_LAYER::CELLING] )
-	{
-		CTile* pTile = static_cast<CTile*>(pTileObj);
-		WriteFile( hFileCelling, &pTile->Get_Info(), sizeof( INFO ), &dwByte, NULL );
-		WriteFile( hFileCelling, &pTile->Get_DrawXID(), sizeof( int ), &dwByte, NULL );
-		WriteFile( hFileCelling, &pTile->Get_DrawYID(), sizeof( int ), &dwByte, NULL );
-		WriteFile( hFileCelling, &pTile->Get_iFrameEndX(), sizeof( int ), &dwByte, NULL );
-		WriteFile( hFileCelling, &pTile->Get_IsRender(), sizeof( bool ), &dwByte, NULL );
-	}
+
 
 	CloseHandle( hFileBack );
-	CloseHandle( hFileFoliage );
-	CloseHandle( hFileCelling );
 	MessageBox(g_hWnd, L"저장 성공!", L"성공", MB_OK);
 }
 
@@ -254,21 +178,7 @@ bool CTileMgr::Load_Tile()
 	HANDLE hFileBack = CreateFile( szBuffBack, GENERIC_READ
 								   , NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
 
-	TCHAR szBuffFoliage[64] = L"../Data/";
-	TCHAR szEndFoliage[32] = L"Foliage.dat";
-	lstrcat( szBuffFoliage, m_pFileName );
-	lstrcat( szBuffFoliage, szEndFoliage );
-	HANDLE hFileFoliage = CreateFile( szBuffFoliage, GENERIC_READ
-									  , NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
-
-	TCHAR szBuffCelling[64] = L"../Data/";
-	TCHAR szEndCelling[32] = L"Celling.dat";
-	lstrcat( szBuffCelling, m_pFileName );
-	lstrcat( szBuffCelling, szEndCelling );
-	HANDLE hFileCelling = CreateFile( szBuffCelling, GENERIC_READ
-									  , NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
-
-	if ( INVALID_HANDLE_VALUE == hFileBack || INVALID_HANDLE_VALUE == hFileFoliage || INVALID_HANDLE_VALUE == hFileCelling )
+	if ( INVALID_HANDLE_VALUE == hFileBack )
 	{
 		MessageBox(g_hWnd, L"불러오기 실패!", L"실패", MB_OK);
 		return false;
@@ -305,57 +215,13 @@ bool CTileMgr::Load_Tile()
 		pTile->Set_IsRender( bIsRender );
 		pTile->Set_IsBlock( bIsBlock );
 
-		m_vecTile[TILE_LAYER::BACKGROUND].emplace_back( pTile );
+		m_vecTile.emplace_back( pTile );
 	}
-	while ( true )
-	{
-		ReadFile( hFileFoliage, &tTemp, sizeof( INFO ), &dwByte, NULL );
-		ReadFile( hFileFoliage, &iDrawXID, sizeof( int ), &dwByte, NULL );
-		ReadFile( hFileFoliage, &iDrawYID, sizeof( int ), &dwByte, NULL );
-		ReadFile( hFileFoliage, &iFrameEndX, sizeof( int ), &dwByte, NULL );
-		ReadFile( hFileFoliage, &bIsRender, sizeof( bool ), &dwByte, NULL );
 
-		if ( 0 == dwByte )
-			break;
-
-		CObj* pObj = CAbstractFactory<CTile>::Create( tTemp.fX, tTemp.fY );
-		CTile* pTile = static_cast<CTile*>(pObj);
-		pTile->Set_DrawXID( iDrawXID );
-		pTile->Set_DrawYID( iDrawYID );
-		pTile->Set_iFrameEndX( iFrameEndX );
-		pTile->Set_IsRender( bIsRender );
-
-		m_vecTile[TILE_LAYER::FOLIAGE].emplace_back( pTile );
-	}
-	while ( true )
-	{
-		ReadFile( hFileCelling, &tTemp, sizeof( INFO ), &dwByte, NULL );
-		ReadFile( hFileCelling, &iDrawXID, sizeof( int ), &dwByte, NULL );
-		ReadFile( hFileCelling, &iDrawYID, sizeof( int ), &dwByte, NULL );
-		ReadFile( hFileCelling, &iFrameEndX, sizeof( int ), &dwByte, NULL );
-		ReadFile( hFileCelling, &bIsRender, sizeof( bool ), &dwByte, NULL );
-
-
-		if ( 0 == dwByte )
-			break;
-
-		CObj* pObj = CAbstractFactory<CTile>::Create( tTemp.fX, tTemp.fY );
-		CTile* pTile = static_cast<CTile*>(pObj);
-		pTile->Set_DrawXID( iDrawXID );
-		pTile->Set_DrawYID( iDrawYID );
-		pTile->Set_iFrameEndX( iFrameEndX );
-		pTile->Set_IsRender( bIsRender );
-
-		m_vecTile[TILE_LAYER::CELLING].emplace_back( pTile );
-	}
 
 	CloseHandle( hFileBack );
-	CloseHandle( hFileFoliage );
-	CloseHandle( hFileCelling );
 
-	if ( m_vecTile[TILE_LAYER::BACKGROUND].size() == (m_iTileX * m_iTileY)
-		 || m_vecTile[TILE_LAYER::FOLIAGE].size() == (m_iTileX * m_iTileY)
-		 || m_vecTile[TILE_LAYER::CELLING].size() == (m_iTileX * m_iTileY) )
+	if ( m_vecTile.size() == (m_iTileX * m_iTileY))
 	{
 		
 		MessageBox( g_hWnd, L"불러오기 성공!", L"성공", MB_OK );

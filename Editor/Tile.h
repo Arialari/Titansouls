@@ -24,6 +24,7 @@ public:
 	inline void			Set_IsBlock( bool _IsBlock ) { m_bIsBlock = _IsBlock; }
 	inline const bool&	Get_IsBlock() const { return m_bIsBlock; }
 	static void			Set_iFrameIdx( int _iFrameIdx ) { m_iFrameIdx = _iFrameIdx; }
+	inline void			Set_eRenderId( RENDERID::ID _eId ) { m_eRenderID = _eId; }
 	
 protected:
 	virtual void		Update_ColisionRect();
