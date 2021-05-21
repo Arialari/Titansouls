@@ -2,9 +2,11 @@
 #include "BmpMgr.h"
 #include "Arrow.h"
 #include "ScrollMgr.h"
+#include "Tile.h"
+#include "Player.h"
 
 CArrow::CArrow()
-    :m_fRadianAngle( 0.f ), m_hMemDc( nullptr ), m_fFullSpeed( 24.5f ), m_fSpeed(0.f), m_fReturnAccelator(1.f)
+    :m_fRadianAngle( 0.f ), m_hMemDc( nullptr ), m_fFullSpeed( 24.5f ), m_fSpeed(0.f), m_fReturnAccelator(1.f), m_bHolded(true), m_bIsReturning(false)
 {
 }
 
@@ -85,40 +87,55 @@ void CArrow::Update_ColisionRect()
 
 void CArrow::OnBlocked( CObj* _pBlockedObj,  DIRECTION _eDir )
 {
-    switch ( _eDir )
+    CObj* pObj;
+    if ( pObj = dynamic_cast<CTile*>(_pBlockedObj) )
     {
-    case E:
-        if ( cos( m_fRadianAngle ) > 0 )
-            m_fRadianAngle = PI - m_fRadianAngle;
-        break;
-    case W:
-        if ( cos( m_fRadianAngle ) < 0 )
-            m_fRadianAngle = PI - m_fRadianAngle;
-        break;
-    case N:
-        if (sin(m_fRadianAngle) > 0 )
-            m_fRadianAngle = -m_fRadianAngle;
-        break;
-    case S:
-        if ( sin( m_fRadianAngle ) < 0 )
-            m_fRadianAngle = -m_fRadianAngle;
-        break;
-    case SE:
-    case SW:
-    case NW:
-    case NE:
-        m_fRadianAngle += PI;
-        break;
-    case DIRECTION_END:
-        break;
-    default:
-        break;
+        switch ( _eDir )
+        {
+        case E:
+            if ( cos( m_fRadianAngle ) > 0 )
+                m_fRadianAngle = PI - m_fRadianAngle;
+            break;
+        case W:
+            if ( cos( m_fRadianAngle ) < 0 )
+                m_fRadianAngle = PI - m_fRadianAngle;
+            break;
+        case N:
+            if ( sin( m_fRadianAngle ) > 0 )
+                m_fRadianAngle = -m_fRadianAngle;
+            break;
+        case S:
+            if ( sin( m_fRadianAngle ) < 0 )
+                m_fRadianAngle = -m_fRadianAngle;
+            break;
+        case SE:
+        case SW:
+        case NW:
+        case NE:
+            m_fRadianAngle += PI;
+            break;
+        case DIRECTION_END:
+            break;
+        default:
+            break;
+        }
     }
+    else if ( pObj = dynamic_cast<CPlayer*>(_pBlockedObj) )
+    {
+        if ( !m_bHolded && ((m_fSpeed < 2.f) || m_bIsReturning) )
+        {
+            static_cast<CPlayer*>(pObj)->Pick_Arrow();
+            m_bIsRender = false;
+            m_bHolded = true;
+        }
+    }
+
 }
 
 void CArrow::Shoot( float _fAimGaze )
 {
     m_fSpeed = m_fFullSpeed * _fAimGaze;
+    m_bHolded = false;
 }
 
 void CArrow::Add_Speed()

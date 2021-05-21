@@ -1,46 +1,5 @@
 ﻿  Arrow.cpp
-D:\Study\Polio\Titansouls\Titansouls\Arrow.h(18,21): error C3668: 'CArrow::OnBlocked': 재정의 지정자 'override'가 있는 메서드가 기본 클래스 메서드를 재정의하지 않았습니다.
-  CGolLath.cpp
-  CollisionMgr.cpp
-D:\Study\Polio\Titansouls\Titansouls\CollisionMgr.cpp(27,21): error C2660: 'CObj::OnBlocked': 함수는 0개의 인수를 사용하지 않습니다.
-D:\Study\Polio\Titansouls\Titansouls\Obj.h(30,16): message : 'CObj::OnBlocked' 선언을 참조하십시오.
-D:\Study\Polio\Titansouls\Titansouls\CollisionMgr.cpp(28,21): error C2660: 'CObj::OnBlocked': 함수는 0개의 인수를 사용하지 않습니다.
-D:\Study\Polio\Titansouls\Titansouls\Obj.h(30,16): message : 'CObj::OnBlocked' 선언을 참조하십시오.
-D:\Study\Polio\Titansouls\Titansouls\CollisionMgr.cpp(48,35): error C2664: 'void CObj::OnBlocked(CObj *,DIRECTION)': 인수 1을(를) 'DIRECTION'에서 'CObj *'(으)로 변환할 수 없습니다.
-D:\Study\Polio\Titansouls\Titansouls\CollisionMgr.cpp(48,34): message : 정수 계열 형식에서 포인터 형식으로 변환하려면 reinterpret_cast, C 스타일 캐스트 또는 함수 스타일 캐스트가 필요합니다.
-D:\Study\Polio\Titansouls\Titansouls\Obj.h(30,16): message : 'CObj::OnBlocked' 선언을 참조하십시오.
-D:\Study\Polio\Titansouls\Titansouls\CollisionMgr.cpp(54,37): error C2664: 'void CObj::OnBlocked(CObj *,DIRECTION)': 인수 1을(를) 'DIRECTION'에서 'CObj *'(으)로 변환할 수 없습니다.
-D:\Study\Polio\Titansouls\Titansouls\CollisionMgr.cpp(54,35): message : 정수 계열 형식에서 포인터 형식으로 변환하려면 reinterpret_cast, C 스타일 캐스트 또는 함수 스타일 캐스트가 필요합니다.
-D:\Study\Polio\Titansouls\Titansouls\Obj.h(30,16): message : 'CObj::OnBlocked' 선언을 참조하십시오.
-D:\Study\Polio\Titansouls\Titansouls\CollisionMgr.cpp(63,37): error C2664: 'void CObj::OnBlocked(CObj *,DIRECTION)': 인수 1을(를) 'DIRECTION'에서 'CObj *'(으)로 변환할 수 없습니다.
-D:\Study\Polio\Titansouls\Titansouls\CollisionMgr.cpp(63,35): message : 정수 계열 형식에서 포인터 형식으로 변환하려면 reinterpret_cast, C 스타일 캐스트 또는 함수 스타일 캐스트가 필요합니다.
-D:\Study\Polio\Titansouls\Titansouls\Obj.h(30,16): message : 'CObj::OnBlocked' 선언을 참조하십시오.
-D:\Study\Polio\Titansouls\Titansouls\CollisionMgr.cpp(69,37): error C2664: 'void CObj::OnBlocked(CObj *,DIRECTION)': 인수 1을(를) 'DIRECTION'에서 'CObj *'(으)로 변환할 수 없습니다.
-D:\Study\Polio\Titansouls\Titansouls\CollisionMgr.cpp(69,35): message : 정수 계열 형식에서 포인터 형식으로 변환하려면 reinterpret_cast, C 스타일 캐스트 또는 함수 스타일 캐스트가 필요합니다.
-D:\Study\Polio\Titansouls\Titansouls\Obj.h(30,16): message : 'CObj::OnBlocked' 선언을 참조하십시오.
-D:\Study\Polio\Titansouls\Titansouls\CollisionMgr.cpp(136,36): error C2664: 'void CObj::OnBlocked(CObj *,DIRECTION)': 인수 1을(를) 'DIRECTION'에서 'CObj *'(으)로 변환할 수 없습니다.
-D:\Study\Polio\Titansouls\Titansouls\CollisionMgr.cpp(136,34): message : 정수 계열 형식에서 포인터 형식으로 변환하려면 reinterpret_cast, C 스타일 캐스트 또는 함수 스타일 캐스트가 필요합니다.
-D:\Study\Polio\Titansouls\Titansouls\Obj.h(30,16): message : 'CObj::OnBlocked' 선언을 참조하십시오.
-D:\Study\Polio\Titansouls\Titansouls\CollisionMgr.cpp(195,21): error C2660: 'CObj::OnBlocked': 함수는 0개의 인수를 사용하지 않습니다.
-D:\Study\Polio\Titansouls\Titansouls\Obj.h(30,16): message : 'CObj::OnBlocked' 선언을 참조하십시오.
-D:\Study\Polio\Titansouls\Titansouls\CollisionMgr.cpp(196,21): error C2660: 'CObj::OnBlocked': 함수는 0개의 인수를 사용하지 않습니다.
-D:\Study\Polio\Titansouls\Titansouls\Obj.h(30,16): message : 'CObj::OnBlocked' 선언을 참조하십시오.
-D:\Study\Polio\Titansouls\Titansouls\CollisionMgr.cpp(253,18): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\Study\Polio\Titansouls\Titansouls\CollisionMgr.cpp(254,19): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  Hallway.cpp
-D:\Study\Polio\Titansouls\Titansouls\Player.h(26,15): error C3668: 'CPlayer::OnBlocked': 재정의 지정자 'override'가 있는 메서드가 기본 클래스 메서드를 재정의하지 않았습니다.
-  MainGame.cpp
-D:\Study\Polio\Titansouls\Titansouls\Player.h(26,15): error C3668: 'CPlayer::OnBlocked': 재정의 지정자 'override'가 있는 메서드가 기본 클래스 메서드를 재정의하지 않았습니다.
-  Obj.cpp
-  ObjMgr.cpp
-  Pawn.cpp
   Player.cpp
-D:\Study\Polio\Titansouls\Titansouls\Player.h(26,15): error C3668: 'CPlayer::OnBlocked': 재정의 지정자 'override'가 있는 메서드가 기본 클래스 메서드를 재정의하지 않았습니다.
-D:\Study\Polio\Titansouls\Titansouls\Arrow.h(18,21): error C3668: 'CArrow::OnBlocked': 재정의 지정자 'override'가 있는 메서드가 기본 클래스 메서드를 재정의하지 않았습니다.
-D:\Study\Polio\Titansouls\Titansouls\Player.cpp(357,57): warning C4244: '인수': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  Stage.cpp
-D:\Study\Polio\Titansouls\Titansouls\Player.h(26,15): error C3668: 'CPlayer::OnBlocked': 재정의 지정자 'override'가 있는 메서드가 기본 클래스 메서드를 재정의하지 않았습니다.
-  Tile.cpp
-  TileMgr.cpp
-  Titan.cpp
+D:\Study\Polio\Titansouls\Titansouls\Player.cpp(392,57): warning C4244: '인수': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   코드를 생성하고 있습니다...
+  Titansouls.vcxproj -> D:\Study\Polio\Titansouls\Debug\Titansouls.exe

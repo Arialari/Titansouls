@@ -20,11 +20,14 @@ public:
     void            Shoot( float _fAimGaze );
     void            Set_RadianAngle( float _fAngle ) { m_fRadianAngle = _fAngle; }
     void            Add_Speed();
+    void            Set_IsReturning( bool _bIsReturning ) { m_bIsReturning = _bIsReturning; }
 private:
     HDC             m_hMemDc;
     float           m_fRadianAngle;
     const float     m_fFullSpeed;
     const float     m_fReturnAccelator;
     float           m_fSpeed;
+    bool            m_bHolded;
+    bool            m_bIsReturning;
 };
 

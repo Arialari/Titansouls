@@ -23,7 +23,8 @@ public:
 	virtual void Late_Update() override;
 	virtual void Render(HDC _DC) override;
 	virtual void Release() override;
-	virtual void OnBlocked( DIRECTION _eDir ) override;
+	virtual void OnBlocked( CObj* _pBlockedObj, DIRECTION _eDir ) override;
+	inline  void Pick_Arrow() { m_bHoldArrow = true; }
 
 private:
 	void Key_Check();

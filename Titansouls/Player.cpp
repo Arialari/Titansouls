@@ -116,7 +116,7 @@ void CPlayer::Release()
 {
 }
 
-void CPlayer::OnBlocked( DIRECTION _eDir )
+void CPlayer::OnBlocked( CObj* _pBlockedObj, DIRECTION _eDir )
 {
 }
 
@@ -323,7 +323,38 @@ void CPlayer::Update_Aim()
 			m_fAimGaze += 0.03f;
 		else
 			m_fAimGaze = 1.f;
-		m_pArrow->Set_Pos( m_tInfo.fX, m_tInfo.fY );
+		switch ( m_eCurDirection )
+		{
+		case E:
+			m_pArrow->Set_Pos( m_tInfo.fX + (DEFAULTCX >> 1), m_tInfo.fY );
+			break;
+		case N:
+			m_pArrow->Set_Pos( m_tInfo.fX, m_tInfo.fY - (DEFAULTCY>>1) );
+			break;
+		case W:
+			m_pArrow->Set_Pos( m_tInfo.fX - (DEFAULTCX >> 1), m_tInfo.fY );
+			break;
+		case S:
+			m_pArrow->Set_Pos( m_tInfo.fX, m_tInfo.fY + (DEFAULTCY >> 1) );
+			break;
+		case SE:
+			m_pArrow->Set_Pos( m_tInfo.fX + (DEFAULTCX >> 1), m_tInfo.fY + (DEFAULTCY >> 1) );
+			break;
+		case SW:
+			m_pArrow->Set_Pos( m_tInfo.fX - (DEFAULTCX >> 1), m_tInfo.fY + (DEFAULTCY >> 1) );
+			break;
+		case NW:
+			m_pArrow->Set_Pos( m_tInfo.fX - (DEFAULTCX >> 1), m_tInfo.fY - (DEFAULTCY >> 1) );
+			break;
+		case NE:
+			m_pArrow->Set_Pos( m_tInfo.fX + (DEFAULTCX >> 1), m_tInfo.fY - (DEFAULTCY >> 1) );
+			break;
+		case DIRECTION_END:
+			break;
+		default:
+			break;
+		}
+		
 		m_pArrow->Set_IsRender( true );
 	}
 	else
@@ -343,8 +374,12 @@ void CPlayer::Update_Aim()
 void CPlayer::Update_Return()
 {
 	if ( !m_bIsReturning )
+	{
+		m_pArrow->Set_IsReturning( false );
 		return;
-
+	}
+		
+	m_pArrow->Set_IsReturning( true );
 
 	float fDeltaX = m_tInfo.fX - m_pArrow->Get_Info().fX ;
 	float fDeltaY = m_tInfo.fY - m_pArrow->Get_Info().fY;
