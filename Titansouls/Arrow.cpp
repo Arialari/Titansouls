@@ -141,6 +141,7 @@ void CArrow::OnBlocked( CObj* _pBlockedObj,  DIRECTION _eDir )
             static_cast<CPlayer*>(pObj)->Pick_Arrow();
             m_bIsRender = false;
             m_bHolded = true;
+            m_fSpeed = 0.f;
         }
     }
 
