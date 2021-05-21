@@ -231,6 +231,8 @@ bool CTileMgr::Load_Tile()
 	int		iFrameEndX = 0;
 	RENDERID::ID	eRenderId = RENDERID::BACKGROUND;
 	bool	bIsBlock = false;
+	int i = 0;
+	int j = 0;
 
 	while (true)
 	{
@@ -245,7 +247,11 @@ bool CTileMgr::Load_Tile()
 		if (0 == dwByte)
 			break;
 
-		CObj* pObj = CAbstractFactory<CTile>::Create(tTemp.fX, tTemp.fY);
+
+		float	fX = (float)((DEFAULTCX >> 1) + (j * DEFAULTCX));
+		float	fY = (float)((DEFAULTCY >> 1) + (i * DEFAULTCY));
+
+		CObj* pObj = CAbstractFactory<CTile>::Create( fX, fY );
 		CTile* pTile = static_cast<CTile*>(pObj);
 		pTile->Set_DrawXID( iDrawXID );
 		pTile->Set_DrawYID( iDrawYID );
@@ -255,6 +261,15 @@ bool CTileMgr::Load_Tile()
 		pTile->Setting_Done();
 		m_vecTile.emplace_back( pTile );
 		CObjMgr::Get_Instance()->Add_Object( pTile, OBJID::BACKGROUND );
+		++j;
+		if ( j >= m_iTileX )
+		{
+			j = 0;
+			++i;
+		}
+		
+		if ( i >= m_iTileY )
+			i = 0;
 	}
 
 

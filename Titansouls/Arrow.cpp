@@ -4,7 +4,7 @@
 #include "ScrollMgr.h"
 
 CArrow::CArrow()
-    :m_fRadianAngle( 0.f ), m_hMemDc( nullptr ), m_fFullSpeed( 19.5f ), m_fSpeed(0.f)
+    :m_fRadianAngle( 0.f ), m_hMemDc( nullptr ), m_fFullSpeed( 24.5f ), m_fSpeed(0.f)
 {
 }
 
@@ -92,11 +92,11 @@ void CArrow::OnBlocked( DIRECTION _eDir )
             m_fRadianAngle = PI - m_fRadianAngle;
         break;
     case N:
-        if (sin(m_fRadianAngle) < 0 )
+        if (sin(m_fRadianAngle) > 0 )
             m_fRadianAngle = -m_fRadianAngle;
         break;
     case S:
-        if ( sin( m_fRadianAngle ) > 0 )
+        if ( sin( m_fRadianAngle ) < 0 )
             m_fRadianAngle = -m_fRadianAngle;
         break;
     case SE:

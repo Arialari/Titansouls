@@ -85,9 +85,62 @@ void CCollisionMgr::Collision_BackGroundEx( list<CObj*>& _Src )
 		int iPosX = (int)pObj->Get_Info().fX;
 		int iPosY = (int)pObj->Get_Info().fY;
 
-		int	iCollisionCheckX = abs( iPosX / DEFAULTCX ) - 1;
-		int	iCollisionCheckY = abs( iPosY / DEFAULTCY ) - 1;
-		for ( int i = iCollisionCheckY; i < iCollisionCheckY + 3; ++i )
+
+
+		//int iX = pObj->Get_Info().fX / DEFAULTCX;
+		//int iY = pObj->Get_Info().fY / DEFAULTCY;
+
+		//int iIdxUp = iIdx1 - 100;
+		//int iIdxDown = iIdx1 + 100;
+
+		int	iCollisionCheckX = abs( iPosX / DEFAULTCX );
+		int	iCollisionCheckY = abs( iPosY / DEFAULTCY );
+		int iIdxCenter = iCollisionCheckY * iTileX + iCollisionCheckX;
+
+		int iIdx[DIRECTION_END] = { 
+			iIdxCenter + 1, iIdxCenter - iTileX, iIdxCenter -1, iIdxCenter + iTileX
+			, iIdxCenter + 101, iIdxCenter + 99, iIdxCenter - 101, iIdxCenter - 99};
+
+		const vector<CObj*> vecTile = CTileMgr::Get_Instance()->Get_vecTile();
+		// 대각선 충돌이 우선이기때문에 먼저 판단합니다 --로 말이죠
+		for (int i = DIRECTION_END-1; i>=0; --i)
+		{
+			CTile* pTile = static_cast<CTile*>(vecTile[iIdx[i]]);
+			if ( pTile->Get_IsBlock() )
+			{
+				float fX = 0, fY = 0;
+				if ( IsObj_OverlappedEx( pTile->Get_CollisionRect(), pObj->Get_CollisionRect(), &fX, &fY ) )
+				{
+					if ( fX < fY )
+					{
+						if ( pTile->Get_Info().fX < pObj->Get_Info().fX )
+						{
+							pObj->Add_PosX( fX );
+						}
+						else
+						{
+							pObj->Add_PosX( -fX );
+						}
+					}
+					else
+					{
+						if ( pTile->Get_Info().fY < pObj->Get_Info().fY )
+						{
+							pObj->Add_PosY( fY );
+						}
+						else
+						{
+							pObj->Add_PosY( -fY );
+						}
+					}
+					pObj->OnBlocked( (DIRECTION)i );
+					break;
+				}
+			}
+		}
+		//int	iCollisionCheckX = abs( iPosX / DEFAULTCX ) - 1;
+		//int	iCollisionCheckY = abs( iPosY / DEFAULTCY ) - 1;
+		/*for ( int i = iCollisionCheckY; i < iCollisionCheckY + 3; ++i )
 		{
 			for ( int j = iCollisionCheckX; j < iCollisionCheckX + 3; ++j )
 			{
@@ -127,7 +180,7 @@ void CCollisionMgr::Collision_BackGroundEx( list<CObj*>& _Src )
 					}
 				}
 			}
-		}
+		}*/
 	}
 }
 

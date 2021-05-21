@@ -18,6 +18,7 @@ public:
     virtual void    OnBlocked(DIRECTION _eDir) override;
 
     void            Shoot( float _fAimGaze );
+    void            Set_RadianAngle( float _fAngle ) { m_fRadianAngle = _fAngle; }
 private:
     HDC             m_hMemDc;
     float           m_fRadianAngle;

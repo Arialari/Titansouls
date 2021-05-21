@@ -9,7 +9,7 @@
 
 CPlayer::CPlayer()
 	: m_ePreState( STATE_END ), m_eCurState( STATE_END ), m_eCurDirection(DIRECTION::DIRECTION_END)
-	, m_fRunSpeed(4.f), m_fWalkSpeed(2.0f), m_fRollSpeed(6.0f), m_pArrow(nullptr), m_bHoldArrow(true), m_bIsAiming(false)
+	, m_fRunSpeed(4.5f), m_fWalkSpeed(2.5f), m_fRollSpeed(6.7f), m_pArrow(nullptr), m_bHoldArrow(true), m_bIsAiming(false), m_bIsReturning(false)
 	, m_fAimGaze(0.f)
 {
 }
@@ -54,6 +54,7 @@ int CPlayer::Update()
 	Key_Check();
 	OffSet();
 	Update_Aim();
+	Update_Return();
 	State_Change();
 	Update_Animation_Frame();
 	
@@ -220,6 +221,7 @@ void CPlayer::Key_Check()
 	m_tInfo.fX += m_fVelocityX;
 	m_tInfo.fY += m_fVelocityY;
 	m_bIsAiming = bIsAim;
+	m_bIsReturning = bIsReturning;
 }
 
 void CPlayer::State_Change()
@@ -318,7 +320,7 @@ void CPlayer::Update_Aim()
 	if ( m_bIsAiming && m_bHoldArrow )
 	{
 		if ( m_fAimGaze < 1.f )
-			m_fAimGaze += 0.10f;
+			m_fAimGaze += 0.03f;
 		else
 			m_fAimGaze = 1.f;
 		m_pArrow->Set_Pos( m_tInfo.fX, m_tInfo.fY );
@@ -328,6 +330,7 @@ void CPlayer::Update_Aim()
 	{
 		if ( m_fAimGaze > 0.f )
 		{
+			m_pArrow->Set_RadianAngle( MyMathMgr::fDirectionToRadianAngle[m_eCurDirection] );
 			m_pArrow->Shoot( m_fAimGaze );
 			m_bHoldArrow = false;
 		}
@@ -335,6 +338,20 @@ void CPlayer::Update_Aim()
 		m_fAimGaze = 0.f;
 	}
 		
+}
+
+void CPlayer::Update_Return()
+{
+	if ( !m_bIsReturning )
+		return;
+
+
+	float fDeltaX = m_pArrow->Get_Info().fX - m_tInfo.fX;
+	float fDeltaY = m_pArrow->Get_Info().fY - m_tInfo.fY;
+
+	//m_pArrow->Set_RadianAngle();
+	//m_pArrow->Set_Pos()
+	
 }
 
 void CPlayer::Update_Animation_Frame()

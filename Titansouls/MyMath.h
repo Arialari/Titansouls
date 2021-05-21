@@ -20,5 +20,15 @@ namespace MyMath
 
 }
 
+class MyMathMgr
+{
+public:
+	MyMathMgr();
+	~MyMathMgr();
+public:
+	static float fDirectionToRadianAngle[DIRECTION::DIRECTION_END];
+
+};
+
 
 #endif // !__MYMAYH_H__

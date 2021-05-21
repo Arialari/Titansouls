@@ -30,6 +30,7 @@ private:
 	void State_Change();
 	void OffSet();
 	void Update_Aim();
+	void Update_Return();
 	virtual void Update_Animation_Frame() override;
 	virtual void Update_ColisionRect() override;
 
@@ -44,6 +45,7 @@ private:
 	CArrow*		m_pArrow;
 	bool		m_bHoldArrow;
 	bool		m_bIsAiming;
+	bool		m_bIsReturning;
 	float		m_fAimGaze;
 };
 
