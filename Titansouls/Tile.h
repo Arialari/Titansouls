@@ -34,7 +34,6 @@ private:
 	static int			m_iFrameIdx;
 	int					m_iFrameEndX;
 	bool				m_bIsAlphaRender;
-	bool				m_bIsBlock;
 };
 
 

@@ -15,14 +15,16 @@ public:
     virtual void    Release() override;
     virtual void    Update_ColisionRect() override;
 
-    virtual void    OnBlocked(DIRECTION _eDir) override;
+    virtual void    OnBlocked(CObj* _pBlockedObj ,DIRECTION _eDir) override;
 
     void            Shoot( float _fAimGaze );
     void            Set_RadianAngle( float _fAngle ) { m_fRadianAngle = _fAngle; }
+    void            Add_Speed();
 private:
     HDC             m_hMemDc;
     float           m_fRadianAngle;
-    float           m_fFullSpeed;
+    const float     m_fFullSpeed;
+    const float     m_fReturnAccelator;
     float           m_fSpeed;
 };
 

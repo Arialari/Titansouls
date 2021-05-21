@@ -7,7 +7,7 @@
 
 int CTile::m_iFrameIdx = 0;
 CTile::CTile()
-	: m_iDrawYID(0), m_iFrameEndX(0), m_bIsAlphaRender(false), m_bIsBlock(false)
+	: m_iDrawYID(0), m_iFrameEndX(0), m_bIsAlphaRender(false)
 {
 }
 
@@ -24,6 +24,7 @@ void CTile::Initialize()
 	m_eRenderID = RENDERID::BACKGROUND;
 	m_vecCollisionRect.reserve( 1 );
 	m_vecCollisionRect.emplace_back( RECT() );
+	m_bIsBlock = false;
 }
 
 int CTile::Update()

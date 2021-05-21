@@ -4,7 +4,7 @@
 #include "ScrollMgr.h"
 
 CArrow::CArrow()
-    :m_fRadianAngle( 0.f ), m_hMemDc( nullptr ), m_fFullSpeed( 24.5f ), m_fSpeed(0.f)
+    :m_fRadianAngle( 0.f ), m_hMemDc( nullptr ), m_fFullSpeed( 24.5f ), m_fSpeed(0.f), m_fReturnAccelator(1.f)
 {
 }
 
@@ -30,8 +30,8 @@ int CArrow::Update()
     if ( m_bDead )
         return OBJ_DEAD;
 
-    if ( m_fSpeed >= 1 )
-        m_fSpeed -= 0.3f;
+    if ( m_fSpeed >= 0.7 )
+        m_fSpeed -= 0.7f;
     else
         m_fSpeed = 0;
 
@@ -46,6 +46,10 @@ int CArrow::Update()
 
 void CArrow::Late_Update()
 {
+    if ( m_fSpeed > 3.f )
+        m_bIsBlock = true;
+    else
+        m_bIsBlock = false;
 }
 
 void CArrow::Render( HDC _DC )
@@ -79,7 +83,7 @@ void CArrow::Update_ColisionRect()
     m_vecCollisionRect.front().bottom = (LONG)(m_tInfo.fY + (m_tInfo.iCY >> 1));
 }
 
-void CArrow::OnBlocked( DIRECTION _eDir )
+void CArrow::OnBlocked( CObj* _pBlockedObj,  DIRECTION _eDir )
 {
     switch ( _eDir )
     {
@@ -115,4 +119,12 @@ void CArrow::OnBlocked( DIRECTION _eDir )
 void CArrow::Shoot( float _fAimGaze )
 {
     m_fSpeed = m_fFullSpeed * _fAimGaze;
+}
+
+void CArrow::Add_Speed()
+{
+    if ( m_fSpeed < m_fFullSpeed )
+        m_fSpeed += m_fReturnAccelator;
+    else
+        m_fSpeed = m_fFullSpeed;
 }

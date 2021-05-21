@@ -27,7 +27,7 @@ public:
 	inline void SetReserveCollisionRect( int _i ) { m_vecCollisionRect.reserve( _i ); }
 
 	//Functions
-	virtual void		OnBlocked(DIRECTION _eDir = DIRECTION_END) { m_bDead = true; }
+	virtual void		OnBlocked(CObj* _pBlockedObj,DIRECTION _eDir = DIRECTION_END) { m_bDead = true; }
 
 	//Setter
 	inline void			Set_ImageKey( const TCHAR* _pImageKey ) { m_pImageKey = _pImageKey; }
@@ -56,6 +56,7 @@ protected:
 	int				m_iDrawXID;
 	RENDERID::ID	m_eRenderID;
 	bool			m_bIsRender;
+	bool			m_bIsBlock;
 };
 
 #endif // !__OBJ_H__

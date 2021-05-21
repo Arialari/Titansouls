@@ -346,9 +346,16 @@ void CPlayer::Update_Return()
 		return;
 
 
-	float fDeltaX = m_pArrow->Get_Info().fX - m_tInfo.fX;
-	float fDeltaY = m_pArrow->Get_Info().fY - m_tInfo.fY;
+	float fDeltaX = m_tInfo.fX - m_pArrow->Get_Info().fX ;
+	float fDeltaY = m_tInfo.fY - m_pArrow->Get_Info().fY;
+	float fDeltaDia = sqrtf( fDeltaX * fDeltaX + fDeltaY * fDeltaY );
 
+	int sign = 1;
+	if ( fDeltaY > 0 )
+		sign = -1;
+
+	m_pArrow->Set_RadianAngle( acos( fDeltaX / fDeltaDia ) * sign );
+	m_pArrow->Add_Speed();
 	//m_pArrow->Set_RadianAngle();
 	//m_pArrow->Set_Pos()
 	
