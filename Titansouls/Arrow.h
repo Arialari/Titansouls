@@ -17,6 +17,7 @@ public:
 
     virtual void    OnBlocked(CObj* _pBlockedObj ,DIRECTION _eDir) override;
 
+    void            Update_RenderPoint();
     void            Shoot( float _fAimGaze );
     void            Set_RadianAngle( float _fAngle ) { m_fRadianAngle = _fAngle; }
     void            Add_Speed();
@@ -29,5 +30,6 @@ private:
     float           m_fSpeed;
     bool            m_bHolded;
     bool            m_bIsReturning;
+    POINT           m_tRenderPoint[3];
 };
 

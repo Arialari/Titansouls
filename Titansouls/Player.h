@@ -47,6 +47,7 @@ private:
 	bool		m_bHoldArrow;
 	bool		m_bIsAiming;
 	bool		m_bIsReturning;
+	bool		m_bWasRetrun;
 	float		m_fAimGaze;
 };
 

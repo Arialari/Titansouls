@@ -9,7 +9,7 @@
 
 CPlayer::CPlayer()
 	: m_ePreState( STATE_END ), m_eCurState( STATE_END ), m_eCurDirection(DIRECTION::DIRECTION_END)
-	, m_fRunSpeed(4.5f), m_fWalkSpeed(2.5f), m_fRollSpeed(6.7f), m_pArrow(nullptr), m_bHoldArrow(true), m_bIsAiming(false), m_bIsReturning(false)
+	, m_fRunSpeed(4.5f), m_fWalkSpeed(2.5f), m_fRollSpeed(6.7f), m_pArrow(nullptr), m_bHoldArrow(true), m_bIsAiming(false), m_bIsReturning(false), m_bWasRetrun(false)
 	, m_fAimGaze(0.f)
 {
 }
@@ -124,6 +124,10 @@ void CPlayer::Key_Check()
 {
 	bool bIsAim = false;
 	bool bIsReturning = false;
+	if ( CKeyMgr::Get_Instance()->Key_Up( 'C' ) )
+	{
+		m_bWasRetrun = false;
+	}
 	if ( m_eCurState != STATE::ROLL )
 	{
 		if ( CKeyMgr::Get_Instance()->Key_Pressing( 'C' ) )
@@ -131,16 +135,24 @@ void CPlayer::Key_Check()
 			m_fSpeed = 0.f;
 			if ( m_bHoldArrow )
 			{
-				m_eCurState = STATE::AIM;
-				bIsAim = true;
-				m_pArrow->Set_IsRender( true );
+				if ( !m_bWasRetrun )
+				{
+					m_eCurState = STATE::AIM;
+					bIsAim = true;
+				}
+				else
+				{
+					m_fSpeed = m_fWalkSpeed;
+					m_eCurState = STATE::WALK;
+				}
 			}
 			else
 			{
 				m_eCurState = STATE::RETURN;
 				bIsReturning = true;
+				m_bWasRetrun = true;
 			}
-			
+
 		}
 		else if ( CKeyMgr::Get_Instance()->Key_Down( 'X' ) )
 		{
@@ -222,6 +234,7 @@ void CPlayer::Key_Check()
 	m_tInfo.fY += m_fVelocityY;
 	m_bIsAiming = bIsAim;
 	m_bIsReturning = bIsReturning;
+
 }
 
 void CPlayer::State_Change()
@@ -320,7 +333,7 @@ void CPlayer::Update_Aim()
 	if ( m_bIsAiming && m_bHoldArrow )
 	{
 		if ( m_fAimGaze < 1.f )
-			m_fAimGaze += 0.03f;
+			m_fAimGaze += 0.10f;
 		else
 			m_fAimGaze = 1.f;
 		switch ( m_eCurDirection )
@@ -354,16 +367,21 @@ void CPlayer::Update_Aim()
 		default:
 			break;
 		}
-		
+		m_pArrow->Set_RadianAngle( MyMathMgr::fDirectionToRadianAngle[m_eCurDirection] );
 		m_pArrow->Set_IsRender( true );
 	}
 	else
 	{
-		if ( m_fAimGaze > 0.f )
+		if ( m_fAimGaze > 0.2f )
 		{
 			m_pArrow->Set_RadianAngle( MyMathMgr::fDirectionToRadianAngle[m_eCurDirection] );
 			m_pArrow->Shoot( m_fAimGaze );
 			m_bHoldArrow = false;
+		}
+		else if (m_fAimGaze > 0.f)
+
+		{
+			m_pArrow->Set_IsRender( false );
 		}
 			
 		m_fAimGaze = 0.f;

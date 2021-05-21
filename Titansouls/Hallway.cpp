@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "BmpMgr.h"
 #include "ScrollMgr.h"
+#include "UiMgr.h"
 
 CHallway::CHallway()
 {
@@ -34,6 +35,7 @@ void CHallway::Initialize()
 void CHallway::Update()
 {
 	CObjMgr::Get_Instance()->Update();
+	CUiMgr::Get_Instance()->Update();
 	CTileMgr::Get_Instance()->Update();
 }
 

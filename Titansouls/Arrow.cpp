@@ -6,8 +6,9 @@
 #include "Player.h"
 
 CArrow::CArrow()
-    :m_fRadianAngle( 0.f ), m_hMemDc( nullptr ), m_fFullSpeed( 24.5f ), m_fSpeed(0.f), m_fReturnAccelator(1.f), m_bHolded(true), m_bIsReturning(false)
+    :m_fRadianAngle( 0.f ), m_hMemDc( nullptr ), m_fFullSpeed( 24.5f ), m_fSpeed( 0.f ), m_fReturnAccelator( 1.f ), m_bHolded( true ), m_bIsReturning( false )
 {
+    ZeroMemory( m_tRenderPoint, sizeof( m_tRenderPoint ) );
 }
 
 CArrow::~CArrow()
@@ -17,6 +18,9 @@ CArrow::~CArrow()
 
 void CArrow::Initialize()
 {
+    CBmpMgr::Get_Instance()->Insert_Bmp( L"../Image/Plg.bmp", L"Plg" );
+    CBmpMgr::Get_Instance()->Insert_Bmp( L"../Image/Reset.bmp", L"Reset" );
+
     m_tInfo.iCX = DEFAULTCX;
     m_tInfo.iCY = DEFAULTCY;
     m_bIsRender = false;
@@ -40,8 +44,10 @@ int CArrow::Update()
     m_tInfo.fX += m_fSpeed * cosf( m_fRadianAngle );
     m_tInfo.fY -= m_fSpeed * sinf( m_fRadianAngle );
 
+    
     Update_Rect();
     Update_ColisionRect();
+    Update_RenderPoint();
 
     return OBJ_NOEVENT;
 }
@@ -61,15 +67,23 @@ void CArrow::Render( HDC _DC )
         Update_Rect();
         int iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
         int iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+        HDC hPlgDC = CBmpMgr::Get_Instance()->Find_Bmp( L"Plg" );
+        HDC hResetDC = CBmpMgr::Get_Instance()->Find_Bmp( L"Reset" );
 
-        bool b = GdiTransparentBlt( _DC
+        PlgBlt( hPlgDC, m_tRenderPoint
+                , m_hMemDc
+                , 31 * PIXELCX, 0
+                , PIXELCX, PIXELCY
+                , NULL, NULL, NULL );
+
+        GdiTransparentBlt( _DC
                            , m_tRect.left + iScrollX, m_tRect.top + iScrollY
                            , m_tInfo.iCX, m_tInfo.iCY
-                           , m_hMemDc
-                           , 31 * PIXELCX, 0
+                           , hPlgDC
+                           , 0 ,0
                            , PIXELCX, PIXELCY
                            , RGB( 255, 0, 255 ) );
-
+        BitBlt( hPlgDC, 0, 0, PIXELCX, PIXELCY, hResetDC, 0, 0, SRCCOPY );
     }
 }
 
@@ -130,6 +144,25 @@ void CArrow::OnBlocked( CObj* _pBlockedObj,  DIRECTION _eDir )
         }
     }
 
+}
+
+void CArrow::Update_RenderPoint()
+{
+    float	fX = (float)(PIXELCX >> 1);
+    float	fY = (float)(PIXELCY >> 1);
+
+    float	fCX = (float)(PIXELCX >> 1);
+    float	fCY = (float)(PIXELCY >> 1);
+    float	fDia = sqrtf( fCX * fCX + fCY * fCY );
+
+    m_tRenderPoint[0].x = (LONG)(fX + (cosf( PI * 5 / 4 + m_fRadianAngle ) * fDia));
+    m_tRenderPoint[0].y = (LONG)(fY - (sinf( PI * 5 / 4 + m_fRadianAngle) * fDia));
+
+    m_tRenderPoint[1].x = (LONG)(fX + (cosf( PI * 3 / 4 + m_fRadianAngle ) * fDia));
+    m_tRenderPoint[1].y = (LONG)(fY - (sinf( PI * 3 / 4 + m_fRadianAngle ) * fDia));
+
+    m_tRenderPoint[2].x = (LONG)(fX + (cosf( PI * 7 / 4 + m_fRadianAngle ) * fDia));
+    m_tRenderPoint[2].y = (LONG)(fY - (sinf( PI * 7 / 4 + m_fRadianAngle ) * fDia));
 }
 
 void CArrow::Shoot( float _fAimGaze )

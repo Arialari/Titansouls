@@ -81,6 +81,7 @@ void CCollisionMgr::Collision_BackGroundEx( list<CObj*>& _Src )
 	{
 		
 		int iTileX = CTileMgr::Get_Instance()->Get_TileLengthX();
+		int iTileY = CTileMgr::Get_Instance()->Get_TileLengthY();
 		int iPosX = (int)pObj->Get_Info().fX;
 		int iPosY = (int)pObj->Get_Info().fY;
 
@@ -104,6 +105,8 @@ void CCollisionMgr::Collision_BackGroundEx( list<CObj*>& _Src )
 		// 대각선 충돌이 우선이기때문에 먼저 판단합니다 --로 말이죠
 		for (int i = DIRECTION_END-1; i>=0; --i)
 		{
+			if ( iIdx[i] < 0 || iIdx[i] >= iTileX * iTileY )
+				continue;
 			CTile* pTile = static_cast<CTile*>(vecTile[iIdx[i]]);
 			if ( pTile->Get_IsBlock() )
 			{
