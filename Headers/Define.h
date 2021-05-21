@@ -19,8 +19,8 @@
 #define PIXELCX 16
 #define PIXELCY 16
 
-#define DEFAULTCX 40
-#define DEFAULTCY 40
+#define DEFAULTCX 50
+#define DEFAULTCY 50
 
 #define TILEX 300
 #define TILEY 1000

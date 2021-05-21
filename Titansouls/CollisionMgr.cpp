@@ -104,15 +104,11 @@ void CCollisionMgr::Collision_BackGroundEx( list<CObj*>& _Src )
 							{
 								pObj->Add_PosX( fX );
 								pObj->OnBlocked( DIRECTION::W );
-								i = iCollisionCheckY + 3;
-								j = iCollisionCheckX + 3;
 							}
 							else
 							{
 								pObj->Add_PosX( -fX );
 								pObj->OnBlocked( DIRECTION::E );
-								i = iCollisionCheckY + 3;
-								j = iCollisionCheckX + 3;
 							}
 						}
 						else
@@ -121,15 +117,11 @@ void CCollisionMgr::Collision_BackGroundEx( list<CObj*>& _Src )
 							{
 								pObj->Add_PosY( fY );
 								pObj->OnBlocked( DIRECTION::N );
-								i = iCollisionCheckY + 3;
-								j = iCollisionCheckX + 3;
 							}
 							else
 							{
 								pObj->Add_PosY( -fY );
 								pObj->OnBlocked( DIRECTION::S );
-								i = iCollisionCheckY + 3;
-								j = iCollisionCheckX + 3;
 							}
 						}
 					}

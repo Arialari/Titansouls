@@ -63,7 +63,6 @@ void CArrow::Render( HDC _DC )
                            , 31 * PIXELCX, 0
                            , PIXELCX, PIXELCY
                            , RGB( 255, 0, 255 ) );
-        Rectangle( _DC, m_tRect.left + iScrollX, m_tRect.top + iScrollY, m_tRect.right + iScrollX, m_tRect.bottom + iScrollY );
 
     }
 }
@@ -85,12 +84,20 @@ void CArrow::OnBlocked( DIRECTION _eDir )
     switch ( _eDir )
     {
     case E:
+        if ( cos( m_fRadianAngle ) > 0 )
+            m_fRadianAngle = PI - m_fRadianAngle;
+        break;
     case W:
-        m_fRadianAngle = PI - m_fRadianAngle;
+        if ( cos( m_fRadianAngle ) < 0 )
+            m_fRadianAngle = PI - m_fRadianAngle;
         break;
     case N:
+        if (sin(m_fRadianAngle) < 0 )
+            m_fRadianAngle = -m_fRadianAngle;
+        break;
     case S:
-        m_fRadianAngle = -m_fRadianAngle;
+        if ( sin( m_fRadianAngle ) > 0 )
+            m_fRadianAngle = -m_fRadianAngle;
         break;
     case SE:
     case SW:
