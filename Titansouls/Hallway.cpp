@@ -77,7 +77,7 @@ void CHallway::Release()
 {
 	for ( int i = 0; i < OBJID::END; ++i )
 	{
-		if( i != OBJID::PLAYER )
+		if( i != OBJID::PLAYER  && i != OBJID::ARROW)
 			CObjMgr::Get_Instance()->Delete_ObjID( (OBJID::ID)i );
 	}
 	CTileMgr::Get_Instance()->Release();
