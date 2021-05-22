@@ -168,6 +168,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneChanger.h" />
     <ClInclude Include="SceneMgr.h" />
     <ClInclude Include="ScrollMgr.h" />
     <ClInclude Include="SludgeScene.h" />
@@ -190,6 +191,7 @@
     <ClCompile Include="GolSetScene.cpp" />
     <ClCompile Include="Hallway.cpp" />
     <ClCompile Include="MyMath.cpp" />
+    <ClCompile Include="SceneChanger.cpp" />
     <ClCompile Include="SludgeScene.cpp" />
     <ClCompile Include="Titan.cpp" />
     <ClCompile Include="IAnimation.cpp" />

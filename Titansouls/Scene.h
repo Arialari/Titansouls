@@ -3,6 +3,7 @@
 #ifndef __SCENE_H__
 #define __SCENE_H__
 
+class CPlayer;
 class CScene
 {
 public:
@@ -21,6 +22,9 @@ protected:
 	int					m_iTileX;
 	int					m_iTileY;
 	const TCHAR*		m_pFileName;
+	static CPlayer*		m_pPlayer;
+	float				m_fStartPointX;
+	float				m_fStartPointY;
 };
 
 #endif // !__SCENE_H__

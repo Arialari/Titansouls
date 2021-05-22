@@ -9,7 +9,7 @@
 
 CPlayer::CPlayer()
 	: m_ePreState( STATE_END ), m_eCurState( STATE_END ), m_eCurDirection(DIRECTION::DIRECTION_END)
-	, m_fRunSpeed(4.5f), m_fWalkSpeed(2.5f), m_fRollSpeed(6.7f), m_pArrow(nullptr), m_bHoldArrow(true), m_bIsAiming(false), m_bIsReturning(false), m_bWasRetrun(false)
+	, m_fRunSpeed(4.5f), m_fWalkSpeed(20.5f), m_fRollSpeed(6.7f), m_pArrow(nullptr), m_bHoldArrow(true), m_bIsAiming(false), m_bIsReturning(false), m_bWasRetrun(false)
 	, m_fAimGaze(0.f)
 {
 }
@@ -26,8 +26,6 @@ void CPlayer::Initialize()
 	CBmpMgr::Get_Instance()->Insert_Bmp( L"../Image/p_Bow.bmp", L"Bow" );
 	CBmpMgr::Get_Instance()->Insert_Bmp( L"../Image/p_Arrow.bmp", L"Arrow" );
 
-	m_tInfo.fX = 38.f* DEFAULTCX;
-	m_tInfo.fY = 184.f * DEFAULTCY;
 	m_tInfo.iCX = DEFAULTCX;
 	m_tInfo.iCY = DEFAULTCY;
 

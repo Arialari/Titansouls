@@ -7,6 +7,7 @@
 #include "BmpMgr.h"
 #include "ScrollMgr.h"
 #include "UiMgr.h"
+#include "SceneChanger.h"
 
 CHallway::CHallway()
 {
@@ -28,8 +29,21 @@ void CHallway::Initialize()
 	CTileMgr::Get_Instance()->Set_TileLength( m_iTileX, m_iTileY );
 	CTileMgr::Get_Instance()->Set_FileName( m_pFileName );
 	CTileMgr::Get_Instance()->Create_Tile();
-	CObjMgr::Get_Instance()->Add_Object( CAbstractFactory<CPlayer>::Create(), OBJID::PLAYER );
+	m_fStartPointX = 39.5f * DEFAULTCX;
+	m_fStartPointY = 184.5f * DEFAULTCY;
+	if ( !m_pPlayer )
+	{
+		m_pPlayer = static_cast<CPlayer*>(CAbstractFactory<CPlayer>::Create( m_fStartPointX, m_fStartPointY ));
+		CObjMgr::Get_Instance()->Add_Object( m_pPlayer, OBJID::PLAYER );
+	}
+	else
+	{
+		//이전 위치에 따른 플레이어 이동
+	}
 	CObjMgr::Get_Instance()->Add_Object( CAbstractFactory<CGolLath>::Create(), OBJID::TITAN );
+	CObj* pObj = CAbstractFactory<CSceneChanger>::Create(39.5f * DEFAULTCX, 98.5f * DEFAULTCY );
+	static_cast<CSceneChanger*>(pObj)->Set_Scene( SCENEID::SLUDGE );
+	CObjMgr::Get_Instance()->Add_Object( pObj, OBJID::COLLISION);
 }
 
 void CHallway::Update()

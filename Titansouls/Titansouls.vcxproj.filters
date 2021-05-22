@@ -100,6 +100,9 @@
     <Filter Include="소스 파일\01.Obj\02.Tile">
       <UniqueIdentifier>{791f964a-6ce0-44e9-b4c1-759e84b8340e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\01.Obj\04.StageChanger">
+      <UniqueIdentifier>{ca83f283-0c56-4797-9981-c7bac658f73e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -198,6 +201,9 @@
     <ClInclude Include="Arrow.h">
       <Filter>소스 파일\01.Obj\03.Arrow</Filter>
     </ClInclude>
+    <ClInclude Include="SceneChanger.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Titansouls.cpp">
@@ -286,6 +292,9 @@
     </ClCompile>
     <ClCompile Include="Arrow.cpp">
       <Filter>소스 파일\01.Obj\03.Arrow</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneChanger.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

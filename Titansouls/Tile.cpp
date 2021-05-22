@@ -82,14 +82,20 @@ void CTile::Render(HDC _DC)
 	}
 	if ( CUiMgr::Get_Instance()->Get_IsCollisionVisible() )
 	{
+
 		if ( m_bIsBlock )
 		{
-			MoveToEx( _DC, m_tRect.left + iScrollX, m_tRect.top + iScrollY, NULL );
-			LineTo( _DC, m_tRect.right + iScrollX, m_tRect.top + iScrollY );
-			LineTo( _DC, m_tRect.right + iScrollX, m_tRect.bottom + iScrollY );
-			LineTo( _DC, m_tRect.left + iScrollX, m_tRect.bottom + iScrollY );
-			LineTo( _DC, m_tRect.left + iScrollX, m_tRect.top + iScrollY );
-			LineTo( _DC, m_tRect.right + iScrollX, m_tRect.bottom + iScrollY );
+			HPEN r_brush = CreatePen(PS_SOLID,1, RGB( 255, 0, 0 ) );
+			HGDIOBJ hOldBrush = SelectObject( _DC, r_brush );
+
+			MoveToEx( _DC, m_tRect.left + iScrollX+1, m_tRect.top + iScrollY+1, NULL );
+			LineTo( _DC, m_tRect.right + iScrollX-1, m_tRect.top + iScrollY+1 );
+			LineTo( _DC, m_tRect.right + iScrollX-1, m_tRect.bottom + iScrollY-1 );
+			LineTo( _DC, m_tRect.left + iScrollX+1, m_tRect.bottom + iScrollY-1 );
+			LineTo( _DC, m_tRect.left + iScrollX+1, m_tRect.top + iScrollY+1 );
+
+			SelectObject( _DC, hOldBrush );
+			DeleteObject( r_brush );
 		}
 	}
 

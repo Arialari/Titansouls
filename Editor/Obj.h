@@ -42,10 +42,10 @@ public:
 	const int& Get_DrawXID() const { return m_iDrawXID; }
 	const RENDERID::ID& Get_RenderID() const { return m_eRenderID; }
 	const vector<RECT>& Get_CollisionRect() const { return m_vecCollisionRect; }
-
-protected:
 	void Update_Rect();
 	virtual void Update_ColisionRect() = 0;
+protected:
+	
 
 protected:
 	INFO			m_tInfo;

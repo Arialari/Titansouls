@@ -12,6 +12,8 @@ public:
 	{
 		CObj* pObj = new T;
 		pObj->Initialize();
+		pObj->Update_Rect();
+		pObj->Update_ColisionRect();
 
 		return pObj;
 	}
@@ -21,6 +23,8 @@ public:
 		CObj* pObj = new T;
 		pObj->Initialize();
 		pObj->Set_Pos(_x, _y);
+		pObj->Update_Rect();
+		pObj->Update_ColisionRect();
 
 		return pObj;
 	}
@@ -31,6 +35,8 @@ public:
 		pObj->Initialize();
 		pObj->Set_Pos(_x, _y);
 		pObj->Set_Angle(_fAngle);
+		pObj->Update_Rect();
+		pObj->Update_ColisionRect();
 
 		return pObj;
 	}
@@ -41,18 +47,12 @@ public:
 		pObj->Initialize();
 		pObj->Set_Pos( _x, _y );
 		pObj->Set_IsRender( _bIsRender );
+		pObj->Update_Rect();
+		pObj->Update_ColisionRect();
 
 		return pObj;
 	}
 
-	static CObj* Create(CObj* _pTarget)
-	{
-		CObj* pObj = new T;
-		pObj->Initialize();
-		pObj->Set_Target(_pTarget);
-
-		return pObj;
-	}
 };
 
 #endif // !__ABSTRACTFACTORY_H__
