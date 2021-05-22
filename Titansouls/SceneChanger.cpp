@@ -5,7 +5,7 @@
 #include "ScrollMgr.h"
 
 CSceneChanger::CSceneChanger()
-    :m_bIsChange(false)
+    :m_bIsChange(false), m_pPlayer(nullptr), m_fTeleportX(0.f), m_fTeleportY(0.f)
 {
 }
 
@@ -35,6 +35,7 @@ void CSceneChanger::Late_Update()
 {
     if ( m_bIsChange )
     {
+        m_pPlayer->Set_Pos( m_fTeleportX,  m_fTeleportY );
         CSceneMgr::Get_Instance()->Scene_Change( m_eChangeScene );
         return;
     }
@@ -69,4 +70,5 @@ void CSceneChanger::Update_ColisionRect()
 void CSceneChanger::OnBlocked( CObj* _pBlockedObj, DIRECTION _eDir )
 {
     m_bIsChange = true;
+    m_pPlayer = _pBlockedObj;
 }

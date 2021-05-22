@@ -43,6 +43,7 @@ void CHallway::Initialize()
 	CObjMgr::Get_Instance()->Add_Object( CAbstractFactory<CGolLath>::Create(), OBJID::TITAN );
 	CObj* pObj = CAbstractFactory<CSceneChanger>::Create(39.5f * DEFAULTCX, 98.5f * DEFAULTCY );
 	static_cast<CSceneChanger*>(pObj)->Set_Scene( SCENEID::SLUDGE );
+	static_cast<CSceneChanger*>(pObj)->Set_TeleportPos ( 39.5f * DEFAULTCX, 80.5f * DEFAULTCY );
 	CObjMgr::Get_Instance()->Add_Object( pObj, OBJID::COLLISION);
 }
 
