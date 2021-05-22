@@ -4,9 +4,11 @@
 #include "CollisionMgr.h"
 #include "ScrollMgr.h"
 #include "TileMgr.h"
+#include "Player.h"
 
 CObjMgr* CObjMgr::m_pInstance = nullptr;
 CObjMgr::CObjMgr()
+	:m_bIsReleased(false)
 {
 }
 
@@ -40,7 +42,8 @@ void CObjMgr::Update()
 	CCollisionMgr::Collision_BackGroundEx( m_listObj[OBJID::PLAYER] );
 	CCollisionMgr::Collision_BackGroundEx( m_listObj[OBJID::ARROW] );
 	CCollisionMgr::Collision_Rect( m_listObj[OBJID::PLAYER], m_listObj[OBJID::ARROW] );
-	CCollisionMgr::Collision_Rect( m_listObj[OBJID::COLLISION], m_listObj[OBJID::PLAYER] );
+	if( static_cast<CPlayer*>(m_listObj[OBJID::PLAYER].front())->Get_IsHolingArrow() )
+		CCollisionMgr::Collision_Rect( m_listObj[OBJID::COLLISION], m_listObj[OBJID::PLAYER] );
 	CCollisionMgr::Collision_RectEx( m_listObj[OBJID::TITAN], m_listObj[OBJID::PLAYER] );
 	//CCollisionMgr::Collision_Sphere(m_listObj[OBJID::MOUSE], m_listObj[OBJID::MONSTER]);
 }
@@ -54,10 +57,16 @@ void CObjMgr::Late_Update()
 			Late_Update_BackGround();
 			continue;
 		}
-		for ( auto& pObj : m_listObj[i] )
+		for(auto iter = m_listObj[i].begin(); iter != m_listObj[i].end(); ++iter)
 		{
+			CObj*	pObj = *iter;
 			pObj->Late_Update();
-
+			if ( m_bIsReleased )
+			{
+				m_bIsReleased = false;
+				return;
+			}
+				
 			if ( m_listObj[i].empty() )
 				break;
 
@@ -98,6 +107,7 @@ void CObjMgr::ReleaseRenderList()
 	{
 		m_listRender[i].clear();
 	}
+	m_bIsReleased = true;
 }
 
 CObj* CObjMgr::Get_Target( CObj* _pObj, OBJID::ID _eID ) const

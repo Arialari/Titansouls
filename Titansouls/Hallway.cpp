@@ -36,10 +36,6 @@ void CHallway::Initialize()
 		m_pPlayer = static_cast<CPlayer*>(CAbstractFactory<CPlayer>::Create( m_fStartPointX, m_fStartPointY ));
 		CObjMgr::Get_Instance()->Add_Object( m_pPlayer, OBJID::PLAYER );
 	}
-	else
-	{
-		//이전 위치에 따른 플레이어 이동
-	}
 	CObjMgr::Get_Instance()->Add_Object( CAbstractFactory<CGolLath>::Create(), OBJID::TITAN );
 	CObj* pObj = CAbstractFactory<CSceneChanger>::Create(39.5f * DEFAULTCX, 98.5f * DEFAULTCY );
 	static_cast<CSceneChanger*>(pObj)->Set_Scene( SCENEID::SLUDGE );

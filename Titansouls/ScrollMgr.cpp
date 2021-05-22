@@ -20,6 +20,14 @@ void CScrollMgr::Late_Update()
 	Scroll_Lock();
 }
 
+void CScrollMgr::Force_Set_Scroll( float _x, float _y )
+{
+	m_fMoveTargetX = _x + (WINCX >> 1);
+	m_fMoveTargetY = _y + (WINCY >> 1);
+	m_fScrollX = _x + (WINCX >> 1);
+	m_fScrollY = _y + (WINCY >> 1);
+}
+
 void CScrollMgr::Scroll_Lock()
 {
 	int iTileX = CTileMgr::Get_Instance()->Get_TileLengthX();

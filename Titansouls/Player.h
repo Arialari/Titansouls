@@ -23,8 +23,13 @@ public:
 	virtual void Late_Update() override;
 	virtual void Render(HDC _DC) override;
 	virtual void Release() override;
+	virtual void Set_Pos( float _x, float _y ) override;
 	virtual void OnBlocked( CObj* _pBlockedObj, DIRECTION _eDir ) override;
+
+public:
 	inline  void Pick_Arrow() { m_bHoldArrow = true; }
+	const bool& Get_IsHolingArrow() const { return m_bHoldArrow; }
+	
 
 private:
 	void Key_Check();

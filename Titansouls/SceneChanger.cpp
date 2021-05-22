@@ -17,6 +17,7 @@ void CSceneChanger::Initialize()
 {
     m_tInfo.iCX = DEFAULTCX*3;
     m_tInfo.iCY = DEFAULTCY;
+    
     m_eRenderID = RENDERID::UI;
     m_vecCollisionRect.reserve( 1 );
     m_vecCollisionRect.emplace_back( RECT() );

@@ -278,8 +278,8 @@ bool CTileMgr::Load_Tile()
 	if ( m_vecTile.size() == (m_iTileX * m_iTileY))
 	{
 		
-		MessageBox( g_hWnd, L"불러오기 성공!", L"성공", MB_OK );
-		return true;
+		//MessageBox( g_hWnd, L"불러오기 성공!", L"성공", MB_OK );
+		//return true;
 	}
 	else
 	{

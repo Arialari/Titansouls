@@ -114,6 +114,13 @@ void CPlayer::Release()
 {
 }
 
+void CPlayer::Set_Pos( float _x, float _y )
+{
+	m_tInfo.fX = _x;
+	m_tInfo.fY = _y;
+	CScrollMgr::Get_Instance()->Force_Set_Scroll( -_x, -_y );
+}
+
 void CPlayer::OnBlocked( CObj* _pBlockedObj, DIRECTION _eDir )
 {
 }
