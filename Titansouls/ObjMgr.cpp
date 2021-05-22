@@ -40,6 +40,7 @@ void CObjMgr::Update()
 	CCollisionMgr::Collision_BackGroundEx( m_listObj[OBJID::PLAYER] );
 	CCollisionMgr::Collision_BackGroundEx( m_listObj[OBJID::ARROW] );
 	CCollisionMgr::Collision_Rect( m_listObj[OBJID::PLAYER], m_listObj[OBJID::ARROW] );
+	CCollisionMgr::Collision_Rect( m_listObj[OBJID::COLLISION], m_listObj[OBJID::PLAYER] );
 	CCollisionMgr::Collision_RectEx( m_listObj[OBJID::TITAN], m_listObj[OBJID::PLAYER] );
 	//CCollisionMgr::Collision_Sphere(m_listObj[OBJID::MOUSE], m_listObj[OBJID::MONSTER]);
 }
@@ -88,6 +89,14 @@ void CObjMgr::Release()
 	{
 		for_each( m_listObj[i].begin(), m_listObj[i].end(), Safe_Delete<CObj*> );
 		m_listObj[i].clear();
+	}
+}
+
+void CObjMgr::ReleaseRenderList()
+{
+	for ( int i = 0; i < RENDERID::END; ++i )
+	{
+		m_listRender[i].clear();
 	}
 }
 

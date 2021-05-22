@@ -1,37 +1,15 @@
-﻿  stdafx.cpp
-  Arrow.cpp
-  BmpMgr.cpp
-  BrainFreezeScene.cpp
-  CGolLath.cpp
-  CollisionMgr.cpp
-D:\Study\Polio\Titansouls\Titansouls\CollisionMgr.cpp(255,18): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\Study\Polio\Titansouls\Titansouls\CollisionMgr.cpp(256,19): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+﻿  BrainFreezeScene.cpp
   EyecubeScene.cpp
   GolSetScene.cpp
   Hallway.cpp
-  IAnimation.cpp
-  Implement.cpp
-  KeyMgr.cpp
   MainGame.cpp
-  MyBitmap.cpp
-  MyMath.cpp
-  Obj.cpp
   ObjMgr.cpp
-  Pawn.cpp
   Player.cpp
 D:\Study\Polio\Titansouls\Titansouls\Player.cpp(408,57): warning C4244: '인수': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  Scene.cpp
   SceneChanger.cpp
-  코드를 생성하고 있습니다...
-  컴파일하고 있습니다...
-  SceneMgr.cpp
-  ScrollMgr.cpp
   SludgeScene.cpp
   Stage.cpp
-  Tile.cpp
   TileMgr.cpp
-  Titan.cpp
-  Titansouls.cpp
   UiMgr.cpp
   코드를 생성하고 있습니다...
   Titansouls.vcxproj -> D:\Study\Polio\Titansouls\Debug\Titansouls.exe

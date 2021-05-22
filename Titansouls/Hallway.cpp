@@ -74,4 +74,11 @@ void CHallway::Render( HDC _DC )
 
 void CHallway::Release()
 {
+	for ( int i = 0; i < OBJID::END; ++i )
+	{
+		if( i != OBJID::PLAYER )
+			CObjMgr::Get_Instance()->Delete_ObjID( (OBJID::ID)i );
+	}
+	CTileMgr::Get_Instance()->Release();
+	CObjMgr::Get_Instance()->ReleaseRenderList();
 }

@@ -5,6 +5,7 @@
 #include "ScrollMgr.h"
 
 CSceneChanger::CSceneChanger()
+    :m_bIsChange(false)
 {
 }
 
@@ -25,11 +26,18 @@ int CSceneChanger::Update()
 {
     if ( m_bDead )
         return OBJ_DEAD;
+
     return OBJ_NOEVENT;
+    
 }
 
 void CSceneChanger::Late_Update()
 {
+    if ( m_bIsChange )
+    {
+        CSceneMgr::Get_Instance()->Scene_Change( m_eChangeScene );
+        return;
+    }
 }
 
 void CSceneChanger::Render( HDC _DC )
@@ -60,5 +68,5 @@ void CSceneChanger::Update_ColisionRect()
 
 void CSceneChanger::OnBlocked( CObj* _pBlockedObj, DIRECTION _eDir )
 {
-    CSceneMgr::Get_Instance()->Scene_Change( m_eChangeScene );
+    m_bIsChange = true;
 }

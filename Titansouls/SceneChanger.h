@@ -19,5 +19,5 @@ public:
 
 private:
     SCENEID::ID m_eChangeScene;
-
+    bool        m_bIsChange;
 };

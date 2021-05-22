@@ -202,7 +202,7 @@
       <Filter>소스 파일\01.Obj\03.Arrow</Filter>
     </ClInclude>
     <ClInclude Include="SceneChanger.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>소스 파일\01.Obj\04.StageChanger</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -294,7 +294,7 @@
       <Filter>소스 파일\01.Obj\03.Arrow</Filter>
     </ClCompile>
     <ClCompile Include="SceneChanger.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\01.Obj\04.StageChanger</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
