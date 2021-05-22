@@ -27,7 +27,7 @@ public:
 	inline void SetReserveCollisionRect( int _i ) { m_vecCollisionRect.reserve( _i ); }
 
 	//Functions
-	virtual void		OnBlocked() { m_bDead = true; }
+	virtual void		OnBlocked() { m_bDestroyed = true; }
 
 	//Setter
 	inline void			Set_ImageKey( const TCHAR* _pImageKey ) { m_pImageKey = _pImageKey; }
@@ -51,7 +51,7 @@ protected:
 	INFO			m_tInfo;
 	RECT			m_tRect;
 	vector<RECT>	m_vecCollisionRect;
-	bool			m_bDead;
+	bool			m_bDestroyed;
 	const TCHAR*	m_pImageKey;
 	int				m_iDrawXID;
 	RENDERID::ID	m_eRenderID;

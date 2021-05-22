@@ -18,7 +18,7 @@ void CUiLayout::Initialize()
 
 int CUiLayout::Update()
 {
-	if ( m_bDead )
+	if ( m_bDestroyed )
 		return OBJ_DEAD;
 
 	return OBJ_NOEVENT;

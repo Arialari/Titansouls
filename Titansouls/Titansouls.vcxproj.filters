@@ -103,6 +103,9 @@
     <Filter Include="소스 파일\01.Obj\04.StageChanger">
       <UniqueIdentifier>{ca83f283-0c56-4797-9981-c7bac658f73e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\01.Obj\00.Pawn\01.Titan\Gol_Lath_Arm">
+      <UniqueIdentifier>{bfd0f610-ee4a-4bff-bb64-485d9430cf43}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -204,6 +207,9 @@
     <ClInclude Include="SceneChanger.h">
       <Filter>소스 파일\01.Obj\04.StageChanger</Filter>
     </ClInclude>
+    <ClInclude Include="GolLathArm.h">
+      <Filter>소스 파일\01.Obj\00.Pawn\01.Titan\Gol_Lath_Arm</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Titansouls.cpp">
@@ -295,6 +301,9 @@
     </ClCompile>
     <ClCompile Include="SceneChanger.cpp">
       <Filter>소스 파일\01.Obj\04.StageChanger</Filter>
+    </ClCompile>
+    <ClCompile Include="GolLathArm.cpp">
+      <Filter>소스 파일\01.Obj\00.Pawn\01.Titan\Gol_Lath_Arm</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

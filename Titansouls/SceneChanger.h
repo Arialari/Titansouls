@@ -17,6 +17,7 @@ public:
     inline void Set_TeleportPos( float _x, float _y ) { m_fTeleportX = _x; m_fTeleportY = _y; }
 
     virtual void OnBlocked( CObj* _pBlockedObj, DIRECTION _eDir ) override;
+    virtual void OnOverlaped( CObj* _pBlockedObj, DIRECTION _eDir = DIRECTION_END ) override;
 
 private:
     SCENEID::ID m_eChangeScene;

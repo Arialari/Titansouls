@@ -33,7 +33,7 @@ void CArrow::Initialize()
 
 int CArrow::Update()
 {
-    if ( m_bDead )
+    if ( m_bDestroyed )
         return OBJ_DEAD;
 
     if ( m_fSpeed >= 0.7 )
@@ -101,50 +101,50 @@ void CArrow::Update_ColisionRect()
 
 void CArrow::OnBlocked( CObj* _pBlockedObj,  DIRECTION _eDir )
 {
-    CObj* pObj;
-    if ( pObj = dynamic_cast<CTile*>(_pBlockedObj) )
+
+    switch ( _eDir )
     {
-        switch ( _eDir )
-        {
-        case E:
-            if ( cos( m_fRadianAngle ) > 0 )
-                m_fRadianAngle = PI - m_fRadianAngle;
-            break;
-        case W:
-            if ( cos( m_fRadianAngle ) < 0 )
-                m_fRadianAngle = PI - m_fRadianAngle;
-            break;
-        case N:
-            if ( sin( m_fRadianAngle ) > 0 )
-                m_fRadianAngle = -m_fRadianAngle;
-            break;
-        case S:
-            if ( sin( m_fRadianAngle ) < 0 )
-                m_fRadianAngle = -m_fRadianAngle;
-            break;
-        case SE:
-        case SW:
-        case NW:
-        case NE:
-            m_fRadianAngle += PI;
-            break;
-        case DIRECTION_END:
-            break;
-        default:
-            break;
-        }
-    }
-    else if ( pObj = dynamic_cast<CPlayer*>(_pBlockedObj) )
-    {
-        if ( !m_bHolded && ((m_fSpeed < 2.f) || m_bIsReturning) )
-        {
-            static_cast<CPlayer*>(pObj)->Pick_Arrow();
-            m_bIsRender = false;
-            m_bHolded = true;
-            m_fSpeed = 0.f;
-        }
+    case E:
+        if ( cos( m_fRadianAngle ) > 0 )
+            m_fRadianAngle = PI - m_fRadianAngle;
+        break;
+    case W:
+        if ( cos( m_fRadianAngle ) < 0 )
+            m_fRadianAngle = PI - m_fRadianAngle;
+        break;
+    case N:
+        if ( sin( m_fRadianAngle ) > 0 )
+            m_fRadianAngle = -m_fRadianAngle;
+        break;
+    case S:
+        if ( sin( m_fRadianAngle ) < 0 )
+            m_fRadianAngle = -m_fRadianAngle;
+        break;
+    case SE:
+    case SW:
+    case NW:
+    case NE:
+        m_fRadianAngle += PI;
+        break;
+    case DIRECTION_END:
+        break;
+    default:
+        break;
     }
 
+
+}
+
+void CArrow::OnOverlaped( CObj* _pBlockedObj, DIRECTION _eDir )
+{
+  
+    if ( !m_bHolded && ((m_fSpeed < 2.f) || m_bIsReturning) )
+    {
+        static_cast<CPlayer*>(_pBlockedObj)->Pick_Arrow();
+        m_bIsRender = false;
+        m_bHolded = true;
+        m_fSpeed = 0.f;
+    }
 }
 
 void CArrow::Update_RenderPoint()

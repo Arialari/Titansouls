@@ -154,6 +154,7 @@
     <ClInclude Include="CollisionMgr.h" />
     <ClInclude Include="EyecubeScene.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="GolLathArm.h" />
     <ClInclude Include="GolSetScene.h" />
     <ClInclude Include="Hallway.h" />
     <ClInclude Include="IAnimation.h" />
@@ -188,6 +189,7 @@
     <ClCompile Include="CGolLath.cpp" />
     <ClCompile Include="CollisionMgr.cpp" />
     <ClCompile Include="EyecubeScene.cpp" />
+    <ClCompile Include="GolLathArm.cpp" />
     <ClCompile Include="GolSetScene.cpp" />
     <ClCompile Include="Hallway.cpp" />
     <ClCompile Include="MyMath.cpp" />

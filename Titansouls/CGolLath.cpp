@@ -29,7 +29,7 @@ void CGolLath::Initialize()
 
 int CGolLath::Update()
 {
-	if ( m_bDead )
+	if ( m_bDestroyed )
 		return OBJ_DEAD;
 
 	Update_Animation_Frame();

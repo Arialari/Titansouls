@@ -45,7 +45,7 @@ void CPlayer::Initialize()
 
 int CPlayer::Update()
 {
-	if (m_bDead)
+	if (m_bDestroyed)
 		return OBJ_DEAD;
 
 
@@ -122,6 +122,10 @@ void CPlayer::Set_Pos( float _x, float _y )
 }
 
 void CPlayer::OnBlocked( CObj* _pBlockedObj, DIRECTION _eDir )
+{
+}
+
+void CPlayer::OnOverlaped( CObj* _pBlockedObj, DIRECTION _eDir )
 {
 }
 

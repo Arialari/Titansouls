@@ -25,7 +25,7 @@ void CSceneChanger::Initialize()
 
 int CSceneChanger::Update()
 {
-    if ( m_bDead )
+    if ( m_bDestroyed )
         return OBJ_DEAD;
 
     return OBJ_NOEVENT;
@@ -69,6 +69,11 @@ void CSceneChanger::Update_ColisionRect()
 }
 
 void CSceneChanger::OnBlocked( CObj* _pBlockedObj, DIRECTION _eDir )
+{
+
+}
+
+void CSceneChanger::OnOverlaped( CObj* _pBlockedObj, DIRECTION _eDir )
 {
     m_bIsChange = true;
     m_pPlayer = _pBlockedObj;

@@ -16,6 +16,7 @@ public:
     virtual void    Update_ColisionRect() override;
 
     virtual void    OnBlocked(CObj* _pBlockedObj ,DIRECTION _eDir) override;
+    virtual void    OnOverlaped( CObj* _pBlockedObj, DIRECTION _eDir = DIRECTION_END ) override;
 
     void            Update_RenderPoint();
     void            Shoot( float _fAimGaze );

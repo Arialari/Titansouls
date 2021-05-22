@@ -26,7 +26,7 @@ void CTile::Initialize()
 
 int CTile::Update()
 {
-	if (m_bDead)
+	if (m_bDestroyed)
 		return OBJ_DEAD;
 
 	return OBJ_NOEVENT;

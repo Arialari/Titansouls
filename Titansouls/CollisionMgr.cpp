@@ -23,8 +23,8 @@ void CCollisionMgr::Collision_Rect( list<CObj*>& _Dst, list<CObj*>& _Src )
 		{
 			if ( IsObj_Overlapped( pDst->Get_CollisionRect(), pSrc->Get_CollisionRect()) )
 			{
-				pDst->OnBlocked(pSrc);
-				pSrc->OnBlocked(pDst);
+				pDst->OnOverlaped(pSrc);
+				pSrc->OnOverlaped(pDst);
 			}
 		}
 	}

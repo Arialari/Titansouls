@@ -279,7 +279,7 @@ bool CTileMgr::Load_Tile()
 	{
 		
 		//MessageBox( g_hWnd, L"불러오기 성공!", L"성공", MB_OK );
-		//return true;
+		return true;
 	}
 	else
 	{

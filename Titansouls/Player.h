@@ -25,6 +25,7 @@ public:
 	virtual void Release() override;
 	virtual void Set_Pos( float _x, float _y ) override;
 	virtual void OnBlocked( CObj* _pBlockedObj, DIRECTION _eDir ) override;
+	virtual void OnOverlaped( CObj* _pBlockedObj, DIRECTION _eDir = DIRECTION_END ) override;
 
 public:
 	inline  void Pick_Arrow() { m_bHoldArrow = true; }
