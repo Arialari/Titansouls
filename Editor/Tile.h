@@ -21,8 +21,8 @@ public:
 	inline const int&	Get_DrawYID() const { return m_iDrawYID; }
 	inline void			Set_iFrameEndX( int _x ) { m_iFrameEndX = _x; }
 	inline const int&	Get_iFrameEndX() const { return m_iFrameEndX; }
-	inline void			Set_IsBlock( bool _IsBlock ) { m_bIsBlock = _IsBlock; }
-	inline const bool&	Get_IsBlock() const { return m_bIsBlock; }
+	inline void			Set_IsBlock( bool _IsBlock ) { m_bIsCheckBlock = _IsBlock; }
+	inline const bool&	Get_IsBlock() const { return m_bIsCheckBlock; }
 	static void			Set_iFrameIdx( int _iFrameIdx ) { m_iFrameIdx = _iFrameIdx; }
 	inline void			Set_eRenderId( RENDERID::ID _eId ) { m_eRenderID = _eId; }
 	
@@ -33,7 +33,7 @@ private:
 	static int			m_iFrameIdx;
 	int					m_iFrameEndX;
 	bool				m_bIsAlphaRender;
-	bool				m_bIsBlock;
+	bool				m_bIsCheckBlock;
 };
 
 

@@ -9,8 +9,8 @@
 
 CPlayer::CPlayer()
 	: m_ePreState( STATE_END ), m_eCurState( STATE_END ), m_eCurDirection(DIRECTION::DIRECTION_END)
-	, m_fRunSpeed(4.5f), m_fWalkSpeed(20.5f), m_fRollSpeed(6.7f), m_pArrow(nullptr), m_bHoldArrow(true), m_bIsAiming(false), m_bIsReturning(false), m_bWasRetrun(false)
-	, m_fAimGaze(0.f)
+	, m_fRunSpeed(5.0f), m_fWalkSpeed(23.5f), m_fRollSpeed(7.5f), m_pArrow(nullptr), m_bHoldArrow(true), m_bIsAiming(false), m_bIsReturning(false), m_bWasRetrun(false)
+	, m_fAimGaze(0.f), m_iDeadFrame(0), m_iDeadTime(180)
 {
 }
 
@@ -46,11 +46,12 @@ void CPlayer::Initialize()
 int CPlayer::Update()
 {
 	if (m_bDestroyed)
-		return OBJ_DEAD;
+		return OBJ_DESTROYED;
 
 
 	Key_Check();
 	OffSet();
+	Update_Dead();
 	Update_Aim();
 	Update_Return();
 	State_Change();
@@ -131,6 +132,8 @@ void CPlayer::OnOverlaped( CObj* _pBlockedObj, DIRECTION _eDir )
 
 void CPlayer::Key_Check()
 {
+	if ( m_eCurState == STATE::DEAD )
+		return;
 	bool bIsAim = false;
 	bool bIsReturning = false;
 	if ( CKeyMgr::Get_Instance()->Key_Up( 'C' ) )
@@ -335,6 +338,26 @@ void CPlayer::OffSet()
 
 	if ( iOffSetY > ( int )( m_tInfo.fY + iScrollY ) )
 		CScrollMgr::Get_Instance()->Add_ScrollY( iOffSetY - (m_tInfo.fY + iScrollY) );
+}
+
+void CPlayer::Update_Dead()
+{
+	if ( m_bDead )
+	{
+		m_eCurState = STATE::DEAD;
+		if ( m_iDeadFrame < m_iDeadTime )
+			++m_iDeadFrame;
+		else
+		{
+			m_bDead = false;
+			m_iDeadFrame = 0;
+			m_eCurState = STATE::IDLE;
+		}
+	}
+	else
+	{
+		m_iDeadFrame = 0;
+	}
 }
 
 void CPlayer::Update_Aim()

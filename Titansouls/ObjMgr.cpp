@@ -29,7 +29,7 @@ void CObjMgr::Update()
 		{
 			int iEvent = (*iter)->Update();
 
-			if ( OBJ_DEAD == iEvent )
+			if ( OBJ_DESTROYED == iEvent )
 			{
 				SAFE_DELETE( *iter );
 				iter = m_listObj[i].erase( iter );
@@ -40,11 +40,15 @@ void CObjMgr::Update()
 	}
 
 	CCollisionMgr::Collision_BackGroundEx( m_listObj[OBJID::PLAYER] );
-	CCollisionMgr::Collision_BackGroundEx( m_listObj[OBJID::ARROW] );
 	CCollisionMgr::Collision_Rect( m_listObj[OBJID::PLAYER], m_listObj[OBJID::ARROW] );
+	CCollisionMgr::Collision_BackGroundEx( m_listObj[OBJID::ARROW] );
+	
 	if( static_cast<CPlayer*>(m_listObj[OBJID::PLAYER].front())->Get_IsHolingArrow() )
 		CCollisionMgr::Collision_Rect( m_listObj[OBJID::COLLISION], m_listObj[OBJID::PLAYER] );
+	CCollisionMgr::Collision_Rect( m_listObj[OBJID::TITAN], m_listObj[OBJID::PLAYER] );
 	CCollisionMgr::Collision_RectEx( m_listObj[OBJID::TITAN], m_listObj[OBJID::PLAYER] );
+	CCollisionMgr::Collision_Rect( m_listObj[OBJID::TITAN], m_listObj[OBJID::ARROW] );
+	CCollisionMgr::Collision_RectEx( m_listObj[OBJID::TITAN], m_listObj[OBJID::ARROW] );
 	//CCollisionMgr::Collision_Sphere(m_listObj[OBJID::MOUSE], m_listObj[OBJID::MONSTER]);
 }
 

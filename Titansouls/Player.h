@@ -36,6 +36,7 @@ private:
 	void Key_Check();
 	void State_Change();
 	void OffSet();
+	void Update_Dead();
 	void Update_Aim();
 	void Update_Return();
 	virtual void Update_Animation_Frame() override;
@@ -55,6 +56,8 @@ private:
 	bool		m_bIsReturning;
 	bool		m_bWasRetrun;
 	float		m_fAimGaze;
+	const int	m_iDeadTime;
+	int			m_iDeadFrame;
 };
 
 #endif // !__PLAYER_H__

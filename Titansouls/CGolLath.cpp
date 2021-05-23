@@ -2,8 +2,12 @@
 #include "CGolLath.h"
 #include "BmpMgr.h"
 #include "ScrollMgr.h"
+#include "GolLathArm.h"
+#include "ObjMgr.h"
+#include "Player.h"
 
 CGolLath::CGolLath()
+	:m_fMaxShoulderY(3.0f), m_fMaxBodyY(7.f), m_fBodyY(0.f), m_fShoulderY(0.f), m_fRenderModelY(0.f), m_fHeadY(0.f), m_bPatterning(false), m_iAttackStartFrame(0), m_iShieldStartFrame(0)
 {
 }
 
@@ -15,27 +19,33 @@ void CGolLath::Initialize()
 {
 	CBmpMgr::Get_Instance()->Insert_Bmp( L"../Image/p_Gol-Lath.bmp", L"Gol_Lath" );
 
-	m_tInfo.fX = 700.f;
-	m_tInfo.fY = 100.f;
+	m_tInfo.fX = 39.5f * DEFAULTCX;
+	m_tInfo.fY = 57.5f * DEFAULTCY;
 	m_tInfo.iCX = DEFAULTCX * 4;
 	m_tInfo.iCY = DEFAULTCY * 5;
 	Update_Rect();
-
 	m_pImageKey = L"Gol_Lath";
 	m_eRenderID = RENDERID::OBJECT;
 	m_vecCollisionRect.reserve( 1 );
 	m_vecCollisionRect.emplace_back( RECT() );
+
+	m_pArm[LEFT] = static_cast<CGolLathArm*>(CAbstractFactory<CGolLathArm>::Create( m_tInfo.fX - (DEFAULTCX * 3), m_tInfo.fY + (DEFAULTCY * 3) ));
+	m_pArm[LEFT]->Set_IsFliped( false );
+	m_pArm[LEFT]->Set_pGolLath( this );
+	m_pArm[RIGHT] = static_cast<CGolLathArm*>(CAbstractFactory<CGolLathArm>::Create( m_tInfo.fX + (DEFAULTCX * 3), m_tInfo.fY + (DEFAULTCY * 3) ));
+	m_pArm[RIGHT]->Set_IsFliped( true );
+	m_pArm[RIGHT]->Set_pGolLath( this );
+	CObjMgr::Get_Instance()->Add_Object( m_pArm[LEFT], OBJID::TITAN );
+	CObjMgr::Get_Instance()->Add_Object( m_pArm[RIGHT], OBJID::TITAN );
 }
 
 int CGolLath::Update()
 {
 	if ( m_bDestroyed )
-		return OBJ_DEAD;
+		return OBJ_DESTROYED;
 
+	Update_Pattern();
 	Update_Animation_Frame();
-
-	//Update_Rect(); Not Nessercery
-	Update_ColisionRect();
 
 	return OBJ_NOEVENT;
 }
@@ -50,24 +60,150 @@ void CGolLath::Render( HDC _DC )
 	int iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
 
 	HDC hMemDC = CBmpMgr::Get_Instance()->Find_Bmp( m_pImageKey );
+	if ( m_iPatternFrame >= 140 )
+	{
+		m_fBodyY = m_fMaxBodyY * 0.7f;
+		m_fShoulderY = m_fMaxShoulderY;
+	}
+	else if ( m_iPatternFrame > 30 )
+	{
+		m_fShoulderY = m_fMaxShoulderY;
 
+		if ( m_iPatternFrame >= 80 )
+		{
+			m_fBodyY = m_fMaxBodyY - ((m_iPatternFrame - 80) * 0.033f);
+		}
+		else if ( m_iPatternFrame >= 70 )
+		{
+			m_fBodyY = m_fMaxBodyY;
+		}
+		else
+		{
+			m_fBodyY = m_iPatternFrame * 0.1f;
+		}
+	}
+	else
+	{
+		m_fShoulderY = m_iPatternFrame * 0.1f;
+		m_fBodyY = m_iPatternFrame * 0.1f;
+	}
+	if ( m_bDead )
+	{
+		m_iFrameidx = 3;
+	}
+	else if ( m_iPatternFrame >= 30 )
+	{
+		m_fHeadY = 2.0f;
+	}
+	else if ( m_iPatternFrame >= 1 )
+	{
+		m_fHeadY += 0.0666f;
+	}
+	if ( m_iPatternFrame == 0 )
+	{
+		m_iFrameidx = 1;
+	}
+	else if ( m_iPatternFrame < 150 )
+	{
+		m_iFrameidx = 4;
+	}
+	else if ( m_iPatternFrame < 230 )
+	{
+		m_iFrameidx = 2;
+	}
+	else
+	{
+		m_iFrameidx = 0;
+	}
+	// 어께 왼쪽
 	GdiTransparentBlt( _DC
-					   , m_tRect.left + iScrollX, m_tRect.top + iScrollY
+					   , m_tRect.left + iScrollX - 3 * DEFAULTCX, (int)(m_tRect.top + iScrollY + (DEFAULTCY * 3.5f) - (m_fBodyY * DEFAULTCY))
+					   , 3 * DEFAULTCX, (int)(DEFAULTCY * m_fShoulderY)
+					   , hMemDC
+					   , 9 * PIXELCX, 6 * PIXELCY
+					   , PIXELCX * 3, (int)(PIXELCY * m_fShoulderY) // 애니메이션에 따라서 이 값을 변경시키면 밑에서 위로 솟아오르는 느낌을 줄 수 잇다.
+					   , RGB( 255, 0, 255 ) );
+
+	// 어께 오른쪽
+	GdiTransparentBlt( _DC
+					   , m_tRect.left + iScrollX + 4 * DEFAULTCX, (int)(m_tRect.top + iScrollY + (DEFAULTCY * 3.5f) - (m_fBodyY * DEFAULTCY))
+					   , 3 * DEFAULTCX, (int)(DEFAULTCY * m_fShoulderY)
+					   , hMemDC
+					   , 12 * PIXELCX, 6 * PIXELCY
+					   , PIXELCX * 3, (int)(PIXELCY * m_fShoulderY)// 애니메이션에 따라서 이 값을 변경시키면 밑에서 위로 솟아오르는 느낌을 줄 수 잇다.
+					   , RGB( 255, 0, 255 ) );
+
+
+	// 몸통
+	GdiTransparentBlt( _DC
+					   , m_tRect.left + iScrollX - DEFAULTCX , (int)(m_tRect.top + iScrollY + (DEFAULTCY * 3) - (m_fBodyY * DEFAULTCY))
+					   , 6 * DEFAULTCX, (int)(DEFAULTCY * m_fBodyY)
+					   , hMemDC
+					   , 0 * PIXELCX, 7 * PIXELCY
+					   , PIXELCX * 6, (int)(PIXELCY * m_fBodyY) // 애니메이션에 따라서 이 값을 변경시키면 밑에서 위로 솟아오르는 느낌을 줄 수 잇다.
+					   , RGB( 255, 0, 255 ) );
+	// 머리
+	GdiTransparentBlt( _DC
+					   , m_tRect.left + iScrollX , (int)(m_tRect.top + iScrollY - ((m_fBodyY + 1 - m_fHeadY) * DEFAULTCY))
 					   , m_tInfo.iCX, m_tInfo.iCY
 					   , hMemDC
-					   , m_tFrame.iFrameX * PIXELCX, m_tFrame.iModelY * PIXELCY
+					   , m_iFrameidx * 4 * PIXELCX, m_tFrame.iModelY * PIXELCY
 					   , PIXELCX * 4, PIXELCY * 5
 					   , RGB( 255, 0, 255 ) );
+
+	RenderCollision( _DC );
 }
 
 void CGolLath::Release()
 {
 }
 
+void CGolLath::Update_Pattern()
+{
+	if ( !m_bActive )
+		return;
+
+	++m_iPatternFrame;
+
+	if ( m_iPatternFrame > 300 ) // 공격 패턴의 시작
+	{
+		if ( m_tInfo.fX < m_pPlayer->Get_Info().fX ) // RIGHT
+		{
+			AttackPattern( RIGHT );
+			ShieldPattern( LEFT );
+		}
+		else // LEFT
+		{
+			AttackPattern( LEFT );
+			ShieldPattern( RIGHT );
+		}
+	}
+	else if ( m_iPatternFrame < 10 ) // 손모으기
+	{
+		float dX = m_tInfo.fX - m_pArm[LEFT]->Get_Info().fX;
+		float dY = m_tInfo.fY - m_pArm[LEFT]->Get_Info().fY;
+
+		//m_pArm[LEFT]->Set_Pos();
+	}
+}
+
+void CGolLath::AttackPattern( Arm _arm )
+{
+	if ( m_bPatterning )
+		return;
+
+}
+
+void CGolLath::ShieldPattern( Arm _arm )
+{
+	if ( m_bPatterning )
+		return;
+}
+
 void CGolLath::Update_ColisionRect()
 {
-	m_vecCollisionRect.front().left = (LONG)(m_tInfo.fX - (m_tInfo.iCX >> 1));
+	m_vecCollisionRect.front().left = (LONG)(m_tInfo.fX - (m_tInfo.iCX >> 1) - 2.5f * DEFAULTCX);
 	m_vecCollisionRect.front().top = (LONG)(m_tInfo.fY - (m_tInfo.iCY >> 1));
-	m_vecCollisionRect.front().right = (LONG)(m_tInfo.fX + (m_tInfo.iCX >> 1));
-	m_vecCollisionRect.front().bottom = (LONG)(m_tInfo.fY + (m_tInfo.iCY >> 1));
+	m_vecCollisionRect.front().right = (LONG)(m_tInfo.fX + (m_tInfo.iCX >> 1) + 2.5f * DEFAULTCX);
+	m_vecCollisionRect.front().bottom = (LONG)(m_tInfo.fY + (m_tInfo.iCY >> 1) - DEFAULTCY);
 }

@@ -26,7 +26,7 @@ void CSceneChanger::Initialize()
 int CSceneChanger::Update()
 {
     if ( m_bDestroyed )
-        return OBJ_DEAD;
+        return OBJ_DESTROYED;
 
     return OBJ_NOEVENT;
     
@@ -44,16 +44,8 @@ void CSceneChanger::Late_Update()
 
 void CSceneChanger::Render( HDC _DC )
 {
-    if ( CUiMgr::Get_Instance()->Get_IsCollisionVisible() )
-    {
-        int iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
-        int iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
-        HBRUSH r_brush = CreateSolidBrush( RGB( 255, 0, 0 ) );
-        HGDIOBJ hOldBrush = SelectObject( _DC, r_brush );
-        Rectangle( _DC, m_tRect.left + iScrollX + 2, m_tRect.top + iScrollY + 2, m_tRect.right + iScrollX - 2, m_tRect.bottom + iScrollY - 2 );
-        SelectObject( _DC, hOldBrush );
-        DeleteObject( r_brush );
-    }
+
+    RenderCollision( _DC );
 }
 
 void CSceneChanger::Release()

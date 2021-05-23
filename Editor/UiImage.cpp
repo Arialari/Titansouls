@@ -24,7 +24,7 @@ void CUiImage::Initialize()
 int CUiImage::Update()
 {
 	if ( m_bDestroyed )
-		return OBJ_DEAD;
+		return OBJ_DESTROYED;
 	if ( CKeyMgr::Get_Instance()->Key_Down( '0' ) )
 		m_iModelEndX = 0;
 	else if ( CKeyMgr::Get_Instance()->Key_Down( VK_ADD ) )

@@ -12,15 +12,15 @@
 #define SAFE_DELETE(p) if(p) { delete p; p = nullptr; }
 
 #define OBJ_NOEVENT		0
-#define OBJ_DEAD		1
+#define OBJ_DESTROYED	1
 
 #define PI	3.141592f
 
 #define PIXELCX 16
 #define PIXELCY 16
 
-#define DEFAULTCX 50
-#define DEFAULTCY 50
+#define DEFAULTCX 40
+#define DEFAULTCY 40
 
 #define TILEX 300
 #define TILEY 1000

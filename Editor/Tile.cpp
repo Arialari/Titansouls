@@ -7,7 +7,7 @@
 
 int CTile::m_iFrameIdx = 0;
 CTile::CTile()
-	: m_iDrawYID(0), m_iFrameEndX(0), m_bIsAlphaRender(false), m_bIsBlock(false)
+	: m_iDrawYID(0), m_iFrameEndX(0), m_bIsAlphaRender(false), m_bIsCheckBlock(false)
 {
 }
 
@@ -27,7 +27,7 @@ void CTile::Initialize()
 int CTile::Update()
 {
 	if (m_bDestroyed)
-		return OBJ_DEAD;
+		return OBJ_DESTROYED;
 
 	return OBJ_NOEVENT;
 }
@@ -79,7 +79,7 @@ void CTile::Render(HDC _DC)
 	}
 	if ( CUiMgr::Get_Instance()->Get_IsCollisionVisible() )
 	{
-		if ( m_bIsBlock )
+		if ( m_bIsCheckBlock )
 		{
 			HPEN r_brush = CreatePen( PS_SOLID, 1, RGB( 255, 0, 0 ) );
 			HGDIOBJ hOldBrush = SelectObject( _DC, r_brush );

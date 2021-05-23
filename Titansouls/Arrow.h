@@ -23,6 +23,7 @@ public:
     void            Set_RadianAngle( float _fAngle ) { m_fRadianAngle = _fAngle; }
     void            Add_Speed();
     void            Set_IsReturning( bool _bIsReturning ) { m_bIsReturning = _bIsReturning; }
+    const bool&     Get_IsDamage() const { return m_bIsDamage; }
 private:
     HDC             m_hMemDc;
     float           m_fRadianAngle;
@@ -32,5 +33,6 @@ private:
     bool            m_bHolded;
     bool            m_bIsReturning;
     POINT           m_tRenderPoint[3];
+    bool            m_bIsDamage;
 };
 

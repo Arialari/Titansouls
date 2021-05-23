@@ -6,7 +6,7 @@
 #include "Player.h"
 
 CArrow::CArrow()
-    :m_fRadianAngle( 0.f ), m_hMemDc( nullptr ), m_fFullSpeed( 24.5f ), m_fSpeed( 0.f ), m_fReturnAccelator( 1.f ), m_bHolded( true ), m_bIsReturning( false )
+    :m_fRadianAngle( 0.f ), m_hMemDc( nullptr ), m_fFullSpeed( 24.5f ), m_fSpeed( 0.f ), m_fReturnAccelator( 1.f ), m_bHolded( true ), m_bIsReturning( false ), m_bIsDamage(false)
 {
     ZeroMemory( m_tRenderPoint, sizeof( m_tRenderPoint ) );
 }
@@ -29,17 +29,29 @@ void CArrow::Initialize()
 
     m_vecCollisionRect.reserve( 1 );
     m_vecCollisionRect.emplace_back( RECT() );
+
+    m_bIsCheckBlock = true;
+    m_bIsCheckOverlape = true;
 }
 
 int CArrow::Update()
 {
     if ( m_bDestroyed )
-        return OBJ_DEAD;
+        return OBJ_DESTROYED;
 
     if ( m_fSpeed >= 0.7 )
         m_fSpeed -= 0.7f;
     else
         m_fSpeed = 0;
+
+    if ( m_fSpeed > 3.f )
+    {
+        m_bIsDamage = true;
+    }
+    else
+    {
+        m_bIsDamage = false;
+    }
 
     m_tInfo.fX += m_fSpeed * cosf( m_fRadianAngle );
     m_tInfo.fY -= m_fSpeed * sinf( m_fRadianAngle );
@@ -55,9 +67,9 @@ int CArrow::Update()
 void CArrow::Late_Update()
 {
     if ( m_fSpeed > 3.f )
-        m_bIsBlock = true;
+        m_bIsCheckBlock = true;
     else
-        m_bIsBlock = false;
+        m_bIsCheckBlock = false;
 }
 
 void CArrow::Render( HDC _DC )
@@ -132,12 +144,10 @@ void CArrow::OnBlocked( CObj* _pBlockedObj,  DIRECTION _eDir )
         break;
     }
 
-
 }
 
 void CArrow::OnOverlaped( CObj* _pBlockedObj, DIRECTION _eDir )
 {
-  
     if ( !m_bHolded && ((m_fSpeed < 2.f) || m_bIsReturning) )
     {
         static_cast<CPlayer*>(_pBlockedObj)->Pick_Arrow();

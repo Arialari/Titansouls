@@ -1,9 +1,28 @@
-﻿  CollisionMgr.cpp
+﻿  stdafx.cpp
+  BmpMgr.cpp
+  BrainFreezeScene.cpp
+  EyecubeScene.cpp
+  GolSetScene.cpp
+  Hallway.cpp
+  CollisionMgr.cpp
 D:\Study\Polio\Titansouls\Editor\CollisionMgr.cpp(141,18): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
 D:\Study\Polio\Titansouls\Editor\CollisionMgr.cpp(142,19): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Editor.cpp
+  IAnimation.cpp
+  Implement.cpp
+  KeyMgr.cpp
+  MainGame.cpp
+  MyBitmap.cpp
+  MyMath.cpp
   Obj.cpp
   ObjMgr.cpp
+  Scene.cpp
+  SceneMgr.cpp
+  ScrollMgr.cpp
+  SludgeScene.cpp
   Tile.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
   TileMgr.cpp
   Ui.cpp
   UiButton.cpp

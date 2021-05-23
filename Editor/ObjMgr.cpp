@@ -23,7 +23,7 @@ void CObjMgr::Update()
 		{
 			int iEvent = (*iter)->Update();
 
-			if ( OBJ_DEAD == iEvent )
+			if ( OBJ_DESTROYED == iEvent )
 			{
 				SAFE_DELETE( *iter );
 				iter = m_listObj[i].erase( iter );

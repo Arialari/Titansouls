@@ -29,13 +29,16 @@ public:
 	//Functions
 	virtual void		OnBlocked(CObj* _pBlockedObj,DIRECTION _eDir = DIRECTION_END) { m_bDestroyed = true; }
 	virtual void		OnOverlaped( CObj* _pBlockedObj, DIRECTION _eDir = DIRECTION_END ) {  }
+	virtual void		RenderCollision( HDC _DC );
 
 	//Setter
 	inline void			Set_ImageKey( const TCHAR* _pImageKey ) { m_pImageKey = _pImageKey; }
 	inline void			Set_DrawXID( int _iDrawXID ) { m_iDrawXID = _iDrawXID; }
 	inline void			Set_IsRender( bool _bIsRender ) { m_bIsRender = _bIsRender; }
 	inline const bool&	Get_IsRender() const { return m_bIsRender; }
-
+	inline const bool& Get_IsCheckBlock() const { return m_bIsCheckBlock; }
+	inline const bool& Get_IsCheckOverlape() const { return m_bIsCheckOverlape; }
+	inline void			Set_Dead( bool _bDead ) { m_bDead = _bDead; }
 public:
 	//Getter
 	const INFO& Get_Info() const { return m_tInfo; }
@@ -57,7 +60,8 @@ protected:
 	int				m_iDrawXID;
 	RENDERID::ID	m_eRenderID;
 	bool			m_bIsRender;
-	bool			m_bIsBlock;
+	bool			m_bIsCheckBlock;
+	bool			m_bIsCheckOverlape;
 	bool			m_bDead;
 };
 

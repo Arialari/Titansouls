@@ -23,8 +23,10 @@ void CCollisionMgr::Collision_Rect( list<CObj*>& _Dst, list<CObj*>& _Src )
 		{
 			if ( IsObj_Overlapped( pDst->Get_CollisionRect(), pSrc->Get_CollisionRect()) )
 			{
-				pDst->OnOverlaped(pSrc);
-				pSrc->OnOverlaped(pDst);
+				if( pDst->Get_IsCheckOverlape() )
+					pDst->OnOverlaped(pSrc);
+				if ( pSrc->Get_IsCheckOverlape() )
+					pSrc->OnOverlaped(pDst);
 			}
 		}
 	}
@@ -44,13 +46,15 @@ void CCollisionMgr::Collision_RectEx( list<CObj*>& _Dst, list<CObj*>& _Src )
 					if ( pDst->Get_Info().fX < pSrc->Get_Info().fX )
 					{
 						pSrc->Add_PosX( fX );
-						pSrc->OnBlocked(pDst, DIRECTION::W);
+						if(pSrc->Get_IsCheckBlock() )
+							pSrc->OnBlocked(pDst, DIRECTION::W);
 						continue;
 					}
 					else
 					{
 						pSrc->Add_PosX( -fX );
-						pSrc->OnBlocked( pDst, DIRECTION::E );
+						if ( pSrc->Get_IsCheckBlock() )
+							pSrc->OnBlocked( pDst, DIRECTION::E );
 						continue;
 					}
 				}
@@ -59,13 +63,15 @@ void CCollisionMgr::Collision_RectEx( list<CObj*>& _Dst, list<CObj*>& _Src )
 					if ( pDst->Get_Info().fY < pSrc->Get_Info().fY )
 					{
 						pSrc->Add_PosY( fY );
-						pSrc->OnBlocked( pDst, DIRECTION::N );
+						if ( pSrc->Get_IsCheckBlock() )
+							pSrc->OnBlocked( pDst, DIRECTION::N );
 						continue;
 					}
 					else
 					{
 						pSrc->Add_PosY( -fY );
-						pSrc->OnBlocked( pDst, DIRECTION::S );
+						if ( pSrc->Get_IsCheckBlock() )
+							pSrc->OnBlocked( pDst, DIRECTION::S );
 						continue;
 					}
 				}
@@ -135,7 +141,8 @@ void CCollisionMgr::Collision_BackGroundEx( list<CObj*>& _Src )
 							pObj->Add_PosY( -fY );
 						}
 					}
-					pObj->OnBlocked( pTile, (DIRECTION)i );
+					if ( pObj->Get_IsCheckBlock() )
+						pObj->OnBlocked( pTile, (DIRECTION)i );
 					break;
 				}
 			}

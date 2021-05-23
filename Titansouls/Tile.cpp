@@ -24,13 +24,13 @@ void CTile::Initialize()
 	m_eRenderID = RENDERID::BACKGROUND;
 	m_vecCollisionRect.reserve( 1 );
 	m_vecCollisionRect.emplace_back( RECT() );
-	m_bIsBlock = false;
+	m_bIsCheckBlock = false;
 }
 
 int CTile::Update()
 {
 	if (m_bDestroyed)
-		return OBJ_DEAD;
+		return OBJ_DESTROYED;
 
 	return OBJ_NOEVENT;
 }
@@ -83,7 +83,7 @@ void CTile::Render(HDC _DC)
 	if ( CUiMgr::Get_Instance()->Get_IsCollisionVisible() )
 	{
 
-		if ( m_bIsBlock )
+		if ( m_bIsCheckBlock )
 		{
 			HPEN r_brush = CreatePen(PS_SOLID,1, RGB( 255, 0, 0 ) );
 			HGDIOBJ hOldBrush = SelectObject( _DC, r_brush );

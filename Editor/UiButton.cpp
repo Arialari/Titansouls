@@ -26,7 +26,7 @@ void CUiButton::Initialize()
 int CUiButton::Update()
 {
 	if ( m_bDestroyed )
-		return OBJ_DEAD;
+		return OBJ_DESTROYED;
 
 	Update_Rect();
 	Update_Hover();

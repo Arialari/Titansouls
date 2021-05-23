@@ -31,13 +31,18 @@ void CHallway::Initialize()
 	CTileMgr::Get_Instance()->Create_Tile();
 	m_fStartPointX = 39.5f * DEFAULTCX;
 	m_fStartPointY = 184.5f * DEFAULTCY;
+	// ---------------------------------------- Create -------------------------
 	if ( !m_pPlayer )
 	{
 		m_pPlayer = static_cast<CPlayer*>(CAbstractFactory<CPlayer>::Create( m_fStartPointX, m_fStartPointY ));
 		CObjMgr::Get_Instance()->Add_Object( m_pPlayer, OBJID::PLAYER );
 	}
-	CObjMgr::Get_Instance()->Add_Object( CAbstractFactory<CGolLath>::Create(), OBJID::TITAN );
-	CObj* pObj = CAbstractFactory<CSceneChanger>::Create(39.5f * DEFAULTCX, 98.5f * DEFAULTCY );
+
+	CObj* pObj = CAbstractFactory<CGolLath>::Create();
+	static_cast<CTitan*>(pObj)->Set_Player( m_pPlayer );
+	CObjMgr::Get_Instance()->Add_Object( pObj, OBJID::TITAN );
+
+	pObj = CAbstractFactory<CSceneChanger>::Create(39.5f * DEFAULTCX, 98.5f * DEFAULTCY );
 	static_cast<CSceneChanger*>(pObj)->Set_Scene( SCENEID::SLUDGE );
 	static_cast<CSceneChanger*>(pObj)->Set_TeleportPos ( 39.5f * DEFAULTCX, 80.5f * DEFAULTCY );
 	CObjMgr::Get_Instance()->Add_Object( pObj, OBJID::COLLISION);
