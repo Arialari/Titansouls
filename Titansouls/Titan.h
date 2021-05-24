@@ -30,7 +30,7 @@ public:
 
 protected:
     virtual void Update_Dead() = 0;
-    void        Update_DamageCollision();
+    virtual void Update_DamageCollision();
     virtual void    Update_Pattern() = 0;
 
 protected:

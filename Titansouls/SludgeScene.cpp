@@ -9,6 +9,7 @@
 #include "SceneChanger.h"
 #include "CGolLath.h"
 #include "SoundMgr.h"
+#include "SludgeHeart.h"
 
 CSludgeScene::CSludgeScene()
 {
@@ -38,8 +39,12 @@ void CSludgeScene::Initialize()
 		m_pPlayer = static_cast<CPlayer*>(CAbstractFactory<CPlayer>::Create( m_fStartPointX, m_fStartPointY ));
 		CObjMgr::Get_Instance()->Add_Object( m_pPlayer, OBJID::PLAYER );
 	}
-	CObjMgr::Get_Instance()->Add_Object( CAbstractFactory<CGolLath>::Create(), OBJID::TITAN );
-	CObj* pObj = CAbstractFactory<CSceneChanger>::Create( 39.5f * DEFAULTCX, 81.5f * DEFAULTCY );
+	CObj* pObj = CAbstractFactory<CSludgeHeart>::Create();
+	static_cast<CTitan*>(pObj)->Set_Player( m_pPlayer );
+	CObjMgr::Get_Instance()->Add_Object( pObj, OBJID::TITAN );
+	CScrollMgr::Get_Instance()->Set_Titan( pObj );
+
+	pObj = CAbstractFactory<CSceneChanger>::Create( 45.5f * DEFAULTCX, 81.5f * DEFAULTCY );
 	static_cast<CSceneChanger*>(pObj)->Set_Scene( SCENEID::HALLWAY_UNDER );
 	static_cast<CSceneChanger*>(pObj)->Set_TeleportPos( 39.5f * DEFAULTCX, 99.5f * DEFAULTCY );
 	CObjMgr::Get_Instance()->Add_Object( pObj, OBJID::COLLISION );

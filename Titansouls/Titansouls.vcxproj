@@ -173,6 +173,10 @@
     <ClInclude Include="SceneChanger.h" />
     <ClInclude Include="SceneMgr.h" />
     <ClInclude Include="ScrollMgr.h" />
+    <ClInclude Include="Slime.h" />
+    <ClInclude Include="SlimeShadow.h" />
+    <ClInclude Include="SludgeHeart.h" />
+    <ClInclude Include="SludgeHeartShadow.h" />
     <ClInclude Include="SludgeScene.h" />
     <ClInclude Include="SoundMgr.h" />
     <ClInclude Include="Stage.h" />
@@ -198,6 +202,10 @@
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MyMath.cpp" />
     <ClCompile Include="SceneChanger.cpp" />
+    <ClCompile Include="Slime.cpp" />
+    <ClCompile Include="SlimeShadow.cpp" />
+    <ClCompile Include="SludgeHeart.cpp" />
+    <ClCompile Include="SludgeHeartShadow.cpp" />
     <ClCompile Include="SludgeScene.cpp" />
     <ClCompile Include="SoundMgr.cpp" />
     <ClCompile Include="Titan.cpp" />

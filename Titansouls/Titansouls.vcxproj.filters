@@ -115,6 +115,15 @@
     <Filter Include="소스 파일\98.Manager\SoundMgr">
       <UniqueIdentifier>{9b3f430b-0529-45fe-a530-3d6fdf61e1fb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\01.Obj\00.Pawn\01.Titan\Sludge">
+      <UniqueIdentifier>{c06f799e-6791-4be4-a485-fde5c4a5d2f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\01.Obj\00.Pawn\01.Titan\Sludge\Slime">
+      <UniqueIdentifier>{de847346-fd3b-4f86-98a6-ffa93fe704a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\01.Obj\00.Pawn\01.Titan\Sludge\Heart">
+      <UniqueIdentifier>{c5bddf5d-9235-4b61-801f-193d67894c83}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -228,6 +237,18 @@
     <ClInclude Include="SoundMgr.h">
       <Filter>소스 파일\98.Manager\SoundMgr</Filter>
     </ClInclude>
+    <ClInclude Include="Slime.h">
+      <Filter>소스 파일\01.Obj\00.Pawn\01.Titan\Sludge\Slime</Filter>
+    </ClInclude>
+    <ClInclude Include="SlimeShadow.h">
+      <Filter>소스 파일\01.Obj\00.Pawn\01.Titan\Sludge\Slime</Filter>
+    </ClInclude>
+    <ClInclude Include="SludgeHeart.h">
+      <Filter>소스 파일\01.Obj\00.Pawn\01.Titan\Sludge\Heart</Filter>
+    </ClInclude>
+    <ClInclude Include="SludgeHeartShadow.h">
+      <Filter>소스 파일\01.Obj\00.Pawn\01.Titan\Sludge\Heart</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Titansouls.cpp">
@@ -331,6 +352,18 @@
     </ClCompile>
     <ClCompile Include="SoundMgr.cpp">
       <Filter>소스 파일\98.Manager\SoundMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Slime.cpp">
+      <Filter>소스 파일\01.Obj\00.Pawn\01.Titan\Sludge\Slime</Filter>
+    </ClCompile>
+    <ClCompile Include="SlimeShadow.cpp">
+      <Filter>소스 파일\01.Obj\00.Pawn\01.Titan\Sludge\Slime</Filter>
+    </ClCompile>
+    <ClCompile Include="SludgeHeart.cpp">
+      <Filter>소스 파일\01.Obj\00.Pawn\01.Titan\Sludge\Heart</Filter>
+    </ClCompile>
+    <ClCompile Include="SludgeHeartShadow.cpp">
+      <Filter>소스 파일\01.Obj\00.Pawn\01.Titan\Sludge\Heart</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
