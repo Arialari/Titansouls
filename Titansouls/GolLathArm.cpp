@@ -35,6 +35,7 @@ int CGolLathArm::Update()
 	Update_Pattern();
 	Update_DamageCollision();
 	Update_ColisionRect();
+	Update_Rect();
 
 	return OBJ_NOEVENT;
 }
@@ -55,7 +56,7 @@ void CGolLathArm::Render( HDC _DC )
 					   , m_tRect.left + iScrollX, m_tRect.top + iScrollY
 					   , m_tInfo.iCX, m_tInfo.iCY
 					   , hMemDC
-					   , (m_tFrame.iFrameX + 16) * PIXELCX, (20 + (6 * m_bIsFliped) )* PIXELCY
+					   , ((m_tFrame.iFrameX * 4) + 16) * PIXELCX, (20 + (6 * m_bIsFliped) )* PIXELCY
 					   , 4 * PIXELCX, 2 * PIXELCY
 					   , RGB( 255, 0, 255 ) );
 	//Ме
@@ -63,7 +64,7 @@ void CGolLathArm::Render( HDC _DC )
 					   , m_tRect.left + iScrollX, m_tRect.top + iScrollY - (DEFAULTCY) - m_fPosZ
 					   , m_tInfo.iCX, 4 * DEFAULTCY
 					   , hMemDC
-					   , (m_tFrame.iFrameX + 16) * PIXELCX, (16 + (6 * m_bIsFliped)) * PIXELCY
+					   , ((m_tFrame.iFrameX * 4) + 16) * PIXELCX, (16 + (6 * m_bIsFliped)) * PIXELCY
 					   , 4 * PIXELCX, 4 * PIXELCY
 					   , RGB( 255, 0, 255 ) );
 	RenderCollision(_DC);

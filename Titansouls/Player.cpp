@@ -9,7 +9,7 @@
 
 CPlayer::CPlayer()
 	: m_ePreState( STATE_END ), m_eCurState( STATE_END ), m_eCurDirection(DIRECTION::DIRECTION_END)
-	, m_fRunSpeed(5.0f), m_fWalkSpeed(23.5f), m_fRollSpeed(7.5f), m_pArrow(nullptr), m_bHoldArrow(true), m_bIsAiming(false), m_bIsReturning(false), m_bWasRetrun(false)
+	, m_fRunSpeed(5.0f), m_fWalkSpeed(3.5f), m_fRollSpeed(7.5f), m_pArrow(nullptr), m_bHoldArrow(true), m_bIsAiming(false), m_bIsReturning(false), m_bWasRetrun(false)
 	, m_fAimGaze(0.f), m_iDeadFrame(0), m_iDeadTime(180)
 {
 }
@@ -300,8 +300,8 @@ void CPlayer::State_Change()
 			m_tFrame.ePlayType = FRAME::PLAYTYPE::NO_LOOP;
 			break;
 		case STATE::DEAD:
-			m_tFrame.iFrameX = m_tFrame.iStartX = 13;
-			m_tFrame.iEndX = 13;
+			m_tFrame.iFrameX = m_tFrame.iStartX = 12;
+			m_tFrame.iEndX = 12;
 			m_tFrame.iModelY = m_eCurDirection;
 			m_tFrame.dwDelay = MAXDWORD;
 			m_tFrame.dwTime = GetTickCount();
@@ -345,6 +345,7 @@ void CPlayer::Update_Dead()
 	if ( m_bDead )
 	{
 		m_eCurState = STATE::DEAD;
+		Update_ColisionRect();
 		if ( m_iDeadFrame < m_iDeadTime )
 			++m_iDeadFrame;
 		else
@@ -480,9 +481,20 @@ void CPlayer::Update_Animation_Frame()
 
 void CPlayer::Update_ColisionRect()
 {
-	m_vecCollisionRect.front().left = (LONG)(m_tInfo.fX - (m_tInfo.iCX >> 1));
-	m_vecCollisionRect.front().top = (LONG)(m_tInfo.fY - (m_tInfo.iCY >> 1));
-	m_vecCollisionRect.front().right = (LONG)(m_tInfo.fX + (m_tInfo.iCX >> 1));
-	m_vecCollisionRect.front().bottom = (LONG)(m_tInfo.fY + (m_tInfo.iCY >> 1));
+	if ( !m_bDead )
+	{
+		m_vecCollisionRect.front().left = (LONG)(m_tInfo.fX - (m_tInfo.iCX >> 1));
+		m_vecCollisionRect.front().top = (LONG)(m_tInfo.fY - (m_tInfo.iCY >> 1));
+		m_vecCollisionRect.front().right = (LONG)(m_tInfo.fX + (m_tInfo.iCX >> 1));
+		m_vecCollisionRect.front().bottom = (LONG)(m_tInfo.fY + (m_tInfo.iCY >> 1));
+	}
+	else
+	{
+		m_vecCollisionRect.front().left = (LONG)0;
+		m_vecCollisionRect.front().top = (LONG)0;
+		m_vecCollisionRect.front().right = (LONG)0;
+		m_vecCollisionRect.front().bottom = (LONG)0;
+	}
+
 }
 

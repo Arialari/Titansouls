@@ -50,10 +50,12 @@ void CTitan::OnOverlaped( CObj* _pBlockedObj, DIRECTION _eDir )
 
 void CTitan::Update_DamageCollision()
 {
-	if ( m_fPosZ == 0 )
+	if ( m_fPosZ <= 2.f && m_fPosZ >= -2.f )
 	{
 		if ( !m_bIsCheckBlock )
 			m_bIsCheckOverlape = true;
+		else
+			m_bIsCheckOverlape = false;
 		m_bIsCheckBlock = true;
 	}
 	else

@@ -7,8 +7,10 @@
 #include "Player.h"
 
 CGolLath::CGolLath()
-	:m_fMaxShoulderY(3.0f), m_fMaxBodyY(7.f), m_fBodyY(0.f), m_fShoulderY(0.f), m_fRenderModelY(0.f), m_fHeadY(0.f), m_bPatterning(false), m_iAttackStartFrame(0), m_iShieldStartFrame(0)
+	:m_fMaxShoulderY( 3.0f ), m_fMaxBodyY( 7.f ), m_fBodyY( 0.f ), m_fShoulderY( 0.f ), m_fRenderModelY( 0.f ), m_fHeadY( 0.f ), m_iAttackStartFrame( 0 ), m_iShieldStartFrame( 0 )
 {
+	m_bPatterning[0] = false;
+	m_bPatterning[1] = false;
 }
 
 CGolLath::~CGolLath()
@@ -29,6 +31,7 @@ void CGolLath::Initialize()
 	m_vecCollisionRect.reserve( 1 );
 	m_vecCollisionRect.emplace_back( RECT() );
 
+
 	m_pArm[LEFT] = static_cast<CGolLathArm*>(CAbstractFactory<CGolLathArm>::Create( m_tInfo.fX - (DEFAULTCX * 3), m_tInfo.fY + (DEFAULTCY * 3) ));
 	m_pArm[LEFT]->Set_IsFliped( false );
 	m_pArm[LEFT]->Set_pGolLath( this );
@@ -45,6 +48,7 @@ int CGolLath::Update()
 		return OBJ_DESTROYED;
 
 	Update_Pattern();
+	Update_DamageCollision();
 	Update_Animation_Frame();
 
 	return OBJ_NOEVENT;
@@ -164,6 +168,22 @@ void CGolLath::Update_Pattern()
 		return;
 
 	++m_iPatternFrame;
+	if ( m_iPatternFrame > 10 )
+	{
+		if ( m_bPatterning[LEFT] )
+		{
+			AttackPattern( LEFT );
+			ShieldPattern( RIGHT );
+			return;
+		}
+		else if (m_bPatterning[RIGHT] )
+		{
+			AttackPattern( RIGHT );
+			ShieldPattern( LEFT );
+			return;
+		}
+	}
+
 
 	if ( m_iPatternFrame > 300 ) // 공격 패턴의 시작
 	{
@@ -180,24 +200,63 @@ void CGolLath::Update_Pattern()
 	}
 	else if ( m_iPatternFrame < 10 ) // 손모으기
 	{
-		float dX = m_tInfo.fX - m_pArm[LEFT]->Get_Info().fX;
-		float dY = m_tInfo.fY - m_pArm[LEFT]->Get_Info().fY;
-
-		//m_pArm[LEFT]->Set_Pos();
+		float fX = MyMath::FInterpTo( m_pArm[LEFT]->Get_Info().fX, m_tInfo.fX, DELTATIME_S, 8.f );
+		float fY = MyMath::FInterpTo( m_pArm[LEFT]->Get_Info().fY, m_tInfo.fY, DELTATIME_S, 8.f );
+		m_pArm[LEFT]->Set_Pos( fX, fY );
+		m_pArm[LEFT]->Set_iFrameX( 2 );
 	}
 }
 
 void CGolLath::AttackPattern( Arm _arm )
 {
-	if ( m_bPatterning )
-		return;
+	if ( !m_bPatterning[_arm] )
+	{
+		m_bPatterning[_arm] = true;
+		m_iAttackStartFrame = m_iPatternFrame;
+		m_iShieldStartFrame = m_iPatternFrame; // 한번에 해줘야함 -ㅅ-
+	}
+		
 
+	if ( m_iPatternFrame < m_iAttackStartFrame + 20 ) //손 올림
+	{
+		m_pArm[_arm]->Set_iFrameX( 0 );
+		float fX = MyMath::FInterpTo( m_pArm[_arm]->Get_Info().fX, m_pPlayer->Get_Info().fX, DELTATIME_S, 8.f );
+		float fY = MyMath::FInterpTo( m_pArm[_arm]->Get_Info().fY, m_pPlayer->Get_Info().fY, DELTATIME_S, 8.f );
+		m_pArm[_arm]->Set_Pos( fX, fY );
+		m_pArm[_arm]->Set_PosZ(DEFAULTCY * 5 * sinf( (m_iPatternFrame - (m_iAttackStartFrame + 0)) * PI / 40 ));
+	}
+	else if ( m_iPatternFrame < m_iAttackStartFrame + 40 ) // 조준
+	{
+		float fX = MyMath::FInterpTo( m_pArm[_arm]->Get_Info().fX, m_pPlayer->Get_Info().fX, DELTATIME_S, 8.f );
+		float fY = MyMath::FInterpTo( m_pArm[_arm]->Get_Info().fY, m_pPlayer->Get_Info().fY, DELTATIME_S, 8.f );
+		m_pArm[_arm]->Set_Pos( fX, fY );
+	}
+	else if ( m_iPatternFrame < m_iAttackStartFrame + 60 )// 내려찍기!
+	{
+		m_pArm[_arm]->Set_PosZ( DEFAULTCY * 5 * sinf( (m_iPatternFrame - (m_iAttackStartFrame + 40)) * PI / 40 + PI / 2  ) );
+	}
+	else
+	{
+		m_pArm[_arm]->Set_PosZ( 0.f );
+	}
+
+
+
+	if ( m_iPatternFrame >= m_iAttackStartFrame + 120 )
+	{
+		m_bPatterning[_arm] = false;
+	}
 }
 
 void CGolLath::ShieldPattern( Arm _arm )
 {
-	if ( m_bPatterning )
-		return;
+	if ( m_iShieldStartFrame + 15 < m_iPatternFrame )
+	{
+		float fX = MyMath::FInterpTo( m_pArm[_arm]->Get_Info().fX, m_tInfo.fX, DELTATIME_S, 8.f );
+		float fY = MyMath::FInterpTo( m_pArm[_arm]->Get_Info().fY, m_tInfo.fY, DELTATIME_S, 8.f );
+		m_pArm[_arm]->Set_Pos( fX, fY );
+		m_pArm[_arm]->Set_iFrameX( 2 );
+	}
 }
 
 void CGolLath::Update_ColisionRect()

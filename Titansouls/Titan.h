@@ -19,6 +19,9 @@ public:
     virtual void Release() override;
     virtual void Update_ColisionRect() override;
     inline void  Set_Player( CPlayer* _pPlayer ) { m_pPlayer = _pPlayer; }
+    inline void Set_PosZ( float _z ) { m_fPosZ = _z; }
+    inline const float& Get_PosZ() const { return m_fPosZ; }
+    inline void Add_PosZ( float _z ) { m_fPosZ += _z; }
 
     virtual void OnBlocked( CObj* _pBlockedObj, DIRECTION _eDir = DIRECTION_END ) override;
     virtual void OnOverlaped( CObj* _pBlockedObj, DIRECTION _eDir = DIRECTION_END ) override;

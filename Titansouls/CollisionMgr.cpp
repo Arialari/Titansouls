@@ -48,6 +48,8 @@ void CCollisionMgr::Collision_RectEx( list<CObj*>& _Dst, list<CObj*>& _Src )
 						pSrc->Add_PosX( fX );
 						if(pSrc->Get_IsCheckBlock() )
 							pSrc->OnBlocked(pDst, DIRECTION::W);
+						if(pDst->Get_IsCheckBlock() )
+							pDst->OnBlocked( pSrc, DIRECTION::E );
 						continue;
 					}
 					else
@@ -55,6 +57,8 @@ void CCollisionMgr::Collision_RectEx( list<CObj*>& _Dst, list<CObj*>& _Src )
 						pSrc->Add_PosX( -fX );
 						if ( pSrc->Get_IsCheckBlock() )
 							pSrc->OnBlocked( pDst, DIRECTION::E );
+						if ( pDst->Get_IsCheckBlock() )
+							pDst->OnBlocked( pSrc, DIRECTION::W );
 						continue;
 					}
 				}
@@ -65,6 +69,8 @@ void CCollisionMgr::Collision_RectEx( list<CObj*>& _Dst, list<CObj*>& _Src )
 						pSrc->Add_PosY( fY );
 						if ( pSrc->Get_IsCheckBlock() )
 							pSrc->OnBlocked( pDst, DIRECTION::N );
+						if ( pDst->Get_IsCheckBlock() )
+							pDst->OnBlocked( pSrc, DIRECTION::S );
 						continue;
 					}
 					else
@@ -72,6 +78,8 @@ void CCollisionMgr::Collision_RectEx( list<CObj*>& _Dst, list<CObj*>& _Src )
 						pSrc->Add_PosY( -fY );
 						if ( pSrc->Get_IsCheckBlock() )
 							pSrc->OnBlocked( pDst, DIRECTION::S );
+						if ( pDst->Get_IsCheckBlock() )
+							pDst->OnBlocked( pSrc, DIRECTION::N );
 						continue;
 					}
 				}

@@ -32,7 +32,7 @@ private:
     float           m_fHeadY;
     float           m_fRenderModelY;
     CGolLathArm*    m_pArm[2];
-    bool            m_bPatterning;
+    bool            m_bPatterning[2];
     int             m_iAttackStartFrame;
     int             m_iShieldStartFrame;
 };
