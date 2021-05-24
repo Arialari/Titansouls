@@ -17,6 +17,8 @@ void CSludgeHeartShadow::Initialize()
 {
 	m_tInfo.iCX = DEFAULTCX;
 	m_tInfo.iCY = DEFAULTCY * 2;
+
+	m_eRenderID = RENDERID::SHADOW;
 }
 
 int CSludgeHeartShadow::Update()

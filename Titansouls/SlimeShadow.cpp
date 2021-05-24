@@ -5,7 +5,7 @@
 
 const int CSlimeShadow::m_iSizeStartX[5] = { 0, 10, 15, 18, 20 };
 const int CSlimeShadow::m_iSizeStartY[5] = { 10, 6, 4, 3, 1 };
-const int CSlimeShadow::m_iSizeX[5] = { 7, 5, 3, 2, 1 };
+const int CSlimeShadow::m_iSizeX[5] = { 8, 5, 3, 2, 1 };
 const int CSlimeShadow::m_iSizeY[5] = { 5, 3, 2, 1, 1 };
 CSlimeShadow::CSlimeShadow()
 	:m_iSizeLv(0), m_pSlime(nullptr)

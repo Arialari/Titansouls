@@ -3,6 +3,7 @@
 #include "ScrollMgr.h"
 #include "BmpMgr.h"
 #include "Slime.h"
+#include "ObjMgr.h"
 
 CSludgeHeart::CSludgeHeart()
 	:m_pShadow(nullptr)
@@ -31,6 +32,7 @@ void CSludgeHeart::Initialize()
 	
 	m_pSlime[0] = static_cast<CSlime*>(CAbstractFactory<CSlime>::Create(m_tInfo.fX,m_tInfo.fY));
 	m_pSlime[0]->Set_SludgeHeart( this );
+	CObjMgr::Get_Instance()->Add_Object( m_pSlime[0], OBJID::TITAN );
 }
 
 int CSludgeHeart::Update()

@@ -6,7 +6,7 @@
 #include "ObjMgr.h"
 
 const int CSlime::m_iSizeStartX[5] = { 0, 10, 15, 18, 20 };
-const int CSlime::m_iSize[5] = { 7, 5, 3, 2, 1 };
+const int CSlime::m_iSize[5] = { 8, 5, 3, 2, 1 };
 CSlime::CSlime()
 	:m_pShadow(nullptr), m_iSizeLv(0)
 {
