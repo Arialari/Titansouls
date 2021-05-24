@@ -10,6 +10,7 @@
 #include "SceneMgr.h"
 #include "TileMgr.h"
 #include "UiMgr.h"
+#include "SoundMgr.h"
 
 
 CMainGame::CMainGame()
@@ -28,8 +29,8 @@ void CMainGame::Initialize()
 	m_hDC = GetDC( g_hWnd );
 	CBmpMgr::Get_Instance()->Insert_Bmp( L"../Image/BackBuffer.bmp", L"BackBuffer" );
 	CBmpMgr::Get_Instance()->Insert_Bmp( L"../Image/Back.bmp", L"Back" );
-
-	CSceneMgr::Get_Instance()->Scene_Change( SCENEID::ID::HALLWAY_UNDER );
+	CSoundMgr::Get_Instance()->Initialize();
+	CSceneMgr::Get_Instance()->Scene_Change( SCENEID::ID::MENU );
 }
 
 void CMainGame::Update()
@@ -74,5 +75,6 @@ void CMainGame::Release()
 	CTileMgr::Destroy_Instance();
 	CUiMgr::Destroy_Instance();
 	CObjMgr::Destroy_Instance();
+	CSoundMgr::Destroy_Instance();
 	ReleaseDC( g_hWnd, m_hDC );
 }

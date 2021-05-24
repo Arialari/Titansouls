@@ -109,6 +109,12 @@
     <Filter Include="소스 파일\01.Obj\05.TitanKillBox">
       <UniqueIdentifier>{86a7efdc-3baf-41a2-aec5-bd51ea3aeaf8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\04.Scene\99.Menu">
+      <UniqueIdentifier>{a1911b2d-5f7e-49eb-a697-ba9155ca6b29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\98.Manager\SoundMgr">
+      <UniqueIdentifier>{9b3f430b-0529-45fe-a530-3d6fdf61e1fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -216,6 +222,12 @@
     <ClInclude Include="TitanKillBox.h">
       <Filter>소스 파일\01.Obj\05.TitanKillBox</Filter>
     </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>소스 파일\04.Scene\99.Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundMgr.h">
+      <Filter>소스 파일\98.Manager\SoundMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Titansouls.cpp">
@@ -313,6 +325,12 @@
     </ClCompile>
     <ClCompile Include="TitanKillBox.cpp">
       <Filter>소스 파일\01.Obj\05.TitanKillBox</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>소스 파일\04.Scene\99.Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundMgr.cpp">
+      <Filter>소스 파일\98.Manager\SoundMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

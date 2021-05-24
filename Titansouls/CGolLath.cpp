@@ -6,6 +6,7 @@
 #include "ObjMgr.h"
 #include "Player.h"
 #include "TitanKillBox.h"
+#include "SoundMgr.h"
 
 CGolLath::CGolLath()
 	:m_fMaxShoulderY( 3.0f ), m_fMaxBodyY( 7.f ), m_fBodyY( 0.f ), m_fShoulderY( 0.f ), m_fRenderModelY( 0.f ), m_fHeadY( 0.f ), m_iAttackStartFrame( 0 ), m_iShieldStartFrame( 0 )
@@ -185,6 +186,12 @@ void CGolLath::Update_Pattern()
 		return;
 
 	++m_iPatternFrame;
+	if ( m_iPatternFrame == 1 )
+	{
+		CSoundMgr::Get_Instance()->StopSound( CSoundMgr::BGM );
+		TCHAR szBuff[32] = L"The First Guardian.mp3";
+		CSoundMgr::Get_Instance()->PlayBGM( szBuff );
+	}
 	if ( m_iPatternFrame > 10 )
 	{
 		if ( m_bPatterning[LEFT] )
@@ -289,4 +296,5 @@ void CGolLath::Update_Dead()
 	m_pArm[LEFT]->Set_PosZ( MyMath::FInterpTo( m_pArm[LEFT]->Get_PosZ(), 0.f, DELTATIME_S, 1.f ));
 	m_pArm[RIGHT]->Set_PosZ( MyMath::FInterpTo( m_pArm[RIGHT]->Get_PosZ(), 0.f, DELTATIME_S, 1.f ) );
 	m_iFrameidx = 3;
+	CSoundMgr::Get_Instance()->StopAll();
 }

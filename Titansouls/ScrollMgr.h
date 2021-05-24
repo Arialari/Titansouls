@@ -10,6 +10,7 @@ private:
 	CScrollMgr();
 	~CScrollMgr();
 public:
+	void	Update();
 	void	Late_Update();
 
 public:
@@ -18,6 +19,8 @@ public:
 	void Set_ScrollX( float _x ) { m_fMoveTargetX = _x + (WINCX >> 1); }
 	void Set_ScrollY( float _y ) { m_fMoveTargetY = _y + (WINCY >> 1);	}
 	void Force_Set_Scroll( float _x, float _y );
+	void Set_Titan( CObj* _pTitan ) { m_pTitan = _pTitan; }
+	void Set_Player( CObj* _pPlayer ) { m_pPlayer = _pPlayer; }
 
 public:
 	float Get_ScrollX() const { return m_fScrollX; }
@@ -48,6 +51,8 @@ private:
 	float	m_fScrollY;
 	float	m_fMoveTargetX;
 	float	m_fMoveTargetY;
+	CObj*	m_pPlayer;
+	CObj*	m_pTitan;
 };
 
 

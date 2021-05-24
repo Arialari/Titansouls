@@ -5,6 +5,7 @@
 #include "ScrollMgr.h"
 #include "BmpMgr.h"
 #include "Arrow.h"
+#include "SoundMgr.h"
 
 
 CPlayer::CPlayer()
@@ -347,6 +348,9 @@ void CPlayer::Update_Dead()
 	{
 		m_eCurState = STATE::DEAD;
 		Update_ColisionRect();
+		m_pArrow->Set_IsRender( false );
+		m_fAimGaze = 0.f;
+		m_bIsAiming = false;
 		if ( m_iDeadFrame < m_iDeadTime )
 			++m_iDeadFrame;
 		else

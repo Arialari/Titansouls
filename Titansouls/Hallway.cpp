@@ -8,6 +8,7 @@
 #include "ScrollMgr.h"
 #include "UiMgr.h"
 #include "SceneChanger.h"
+#include "SoundMgr.h"
 
 CHallway::CHallway()
 {
@@ -36,23 +37,36 @@ void CHallway::Initialize()
 	{
 		m_pPlayer = static_cast<CPlayer*>(CAbstractFactory<CPlayer>::Create( m_fStartPointX, m_fStartPointY ));
 		CObjMgr::Get_Instance()->Add_Object( m_pPlayer, OBJID::PLAYER );
+		CScrollMgr::Get_Instance()->Set_Player( m_pPlayer );
+
 	}
 
 	CObj* pObj = CAbstractFactory<CGolLath>::Create();
 	static_cast<CTitan*>(pObj)->Set_Player( m_pPlayer );
 	CObjMgr::Get_Instance()->Add_Object( pObj, OBJID::TITAN );
+	CScrollMgr::Get_Instance()->Set_Titan( pObj );
 
 	pObj = CAbstractFactory<CSceneChanger>::Create(39.5f * DEFAULTCX, 98.5f * DEFAULTCY );
 	static_cast<CSceneChanger*>(pObj)->Set_Scene( SCENEID::SLUDGE );
-	static_cast<CSceneChanger*>(pObj)->Set_TeleportPos ( 39.5f * DEFAULTCX, 80.5f * DEFAULTCY );
+	static_cast<CSceneChanger*>(pObj)->Set_TeleportPos ( 45.5f * DEFAULTCX, 82.5f * DEFAULTCY );
 	CObjMgr::Get_Instance()->Add_Object( pObj, OBJID::COLLISION);
+	
+	TCHAR bgmName[32] = L"Hallway.mp3";
+	CSoundMgr::Get_Instance()->PlayBGM( bgmName );
 }
 
 void CHallway::Update()
 {
 	CObjMgr::Get_Instance()->Update();
+	CScrollMgr::Get_Instance()->Update();
 	CUiMgr::Get_Instance()->Update();
-	CTileMgr::Get_Instance()->Update();
+	CTileMgr::Get_Instance()->Update();	
+	if ( m_pPlayer->Get_IsDead() )
+	{
+		CSoundMgr::Get_Instance()->StopSound( CSoundMgr::BGM );
+		CSoundMgr::Get_Instance()->StopSound( CSoundMgr::TITANBGM );
+	}
+		
 }
 
 void CHallway::Late_Update()
@@ -83,4 +97,5 @@ void CHallway::Release()
 	}
 	CTileMgr::Get_Instance()->Release();
 	CObjMgr::Get_Instance()->ReleaseRenderList();
+
 }

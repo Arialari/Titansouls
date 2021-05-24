@@ -3,6 +3,7 @@
 #include "UiMgr.h"
 #include "SceneMgr.h"
 #include "ScrollMgr.h"
+#include "SoundMgr.h"
 
 CSceneChanger::CSceneChanger()
     :m_bIsChange(false), m_pPlayer(nullptr), m_fTeleportX(0.f), m_fTeleportY(0.f)
@@ -67,6 +68,10 @@ void CSceneChanger::OnBlocked( CObj* _pBlockedObj, DIRECTION _eDir )
 
 void CSceneChanger::OnOverlaped( CObj* _pBlockedObj, DIRECTION _eDir )
 {
+    CSoundMgr::Get_Instance()->StopAll();
     m_bIsChange = true;
     m_pPlayer = _pBlockedObj;
+    TCHAR szBuff[32] = L"Enter.mp3";
+    CSoundMgr::Get_Instance()->PlaySound( szBuff, CSoundMgr::UI );
+
 }

@@ -8,6 +8,7 @@
 #include "ScrollMgr.h"
 #include "SceneChanger.h"
 #include "CGolLath.h"
+#include "SoundMgr.h"
 
 CSludgeScene::CSludgeScene()
 {
@@ -47,8 +48,14 @@ void CSludgeScene::Initialize()
 void CSludgeScene::Update()
 {
 	CObjMgr::Get_Instance()->Update();
+	CScrollMgr::Get_Instance()->Update();
 	CUiMgr::Get_Instance()->Update();
 	CTileMgr::Get_Instance()->Update();
+	if ( m_pPlayer->Get_IsDead() )
+	{
+		CSoundMgr::Get_Instance()->StopSound( CSoundMgr::BGM );
+		CSoundMgr::Get_Instance()->StopSound( CSoundMgr::TITANBGM );
+	}
 }
 void CSludgeScene::Late_Update()
 {
@@ -77,4 +84,4 @@ void CSludgeScene::Release()
 	}
 	CTileMgr::Get_Instance()->Release();
 	CObjMgr::Get_Instance()->ReleaseRenderList();
-}
+	}

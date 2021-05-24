@@ -52,3 +52,7 @@ using namespace std;
 
 #endif // _DEBUG
 ///////////////////////////////////////////////////////////////////////////
+// »ç¿îµå
+#include <io.h>
+#include "fmod.h"
+#pragma comment (lib, "fmodex_vc.lib")

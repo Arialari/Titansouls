@@ -7,6 +7,7 @@
 #include "EyecubeScene.h"
 #include "GolSetScene.h"
 #include "TileMgr.h"
+#include "Menu.h"
 
 CSceneMgr* CSceneMgr::m_pInstance = nullptr;
 CSceneMgr::CSceneMgr()
@@ -51,6 +52,9 @@ void CSceneMgr::Scene_Change( SCENEID::ID _eID)
 
 		switch (m_eCurScene)
 		{
+		case SCENEID::ID::MENU:
+			m_pScene = new CMenu;
+			break;
 		case SCENEID::ID::HALLWAY_UNDER:
 			m_pScene = new CHallway;
 			break;
