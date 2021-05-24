@@ -5,6 +5,7 @@
 #include "GolLathArm.h"
 #include "ObjMgr.h"
 #include "Player.h"
+#include "TitanKillBox.h"
 
 CGolLath::CGolLath()
 	:m_fMaxShoulderY( 3.0f ), m_fMaxBodyY( 7.f ), m_fBodyY( 0.f ), m_fShoulderY( 0.f ), m_fRenderModelY( 0.f ), m_fHeadY( 0.f ), m_iAttackStartFrame( 0 ), m_iShieldStartFrame( 0 )
@@ -31,7 +32,7 @@ void CGolLath::Initialize()
 	m_vecCollisionRect.reserve( 1 );
 	m_vecCollisionRect.emplace_back( RECT() );
 
-
+	
 	m_pArm[LEFT] = static_cast<CGolLathArm*>(CAbstractFactory<CGolLathArm>::Create( m_tInfo.fX - (DEFAULTCX * 3), m_tInfo.fY + (DEFAULTCY * 3) ));
 	m_pArm[LEFT]->Set_IsFliped( false );
 	m_pArm[LEFT]->Set_pGolLath( this );
@@ -40,6 +41,10 @@ void CGolLath::Initialize()
 	m_pArm[RIGHT]->Set_pGolLath( this );
 	CObjMgr::Get_Instance()->Add_Object( m_pArm[LEFT], OBJID::TITAN );
 	CObjMgr::Get_Instance()->Add_Object( m_pArm[RIGHT], OBJID::TITAN );
+	m_pKillBox = static_cast<CTitanKillBox*>(CAbstractFactory<CTitanKillBox>::Create( m_tInfo.fX, m_tInfo.fY + (DEFAULTCY * 1.3f) ));
+	m_pKillBox->Set_iC( DEFAULTCX, DEFAULTCY );
+	m_pKillBox->Set_Titan( this );
+	CObjMgr::Get_Instance()->Add_Object( m_pKillBox, OBJID::TITANKILLBOX );
 }
 
 int CGolLath::Update()
@@ -47,9 +52,18 @@ int CGolLath::Update()
 	if ( m_bDestroyed )
 		return OBJ_DESTROYED;
 
-	Update_Pattern();
-	Update_DamageCollision();
-	Update_Animation_Frame();
+	if ( !m_bDead )
+	{
+		Update_Pattern();
+		Update_DamageCollision();
+		Update_Animation_Frame();
+	}
+	else
+	{
+		Update_Dead();
+	}
+
+	
 
 	return OBJ_NOEVENT;
 }
@@ -114,8 +128,11 @@ void CGolLath::Render( HDC _DC )
 	else if ( m_iPatternFrame < 230 )
 	{
 		m_iFrameidx = 2;
+
+		if ( m_pKillBox )
+			m_pKillBox->Set_Active();
 	}
-	else
+	else if ( !m_bDead )
 	{
 		m_iFrameidx = 0;
 	}
@@ -198,10 +215,10 @@ void CGolLath::Update_Pattern()
 			ShieldPattern( RIGHT );
 		}
 	}
-	else if ( m_iPatternFrame < 10 ) // 손모으기
+	else if ( m_iPatternFrame < 30 ) // 손모으기
 	{
 		float fX = MyMath::FInterpTo( m_pArm[LEFT]->Get_Info().fX, m_tInfo.fX, DELTATIME_S, 8.f );
-		float fY = MyMath::FInterpTo( m_pArm[LEFT]->Get_Info().fY, m_tInfo.fY, DELTATIME_S, 8.f );
+		float fY = MyMath::FInterpTo( m_pArm[LEFT]->Get_Info().fY, m_pKillBox->Get_Info().fY, DELTATIME_S, 8.f );
 		m_pArm[LEFT]->Set_Pos( fX, fY );
 		m_pArm[LEFT]->Set_iFrameX( 2 );
 	}
@@ -242,7 +259,7 @@ void CGolLath::AttackPattern( Arm _arm )
 
 
 
-	if ( m_iPatternFrame >= m_iAttackStartFrame + 120 )
+	if ( m_iPatternFrame >= m_iAttackStartFrame + 100 )
 	{
 		m_bPatterning[_arm] = false;
 	}
@@ -253,7 +270,7 @@ void CGolLath::ShieldPattern( Arm _arm )
 	if ( m_iShieldStartFrame + 15 < m_iPatternFrame )
 	{
 		float fX = MyMath::FInterpTo( m_pArm[_arm]->Get_Info().fX, m_tInfo.fX, DELTATIME_S, 8.f );
-		float fY = MyMath::FInterpTo( m_pArm[_arm]->Get_Info().fY, m_tInfo.fY, DELTATIME_S, 8.f );
+		float fY = MyMath::FInterpTo( m_pArm[_arm]->Get_Info().fY, m_pKillBox->Get_Info().fY, DELTATIME_S, 8.f );
 		m_pArm[_arm]->Set_Pos( fX, fY );
 		m_pArm[_arm]->Set_iFrameX( 2 );
 	}
@@ -265,4 +282,11 @@ void CGolLath::Update_ColisionRect()
 	m_vecCollisionRect.front().top = (LONG)(m_tInfo.fY - (m_tInfo.iCY >> 1));
 	m_vecCollisionRect.front().right = (LONG)(m_tInfo.fX + (m_tInfo.iCX >> 1) + 2.5f * DEFAULTCX);
 	m_vecCollisionRect.front().bottom = (LONG)(m_tInfo.fY + (m_tInfo.iCY >> 1) - DEFAULTCY);
+}
+
+void CGolLath::Update_Dead()
+{
+	m_pArm[LEFT]->Set_PosZ( MyMath::FInterpTo( m_pArm[LEFT]->Get_PosZ(), 0.f, DELTATIME_S, 1.f ));
+	m_pArm[RIGHT]->Set_PosZ( MyMath::FInterpTo( m_pArm[RIGHT]->Get_PosZ(), 0.f, DELTATIME_S, 1.f ) );
+	m_iFrameidx = 3;
 }

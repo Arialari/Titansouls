@@ -179,6 +179,7 @@
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileMgr.h" />
     <ClInclude Include="Titan.h" />
+    <ClInclude Include="TitanKillBox.h" />
     <ClInclude Include="Titansouls.h" />
     <ClInclude Include="UiMgr.h" />
   </ItemGroup>
@@ -215,6 +216,7 @@
     </ClCompile>
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileMgr.cpp" />
+    <ClCompile Include="TitanKillBox.cpp" />
     <ClCompile Include="Titansouls.cpp" />
     <ClCompile Include="UiMgr.cpp" />
   </ItemGroup>

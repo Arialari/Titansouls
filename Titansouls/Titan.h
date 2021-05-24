@@ -5,6 +5,7 @@
 
 #include "Pawn.h"
 class CPlayer;
+class CTitanKillBox;
 class CTitan :
     public CPawn
 {
@@ -22,10 +23,13 @@ public:
     inline void Set_PosZ( float _z ) { m_fPosZ = _z; }
     inline const float& Get_PosZ() const { return m_fPosZ; }
     inline void Add_PosZ( float _z ) { m_fPosZ += _z; }
+    inline void Set_Active() { m_bActive = true; }
 
     virtual void OnBlocked( CObj* _pBlockedObj, DIRECTION _eDir = DIRECTION_END ) override;
     virtual void OnOverlaped( CObj* _pBlockedObj, DIRECTION _eDir = DIRECTION_END ) override;
+
 protected:
+    virtual void Update_Dead() = 0;
     void        Update_DamageCollision();
     virtual void    Update_Pattern() = 0;
 
@@ -34,6 +38,7 @@ protected:
     float       m_fPosZ;
     CPlayer*    m_pPlayer;
     int         m_iPatternFrame;
+    CTitanKillBox* m_pKillBox;
 };
 
 #endif // !__TITAN_H__

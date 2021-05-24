@@ -28,9 +28,13 @@ public:
     inline void Set_iFrameX( int _iFramex ) { m_tFrame.iFrameX = _iFramex; }
 protected:
     virtual void Update_Pattern() override;
+    // CTitan을(를) 통해 상속됨
+    virtual void Update_Dead() override;
 private:
     bool        m_bIsFliped;
     CGolLath*    m_pGolLath;
+
+   
 };
 
 #endif // !__GOLLATHARM_H__

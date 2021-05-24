@@ -1,9 +1,10 @@
 #include "stdafx.h"
 #include "Titan.h"
 #include "Arrow.h"
+#include "TitanKillBox.h"
 
 CTitan::CTitan()
-	:m_bActive(false), m_fPosZ(0.f)
+	:m_bActive(false), m_fPosZ(0.f), m_pKillBox(nullptr)
 {
 }
 
@@ -40,7 +41,10 @@ void CTitan::OnBlocked( CObj* _pBlockedObj, DIRECTION _eDir)
 {
 	if ( dynamic_cast<CArrow*>(_pBlockedObj) )
 		if ( !m_bDead && static_cast<CArrow*>(_pBlockedObj)->Get_IsDamage() )
+		{
 			m_bActive = true;
+		}
+			
 }
 
 void CTitan::OnOverlaped( CObj* _pBlockedObj, DIRECTION _eDir )

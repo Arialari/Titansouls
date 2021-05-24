@@ -16,7 +16,7 @@ CObj::~CObj()
 {
 }
 
-void CObj::RenderCollision(HDC _DC)
+void CObj::RenderCollision(HDC _DC, COLORREF _color )
 {
 	if ( CUiMgr::Get_Instance()->Get_IsCollisionVisible() )
 	{
@@ -24,7 +24,7 @@ void CObj::RenderCollision(HDC _DC)
 		{
 			int iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
 			int iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
-			HBRUSH r_brush = CreateSolidBrush( RGB( 255, 0, 0 ) );
+			HBRUSH r_brush = CreateSolidBrush( _color );
 			HGDIOBJ hOldBrush = SelectObject( _DC, r_brush );
 			Rectangle( _DC, rc.left + iScrollX + 2, rc.top + iScrollY + 2, rc.right + iScrollX - 2, rc.bottom + iScrollY - 2 );
 			SelectObject( _DC, hOldBrush );

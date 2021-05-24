@@ -29,7 +29,7 @@ public:
 	//Functions
 	virtual void		OnBlocked(CObj* _pBlockedObj,DIRECTION _eDir = DIRECTION_END) { m_bDestroyed = true; }
 	virtual void		OnOverlaped( CObj* _pBlockedObj, DIRECTION _eDir = DIRECTION_END ) {  }
-	virtual void		RenderCollision( HDC _DC );
+	virtual void		RenderCollision( HDC _DC , COLORREF _color = RGB( 255, 0, 0 ) );
 
 	//Setter
 	inline void			Set_ImageKey( const TCHAR* _pImageKey ) { m_pImageKey = _pImageKey; }

@@ -275,7 +275,7 @@ void CPlayer::State_Change()
 			break;
 		case STATE::ROLL:
 			m_tFrame.iFrameX = m_tFrame.iStartX = 6;
-			m_tFrame.iEndX = 11;
+			m_tFrame.iEndX = 12;
 			m_tFrame.iModelY = m_eCurDirection;
 			m_tFrame.dwDelay = 50;
 			m_tFrame.dwTime = GetTickCount();
@@ -300,12 +300,13 @@ void CPlayer::State_Change()
 			m_tFrame.ePlayType = FRAME::PLAYTYPE::NO_LOOP;
 			break;
 		case STATE::DEAD:
-			m_tFrame.iFrameX = m_tFrame.iStartX = 12;
-			m_tFrame.iEndX = 12;
+			m_tFrame.iFrameX = m_tFrame.iStartX = 13;
+			m_tFrame.iEndX = 13;
 			m_tFrame.iModelY = m_eCurDirection;
 			m_tFrame.dwDelay = MAXDWORD;
 			m_tFrame.dwTime = GetTickCount();
 			m_tFrame.ePlayType = FRAME::PLAYTYPE::NO_LOOP;
+			break;
 		case STATE::RETURN:
 			m_tFrame.iFrameX = m_tFrame.iStartX = 15;
 			m_tFrame.iEndX = 15;

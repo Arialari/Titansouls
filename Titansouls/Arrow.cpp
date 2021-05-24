@@ -105,10 +105,21 @@ void CArrow::Release()
 
 void CArrow::Update_ColisionRect()
 {
-    m_vecCollisionRect.front().left = (LONG)(m_tInfo.fX - (m_tInfo.iCX >> 1));
-    m_vecCollisionRect.front().top = (LONG)(m_tInfo.fY - (m_tInfo.iCY >> 1));
-    m_vecCollisionRect.front().right = (LONG)(m_tInfo.fX + (m_tInfo.iCX >> 1));
-    m_vecCollisionRect.front().bottom = (LONG)(m_tInfo.fY + (m_tInfo.iCY >> 1));
+    if ( !m_bHolded )
+    {
+        m_vecCollisionRect.front().left = (LONG)(m_tInfo.fX - (m_tInfo.iCX >> 1));
+        m_vecCollisionRect.front().top = (LONG)(m_tInfo.fY - (m_tInfo.iCY >> 1));
+        m_vecCollisionRect.front().right = (LONG)(m_tInfo.fX + (m_tInfo.iCX >> 1));
+        m_vecCollisionRect.front().bottom = (LONG)(m_tInfo.fY + (m_tInfo.iCY >> 1));
+
+    }
+    else
+    {
+        m_vecCollisionRect.front().left = (LONG)0;
+        m_vecCollisionRect.front().top = (LONG)0;
+        m_vecCollisionRect.front().right = (LONG)0;
+        m_vecCollisionRect.front().bottom = (LONG)0;
+    }
 }
 
 void CArrow::OnBlocked( CObj* _pBlockedObj,  DIRECTION _eDir )
@@ -150,10 +161,13 @@ void CArrow::OnOverlaped( CObj* _pBlockedObj, DIRECTION _eDir )
 {
     if ( !m_bHolded && ((m_fSpeed < 2.f) || m_bIsReturning) )
     {
-        static_cast<CPlayer*>(_pBlockedObj)->Pick_Arrow();
-        m_bIsRender = false;
-        m_bHolded = true;
-        m_fSpeed = 0.f;
+        if ( dynamic_cast<CPlayer*>(_pBlockedObj) )
+        {
+            static_cast<CPlayer*>(_pBlockedObj)->Pick_Arrow();
+            m_bIsRender = false;
+            m_bHolded = true;
+            m_fSpeed = 0.f;
+        }
     }
 }
 

@@ -106,6 +106,9 @@
     <Filter Include="소스 파일\01.Obj\00.Pawn\01.Titan\Gol_Lath_Arm">
       <UniqueIdentifier>{bfd0f610-ee4a-4bff-bb64-485d9430cf43}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\01.Obj\05.TitanKillBox">
+      <UniqueIdentifier>{86a7efdc-3baf-41a2-aec5-bd51ea3aeaf8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -210,6 +213,9 @@
     <ClInclude Include="GolLathArm.h">
       <Filter>소스 파일\01.Obj\00.Pawn\01.Titan\Gol_Lath_Arm</Filter>
     </ClInclude>
+    <ClInclude Include="TitanKillBox.h">
+      <Filter>소스 파일\01.Obj\05.TitanKillBox</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Titansouls.cpp">
@@ -304,6 +310,9 @@
     </ClCompile>
     <ClCompile Include="GolLathArm.cpp">
       <Filter>소스 파일\01.Obj\00.Pawn\01.Titan\Gol_Lath_Arm</Filter>
+    </ClCompile>
+    <ClCompile Include="TitanKillBox.cpp">
+      <Filter>소스 파일\01.Obj\05.TitanKillBox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

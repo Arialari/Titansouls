@@ -25,6 +25,8 @@ private:
     void        ShieldPattern( Arm _arm);
 private:
     virtual void Update_ColisionRect() override;
+    virtual void Update_Dead() override;
+private:
     const float     m_fMaxShoulderY;
     float           m_fShoulderY;
     const float     m_fMaxBodyY;

@@ -22,8 +22,10 @@ public:
     void            Shoot( float _fAimGaze );
     void            Set_RadianAngle( float _fAngle ) { m_fRadianAngle = _fAngle; }
     void            Add_Speed();
+    inline void     Stop_Moving() { m_fSpeed = 0.f; }
     void            Set_IsReturning( bool _bIsReturning ) { m_bIsReturning = _bIsReturning; }
     const bool&     Get_IsDamage() const { return m_bIsDamage; }
+    const float&    Get_Angle() const { return m_fRadianAngle; }
 private:
     HDC             m_hMemDc;
     float           m_fRadianAngle;

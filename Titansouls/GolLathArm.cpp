@@ -2,6 +2,7 @@
 #include "GolLathArm.h"
 #include "ScrollMgr.h"
 #include "BmpMgr.h"
+#include "CGolLath.h"
 
 CGolLathArm::CGolLathArm()
 	:m_bIsFliped(false), m_pGolLath(nullptr)
@@ -95,12 +96,20 @@ void CGolLathArm::Update_ColisionRect()
 
 void CGolLathArm::OnOverlaped( CObj* _pBlockedObj, DIRECTION _eDir )
 {
-	_pBlockedObj->Set_Dead( true );
+	if ( !m_bDead )
+	{
+		_pBlockedObj->Set_Dead( true );
+		_pBlockedObj->Update_ColisionRect();
+	}
 }
 
 void CGolLathArm::Update_Pattern()
 {
 	if ( m_bActive )
-		++m_iPatternFrame;
+		m_pGolLath->Set_Active();
 	
+}
+
+void CGolLathArm::Update_Dead()
+{
 }
