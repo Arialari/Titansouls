@@ -184,13 +184,15 @@ void CGolLath::Update_Pattern()
 {
 	if ( !m_bActive )
 		return;
-
 	++m_iPatternFrame;
 	if ( m_iPatternFrame == 1 )
 	{
 		CSoundMgr::Get_Instance()->StopSound( CSoundMgr::BGM );
 		TCHAR szBuff[32] = L"The First Guardian.mp3";
 		CSoundMgr::Get_Instance()->PlayBGM( szBuff );
+
+		m_pArm[0]->Set_Active();
+		m_pArm[1]->Set_Active();
 	}
 	if ( m_iPatternFrame > 10 )
 	{

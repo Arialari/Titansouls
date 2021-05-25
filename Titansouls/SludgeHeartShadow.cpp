@@ -19,11 +19,16 @@ void CSludgeHeartShadow::Initialize()
 	m_tInfo.iCY = DEFAULTCY * 2;
 
 	m_eRenderID = RENDERID::SHADOW;
+	m_vecCollisionRect.reserve( 1 );
+	m_vecCollisionRect.emplace_back( RECT() );
 }
 
 int CSludgeHeartShadow::Update()
 {
-    return 0;
+	if ( m_bDestroyed )
+		return OBJ_DESTROYED;
+
+	return OBJ_NOEVENT;
 }
 
 void CSludgeHeartShadow::Late_Update()
@@ -47,6 +52,11 @@ void CSludgeHeartShadow::Render( HDC _DC )
 
 void CSludgeHeartShadow::Release()
 {
+}
+
+void CSludgeHeartShadow::Update_ColisionRect()
+{
+
 }
 
 void CSludgeHeartShadow::Update_Dead()

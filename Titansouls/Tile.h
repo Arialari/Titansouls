@@ -28,6 +28,7 @@ public:
 	inline void			Set_eRenderId( RENDERID::ID _eId ) { m_eRenderID = _eId; }
 	
 protected:
+
 	virtual void		Update_ColisionRect();
 private:
 	int					m_iDrawYID;

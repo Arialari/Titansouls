@@ -19,6 +19,7 @@ public:
 	void Set_ScrollX( float _x ) { m_fMoveTargetX = _x + (WINCX >> 1); }
 	void Set_ScrollY( float _y ) { m_fMoveTargetY = _y + (WINCY >> 1);	}
 	void Force_Set_Scroll( float _x, float _y );
+	void Force_Add_Scroll( float _x, float _y );
 	void Set_Titan( CObj* _pTitan ) { m_pTitan = _pTitan; }
 	void Set_Player( CObj* _pPlayer ) { m_pPlayer = _pPlayer; }
 

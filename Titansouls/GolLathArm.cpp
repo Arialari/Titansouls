@@ -5,7 +5,7 @@
 #include "CGolLath.h"
 
 CGolLathArm::CGolLathArm()
-	:m_bIsFliped(false), m_pGolLath(nullptr)
+	:m_bIsFliped(false), m_pGolLath(nullptr), m_iShakeStartFrame(0)
 {
 }
 
@@ -30,7 +30,7 @@ int CGolLathArm::Update()
 {
 	if ( m_bDestroyed )
 		return OBJ_DESTROYED;
-
+	++m_iPatternFrame;
 	if ( m_bIsCheckBlock )
 		m_bIsCheckOverlape = false;
 	Update_Pattern();
@@ -43,6 +43,20 @@ int CGolLathArm::Update()
 
 void CGolLathArm::Late_Update()
 {
+	if ( m_bActive )
+	{
+		if ( m_bIsCheckOverlape )
+		{
+			m_iShakeStartFrame = m_iPatternFrame;
+		}
+		if ( m_iPatternFrame > m_iShakeStartFrame && m_iPatternFrame < m_iShakeStartFrame + 10 )
+		{
+			int iDeltaFrame = m_iPatternFrame - m_iShakeStartFrame;
+			int sign = ((iDeltaFrame) % 3 - 1);
+			CScrollMgr::Get_Instance()->Force_Add_Scroll( ((20.f - iDeltaFrame) * sign), 0.f );
+		}
+	}
+
 }
 
 void CGolLathArm::Render( HDC _DC )

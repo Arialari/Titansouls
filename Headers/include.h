@@ -3,6 +3,7 @@
 #ifndef __INCLUDE_H__
 #define __INCLUDE_H__
 
+#include <assert.h>
 #include "Define.h"
 #include "Extern.h"
 #include "Enum.h"

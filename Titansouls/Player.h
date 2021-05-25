@@ -58,6 +58,9 @@ private:
 	float		m_fAimGaze;
 	const int	m_iDeadTime;
 	int			m_iDeadFrame;
+
+	//cheat
+	bool		m_bNeverDie;
 };
 
 #endif // !__PLAYER_H__

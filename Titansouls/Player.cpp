@@ -11,7 +11,7 @@
 CPlayer::CPlayer()
 	: m_ePreState( STATE_END ), m_eCurState( STATE_END ), m_eCurDirection(DIRECTION::DIRECTION_END)
 	, m_fRunSpeed(5.0f), m_fWalkSpeed(3.5f), m_fRollSpeed(7.5f), m_pArrow(nullptr), m_bHoldArrow(true), m_bIsAiming(false), m_bIsReturning(false), m_bWasRetrun(false)
-	, m_fAimGaze(0.f), m_iDeadFrame(0), m_iDeadTime(180)
+	, m_fAimGaze(0.f), m_iDeadFrame(0), m_iDeadTime(180), m_bNeverDie(false)
 {
 }
 
@@ -247,7 +247,11 @@ void CPlayer::Key_Check()
 	m_tInfo.fY += m_fVelocityY;
 	m_bIsAiming = bIsAim;
 	m_bIsReturning = bIsReturning;
-
+	//cheat
+	if ( CKeyMgr::Get_Instance()->Key_Down( VK_F2 ) )
+	{
+		m_bNeverDie = !m_bNeverDie;
+	}
 }
 
 void CPlayer::State_Change()
@@ -276,7 +280,7 @@ void CPlayer::State_Change()
 			break;
 		case STATE::ROLL:
 			m_tFrame.iFrameX = m_tFrame.iStartX = 6;
-			m_tFrame.iEndX = 12;
+			m_tFrame.iEndX = 11;
 			m_tFrame.iModelY = m_eCurDirection;
 			m_tFrame.dwDelay = 50;
 			m_tFrame.dwTime = GetTickCount();
@@ -344,6 +348,8 @@ void CPlayer::OffSet()
 
 void CPlayer::Update_Dead()
 {
+	if ( m_bNeverDie )
+		return;
 	if ( m_bDead )
 	{
 		m_eCurState = STATE::DEAD;
@@ -434,8 +440,11 @@ void CPlayer::Update_Return()
 		m_pArrow->Set_IsReturning( false );
 		return;
 	}
-		
-	m_pArrow->Set_IsReturning( true );
+	if( !m_pArrow->Get_IsReturning() )
+	{
+		m_pArrow->Set_IsReturning( true );
+		m_pArrow->Stop_Moving();
+	}
 
 	float fDeltaX = m_tInfo.fX - m_pArrow->Get_Info().fX ;
 	float fDeltaY = m_tInfo.fY - m_pArrow->Get_Info().fY;

@@ -144,10 +144,20 @@ void CArrow::OnBlocked( CObj* _pBlockedObj,  DIRECTION _eDir )
             m_fRadianAngle = -m_fRadianAngle;
         break;
     case SE:
+        if ( cos( m_fRadianAngle ) > 0 && sin( m_fRadianAngle ) < 0 )
+            m_fRadianAngle += PI;
+        break;
     case SW:
+        if ( cos( m_fRadianAngle ) < 0 && sin( m_fRadianAngle ) < 0 )
+            m_fRadianAngle += PI;
+        break;
     case NW:
+        if ( cos( m_fRadianAngle ) < 0 && sin( m_fRadianAngle ) > 0 )
+            m_fRadianAngle += PI;
+        break;
     case NE:
-        m_fRadianAngle += PI;
+        if ( cos( m_fRadianAngle ) > 0 && sin( m_fRadianAngle ) > 0 )
+            m_fRadianAngle += PI;
         break;
     case DIRECTION_END:
         break;

@@ -39,6 +39,7 @@ public:
 	inline const bool& Get_IsCheckBlock() const { return m_bIsCheckBlock; }
 	inline const bool& Get_IsCheckOverlape() const { return m_bIsCheckOverlape; }
 	inline void			Set_Dead( bool _bDead ) { m_bDead = _bDead; }
+	inline void			Set_IsCheckOverlap( bool _IsOverlap ) { m_bIsCheckOverlape = _IsOverlap; }
 public:
 	//Getter
 	const INFO& Get_Info() const { return m_tInfo; }

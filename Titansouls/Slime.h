@@ -19,17 +19,36 @@ public:
     virtual void Render( HDC _DC ) override;
     virtual void Release() override;
 public:
-    void        Set_SludgeHeart( CSludgeHeart* _pSludge ) { m_pSludeHeart = _pSludge; }
+    inline void Set_SludgeHeart( CSludgeHeart* _pSludge ) { m_pSludeHeart = _pSludge; }
+    inline void Set_HaveHeart() {m_bHaveHeart = true; }
+    inline void Set_iSizeLv( int _iSizeLv ) { m_iSizeLv = _iSizeLv; }
+    virtual void Set_Active() override;
+    void        Reset_Size();
+    inline const bool& Get_bHaveHeart() const { return m_bHaveHeart; }
 private:
     virtual void Update_DamageCollision() override;
     virtual void Update_Dead() override;
     virtual void Update_Pattern() override;
+    virtual void Update_Shadow() override;
+    void    Update_Heart();
+    
+    void        Update_Mozzi();
 private:
     CSlimeShadow*         m_pShadow;
     CSludgeHeart*       m_pSludeHeart;
     static const int    m_iSizeStartX[5];
     static const int    m_iSize[5];
+    static const float    m_fMozziMinX;
+    static const float    m_fMozziMinY;
     int             m_iSizeLv;
+    bool            m_bHaveHeart;
+    float           m_fMozziX;
+    float           m_fMozziY;
+    int             m_iMaxCX;
+    int             m_iMaxCY;
+    float            m_fTargetX;
+    float            m_fTargetY;
 };
 
 #endif // !__SLIME_H__
+

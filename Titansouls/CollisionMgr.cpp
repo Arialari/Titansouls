@@ -117,7 +117,7 @@ void CCollisionMgr::Collision_BackGroundEx( list<CObj*>& _Src )
 
 		const vector<CObj*> vecTile = CTileMgr::Get_Instance()->Get_vecTile();
 		// 대각선 충돌이 우선이기때문에 먼저 판단합니다 --로 말이죠
-		for (int i = DIRECTION_END-1; i>=0; --i)
+		for (int i = 0; i<DIRECTION_END; ++i)
 		{
 			if ( iIdx[i] < 0 || iIdx[i] >= iTileX * iTileY )
 				continue;
@@ -151,7 +151,7 @@ void CCollisionMgr::Collision_BackGroundEx( list<CObj*>& _Src )
 					}
 					if ( pObj->Get_IsCheckBlock() )
 						pObj->OnBlocked( pTile, (DIRECTION)i );
-					break;
+					//break;
 				}
 			}
 		}

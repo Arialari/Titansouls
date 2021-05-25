@@ -54,6 +54,14 @@ void CScrollMgr::Force_Set_Scroll( float _x, float _y )
 	m_fScrollY = _y + (WINCY >> 1);
 }
 
+void CScrollMgr::Force_Add_Scroll( float _x, float _y )
+{
+	m_fMoveTargetX -= _x;
+	m_fMoveTargetY -= _y;
+	m_fScrollX -= _x;
+	m_fScrollY -= _y;
+}
+
 void CScrollMgr::Scroll_Lock()
 {
 	int iTileX = CTileMgr::Get_Instance()->Get_TileLengthX();

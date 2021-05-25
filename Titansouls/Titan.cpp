@@ -68,3 +68,7 @@ void CTitan::Update_DamageCollision()
 		m_bIsCheckOverlape = false;
 	}
 }
+
+void CTitan::Update_Shadow()
+{
+}

@@ -33,7 +33,7 @@ protected:
 private:
     bool        m_bIsFliped;
     CGolLath*    m_pGolLath;
-
+    int         m_iShakeStartFrame;
    
 };
 
