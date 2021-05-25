@@ -13,7 +13,7 @@ const float CSlime::m_fMozziMinX = 0.6f;
 const float CSlime::m_fMozziMinY = 0.5f;
 CSlime::CSlime()
 	:m_pShadow(nullptr), m_iSizeLv(0), m_bHaveHeart(false), m_fMozziY(false), m_fMozziX(false)
-	, m_fTargetX(0), m_fTargetY(0), m_bIsHomingPlayer(true)
+	, m_fTargetX(0), m_fTargetY(0), m_bIsHomingPlayer(true), m_iShakeStartFrame(0)
 {
 }
 
@@ -85,6 +85,20 @@ int CSlime::Update()
 
 void CSlime::Late_Update()
 {
+	if (!m_bDead && m_iSizeLv < 2 )
+	{
+		int iCurPatternFrame = m_iPatternFrame % 100;
+		if ( iCurPatternFrame == 50 )
+		{
+			m_iShakeStartFrame = m_iPatternFrame;
+		}
+		if ( m_iPatternFrame > m_iShakeStartFrame && m_iPatternFrame < m_iShakeStartFrame + 10 )
+		{
+			int iDeltaFrame = m_iPatternFrame - m_iShakeStartFrame;
+			int sign = ((iDeltaFrame) % 3 - 1);
+			CScrollMgr::Get_Instance()->Force_Add_Scroll( ( (20.f - iDeltaFrame) * sign) / (m_iSizeLv + 1), 0.f );
+		}
+	}
 }
 
 void CSlime::Render( HDC _DC )

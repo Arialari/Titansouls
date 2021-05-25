@@ -52,6 +52,7 @@ private:
     float                       m_fTargetX;
     float                       m_fTargetY;
     list<CSlime*>::iterator     m_iterThis;
+    int                         m_iShakeStartFrame;
 };
 
 #endif // !__SLIME_H__
