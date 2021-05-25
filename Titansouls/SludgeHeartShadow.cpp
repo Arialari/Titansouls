@@ -4,7 +4,7 @@
 #include "BmpMgr.h"
 
 CSludgeHeartShadow::CSludgeHeartShadow()
-    : m_pSludgeHeart(nullptr)
+    : m_pSludgeHeart(nullptr), m_bIsAlone(false)
 {
 }
 
@@ -42,7 +42,7 @@ void CSludgeHeartShadow::Render( HDC _DC )
 	HDC hMemDC = CBmpMgr::Get_Instance()->Find_Bmp( m_pImageKey );
 
 	GdiTransparentBlt( _DC
-					   , m_tRect.left + iScrollX, (int)(m_tRect.top + iScrollY)
+					   , m_tRect.left + iScrollX, (int)(m_tRect.top + iScrollY /*- (m_tInfo.iCY)>>1*/)
 					   , m_tInfo.iCX, m_tInfo.iCY
 					   , hMemDC
 					   , 18 * PIXELCX, 3 * PIXELCY

@@ -44,7 +44,7 @@ int CArrow::Update()
     else
         m_fSpeed = 0;
 
-    if ( m_fSpeed > 3.f )
+    if ( m_fSpeed > 5.f )
     {
         m_bIsDamage = true;
     }

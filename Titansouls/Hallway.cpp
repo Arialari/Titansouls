@@ -97,5 +97,6 @@ void CHallway::Release()
 	}
 	CTileMgr::Get_Instance()->Release();
 	CObjMgr::Get_Instance()->ReleaseRenderList();
+	CScrollMgr::Get_Instance()->Set_Titan( nullptr );
 
 }

@@ -42,7 +42,6 @@ void CSludgeScene::Initialize()
 	CObj* pObj = CAbstractFactory<CSludgeHeart>::Create();
 	static_cast<CTitan*>(pObj)->Set_Player( m_pPlayer );
 	CObjMgr::Get_Instance()->Add_Object( pObj, OBJID::TITAN );
-	CScrollMgr::Get_Instance()->Set_Titan( pObj );
 
 	pObj = CAbstractFactory<CSceneChanger>::Create( 45.5f * DEFAULTCX, 82.5f * DEFAULTCY );
 	static_cast<CSceneChanger*>(pObj)->Set_Scene( SCENEID::HALLWAY_UNDER );

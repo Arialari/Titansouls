@@ -12,7 +12,7 @@ const int CSlimeShadow::m_iSizeStartY[5] = { 10, 6, 4, 3, 1 };
 const int CSlimeShadow::m_iSizeX[5] = { 8, 5, 3, 2, 1 };
 const int CSlimeShadow::m_iSizeY[5] = { 5, 3, 2, 1, 1 };
 CSlimeShadow::CSlimeShadow()
-	:m_iSizeLv(0), m_pSlime(nullptr), m_iMaxCX(0), m_fMozziX(1.f)
+	:m_iSizeLv(0), m_pSlime(nullptr), m_iMaxCX(0), m_fMozziX(1.f), m_iMaxCY(0), m_fMozziY( 1.f )
 {
 }
 
@@ -25,8 +25,9 @@ void CSlimeShadow::Initialize()
 {
 	CBmpMgr::Get_Instance()->Insert_Bmp( L"../Image/p_Sludge Heart.bmp", L"Sludge" );
 	m_iMaxCX = m_iSizeX[m_iSizeLv] * DEFAULTCX;
+	m_iMaxCY = m_iSizeY[m_iSizeLv] * DEFAULTCY;
 	m_tInfo.iCX = m_iMaxCX;
-	m_tInfo.iCY = m_iSizeY[m_iSizeLv] * DEFAULTCY - (DEFAULTCY * m_iSizeY[m_iSizeLv] / 8);
+	m_tInfo.iCY = m_iMaxCY;
 	Update_Rect();
 	m_pImageKey = L"Sludge";
 	
@@ -38,7 +39,7 @@ void CSlimeShadow::Initialize()
 
 int CSlimeShadow::Update()
 {
-	if ( m_bDestroyed )
+	if ( m_bDestroyed || m_bDead)
 		return OBJ_DESTROYED;
 	Reset_Size();
 	Update_Mozzi();
@@ -104,6 +105,8 @@ void CSlimeShadow::OnOverlaped( CObj* _pBlockedObj, DIRECTION _eDir )
 	}
 	else if ( dynamic_cast<CArrow*>(_pBlockedObj) )
 	{
+		if ( !(static_cast<CArrow*>(_pBlockedObj)->Get_IsDamage()) )
+			return;
 		if ( !m_bDead )
 		{
 			m_pSludgeHeart->Set_Active();
@@ -112,11 +115,17 @@ void CSlimeShadow::OnOverlaped( CObj* _pBlockedObj, DIRECTION _eDir )
 				if ( m_pSlime->Get_bHaveHeart() && m_iSizeLv == 3 )
 				{
 					m_bDestroyed = true;
+					m_pSlime->Set_Dead(true);
 					m_pSludgeHeart->Set_Alone();
 				}
 				else
 				{
-					m_pSludgeHeart->Create_Slime( m_tInfo.fX, m_tInfo.fY + 10, ++m_iSizeLv );
+					m_bDestroyed = true;
+					m_pSlime->Set_Dead( true );
+					m_pSludgeHeart->Create_Slime( m_tInfo.fX, m_tInfo.fY + (rand() % 3 - 1)* 2 * DEFAULTCY, ++m_iSizeLv, m_pSlime->Get_bHaveHeart() );
+					m_pSlime->Set_iSizeLv( m_iSizeLv );
+					m_pSlime->Reset_Size();
+					m_pSludgeHeart->Create_Slime( m_tInfo.fX + (rand() % 3 - 1)* 2 * DEFAULTCX, m_tInfo.fY, m_iSizeLv, false );
 					m_pSlime->Set_iSizeLv( m_iSizeLv );
 					m_pSlime->Reset_Size();
 				}
@@ -130,14 +139,17 @@ void CSlimeShadow::OnOverlaped( CObj* _pBlockedObj, DIRECTION _eDir )
 void CSlimeShadow::Reset_Size()
 {
 	m_iMaxCX = m_iSizeX[m_iSizeLv] * DEFAULTCX;
+	m_iMaxCY = m_iSizeX[m_iSizeLv] * DEFAULTCY;
 	m_tInfo.iCX = m_iMaxCX;
-	m_tInfo.iCY = m_iSizeY[m_iSizeLv] * DEFAULTCY - (DEFAULTCY * m_iSizeY[m_iSizeLv] / 8);
+	m_tInfo.iCY = m_iMaxCY;
+	//m_tInfo.iCY = m_iSizeY[m_iSizeLv] * DEFAULTCY - (DEFAULTCY * m_iSizeY[m_iSizeLv] / 8);
 	Update_Rect();
 }
 
 void CSlimeShadow::Update_Mozzi()
 {
 	m_tInfo.iCX = m_iMaxCX * m_fMozziX - (DEFAULTCX * m_iSizeX[m_iSizeLv] / 8);
+	m_tInfo.iCY = m_iMaxCY * m_fMozziY - (DEFAULTCX * m_iSizeX[m_iSizeLv] / 8);
 }
 
 void CSlimeShadow::Update_Dead()

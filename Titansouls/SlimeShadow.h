@@ -23,7 +23,9 @@ public:
 
     void        Set_SludgeHeart( CSludgeHeart* _pHeart ) { m_pSludgeHeart = _pHeart; }
     void       Set_Slime( CSlime* _pSlime ) { m_pSlime = _pSlime; }
+    void        Set_Slimeiter( list<CSlime*>::iterator _iter ) { m_iterSlime = _iter; }
     void        Set_MozziX( float _x ) { m_fMozziX = _x;  }
+    void        Set_MozziY( float _y ) { m_fMozziX = _y; }
     void        Set_iSizeLv( int _iSizeLv ) { m_iSizeLv = _iSizeLv; }
     void        Reset_Size();
 private:
@@ -39,7 +41,10 @@ private:
     CSlime*         m_pSlime;
     CSludgeHeart*   m_pSludgeHeart;
     float           m_fMozziX;
+    float           m_fMozziY;
     int             m_iMaxCX;
+    int             m_iMaxCY;
+    list<CSlime*>::iterator     m_iterSlime;
 };
 
 #endif // !__CSlUDGEHEART_SHADOW_H__

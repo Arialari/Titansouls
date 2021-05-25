@@ -24,6 +24,7 @@ public:
     inline const float& Get_PosZ() const { return m_fPosZ; }
     inline void Add_PosZ( float _z ) { m_fPosZ += _z; }
     inline virtual void Set_Active() { m_bActive = true; }
+    inline const bool& Get_Active() const { return m_bActive; }
 
     virtual void OnBlocked( CObj* _pBlockedObj, DIRECTION _eDir = DIRECTION_END ) override;
     virtual void OnOverlaped( CObj* _pBlockedObj, DIRECTION _eDir = DIRECTION_END ) override;

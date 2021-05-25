@@ -257,9 +257,16 @@ void CGolLath::AttackPattern( Arm _arm )
 		float fY = MyMath::FInterpTo( m_pArm[_arm]->Get_Info().fY, m_pPlayer->Get_Info().fY, DELTATIME_S, 8.f );
 		m_pArm[_arm]->Set_Pos( fX, fY );
 	}
-	else if ( m_iPatternFrame < m_iAttackStartFrame + 60 )// ³»·ÁÂï±â!
+	else if ( m_iPatternFrame < m_iAttackStartFrame + 50 )// ³»·ÁÂï±â!
 	{
+		float fX = MyMath::FInterpTo( m_pArm[_arm]->Get_Info().fX, m_pPlayer->Get_Info().fX, DELTATIME_S, 8.f );
+		float fY = MyMath::FInterpTo( m_pArm[_arm]->Get_Info().fY, m_pPlayer->Get_Info().fY, DELTATIME_S, 8.f );
+		m_pArm[_arm]->Set_Pos( fX, fY );
 		m_pArm[_arm]->Set_PosZ( DEFAULTCY * 5 * sinf( (m_iPatternFrame - (m_iAttackStartFrame + 40)) * PI / 40 + PI / 2  ) );
+	}
+	else if ( m_iPatternFrame < m_iAttackStartFrame + 60 )
+	{
+		m_pArm[_arm]->Set_PosZ( DEFAULTCY * 5 * sinf( (m_iPatternFrame - (m_iAttackStartFrame + 40)) * PI / 40 + PI / 2 ) );
 	}
 	else
 	{

@@ -2,6 +2,7 @@
 #include "ScrollMgr.h"
 #include "TileMgr.h"
 #include "Obj.h"
+#include "Titan.h"
 
 CScrollMgr* CScrollMgr::m_pInstance = nullptr;
 CScrollMgr::CScrollMgr()
@@ -17,7 +18,29 @@ CScrollMgr::~CScrollMgr()
 void CScrollMgr::Update()
 {
 
-	if ( m_pPlayer )
+	if ( m_pPlayer && m_pTitan && !m_pTitan->Get_IsDead() && static_cast<CTitan*>(m_pTitan)->Get_Active() )
+	{
+		int iOffSetX = WINCX >> 1;
+		int iOffSetY = WINCY >> 1;
+		int iScrollX = (int)m_fMoveTargetX;
+		int iScrollY = (int)m_fMoveTargetY;
+		int iX = (int)(m_pTitan->Get_Info().fX + m_pPlayer->Get_Info().fX)>>1;
+		int iY = (int)(m_pTitan->Get_Info().fY + m_pPlayer->Get_Info().fY)>>1;
+
+		if ( iOffSetX < (int)(iX + iScrollX) )
+			CScrollMgr::Get_Instance()->Add_ScrollX( iOffSetX - (iX + iScrollX) );
+
+		if ( iOffSetX > ( int )(iX + iScrollX) )
+			CScrollMgr::Get_Instance()->Add_ScrollX( iOffSetX - (iX + iScrollX) );
+
+		if ( iOffSetY < (int)(iY + iScrollY) )
+			CScrollMgr::Get_Instance()->Add_ScrollY( iOffSetY - (iY + iScrollY) );
+
+		if ( iOffSetY > ( int )(iY + iScrollY) )
+			CScrollMgr::Get_Instance()->Add_ScrollY( iOffSetY - (iY + iScrollY) );
+
+	}
+	else if ( m_pPlayer )
 	{
 		int iOffSetX = WINCX >> 1;
 		int iOffSetY = WINCY >> 1;
@@ -35,7 +58,6 @@ void CScrollMgr::Update()
 
 		if ( iOffSetY > ( int )(m_pPlayer->Get_Info().fY + iScrollY) )
 			CScrollMgr::Get_Instance()->Add_ScrollY( iOffSetY - (m_pPlayer->Get_Info().fY + iScrollY) );
-
 	}
 }
 

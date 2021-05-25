@@ -15,14 +15,18 @@ public:
     virtual void Render( HDC _DC ) override;
     virtual void Release() override;
     virtual void Set_Active() override;
-    inline void  Set_Alone() { m_bAlone = true; }
+    virtual void Update_ColisionRect() override;
+    void  Set_Alone();
+    inline void  EraseSlime( list<CSlime*>::iterator _iter ) { m_pSlime.erase( _iter ); }
+    virtual void Update_DamageCollision() override;
+    virtual void OnOverlaped( CObj* _pBlockedObj, DIRECTION _eDir = DIRECTION_END ) override;
 public:
-    void         Create_Slime( float _x, float _y, int _iSizeLv );
+    void         Create_Slime( float _x, float _y, int _iSizeLv, bool bHaveHeart );
 private:
     virtual void Update_Dead() override;
     virtual void Update_Pattern() override;
 private:
-    vector<CSlime*>     m_pSlime;
+    list<CSlime*>     m_pSlime;
     CSludgeHeartShadow*       m_pShadow;
 
     bool            m_bAlone;

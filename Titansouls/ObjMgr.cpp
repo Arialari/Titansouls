@@ -42,6 +42,7 @@ void CObjMgr::Update()
 	CCollisionMgr::Collision_BackGroundEx( m_listObj[OBJID::PLAYER] );
 	CCollisionMgr::Collision_Rect( m_listObj[OBJID::PLAYER], m_listObj[OBJID::ARROW] );
 	CCollisionMgr::Collision_BackGroundEx( m_listObj[OBJID::ARROW] );
+	CCollisionMgr::Collision_BackGroundEx( m_listObj[OBJID::TITAN] );
 	
 	if( static_cast<CPlayer*>(m_listObj[OBJID::PLAYER].front())->Get_IsHolingArrow() )
 		CCollisionMgr::Collision_Rect( m_listObj[OBJID::COLLISION], m_listObj[OBJID::PLAYER] );

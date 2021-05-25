@@ -15,10 +15,13 @@ public:
     virtual void Release() override;
     void        Update_ColisionRect() override;
 
+    inline void Set_Alone() { m_bIsAlone = true; }
+
 private:
     virtual void Update_Dead() override;
     virtual void Update_Pattern() override;
 private:
     CSludgeHeart* m_pSludgeHeart;
+    bool            m_bIsAlone;
 };
 

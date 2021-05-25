@@ -43,7 +43,7 @@ int CGolLathArm::Update()
 
 void CGolLathArm::Late_Update()
 {
-	if ( m_bActive )
+	if ( m_bActive && !m_bDead )
 	{
 		if ( m_bIsCheckOverlape )
 		{

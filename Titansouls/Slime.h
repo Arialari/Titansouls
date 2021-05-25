@@ -21,10 +21,12 @@ public:
 public:
     inline void Set_SludgeHeart( CSludgeHeart* _pSludge ) { m_pSludeHeart = _pSludge; }
     inline void Set_HaveHeart() {m_bHaveHeart = true; }
-    inline void Set_iSizeLv( int _iSizeLv ) { m_iSizeLv = _iSizeLv; }
+    void Set_ThisIter( list<CSlime*>::iterator _iter );
+    void Set_iSizeLv( int _iSizeLv );
     virtual void Set_Active() override;
     void        Reset_Size();
     inline const bool& Get_bHaveHeart() const { return m_bHaveHeart; }
+    virtual void			Set_Dead( bool _bDead );
 private:
     virtual void Update_DamageCollision() override;
     virtual void Update_Dead() override;
@@ -44,10 +46,12 @@ private:
     bool            m_bHaveHeart;
     float           m_fMozziX;
     float           m_fMozziY;
-    int             m_iMaxCX;
-    int             m_iMaxCY;
-    float            m_fTargetX;
-    float            m_fTargetY;
+    bool            m_bIsHomingPlayer;
+    int                         m_iMaxCX;
+    int                         m_iMaxCY;
+    float                       m_fTargetX;
+    float                       m_fTargetY;
+    list<CSlime*>::iterator     m_iterThis;
 };
 
 #endif // !__SLIME_H__
