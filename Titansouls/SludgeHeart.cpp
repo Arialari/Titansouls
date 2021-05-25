@@ -155,7 +155,8 @@ void CSludgeHeart::OnOverlaped( CObj* _pBlockedObj, DIRECTION _eDir )
 		}
 		else if ( dynamic_cast<CArrow*>(_pBlockedObj) )
 		{
-			m_bDead = true;
+			if ( static_cast<CArrow*>(_pBlockedObj)->Get_IsDamage() )
+				m_bDead = true;
 		}
 	}
 

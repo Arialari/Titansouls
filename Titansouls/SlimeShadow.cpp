@@ -139,7 +139,7 @@ void CSlimeShadow::OnOverlaped( CObj* _pBlockedObj, DIRECTION _eDir )
 void CSlimeShadow::Reset_Size()
 {
 	m_iMaxCX = m_iSizeX[m_iSizeLv] * DEFAULTCX;
-	m_iMaxCY = m_iSizeX[m_iSizeLv] * DEFAULTCY;
+	m_iMaxCY = m_iSizeY[m_iSizeLv] * DEFAULTCY;
 	m_tInfo.iCX = m_iMaxCX;
 	m_tInfo.iCY = m_iMaxCY;
 	//m_tInfo.iCY = m_iSizeY[m_iSizeLv] * DEFAULTCY - (DEFAULTCY * m_iSizeY[m_iSizeLv] / 8);
@@ -149,7 +149,7 @@ void CSlimeShadow::Reset_Size()
 void CSlimeShadow::Update_Mozzi()
 {
 	m_tInfo.iCX = m_iMaxCX * m_fMozziX - (DEFAULTCX * m_iSizeX[m_iSizeLv] / 8);
-	m_tInfo.iCY = m_iMaxCY * m_fMozziY - (DEFAULTCX * m_iSizeX[m_iSizeLv] / 8);
+	m_tInfo.iCY = m_iMaxCY * m_fMozziY - (DEFAULTCX * m_iSizeY[m_iSizeLv] / 8);
 }
 
 void CSlimeShadow::Update_Dead()

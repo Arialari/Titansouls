@@ -157,10 +157,10 @@ void CObjMgr::Late_Update_BackGround()
 	int iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
 	int iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
 
-	int	iCullX = abs( iScrollX / DEFAULTCX );
+	int	iCullX = abs( iScrollX / DEFAULTCX ) - 1;
 	int	iCullY = abs( iScrollY / DEFAULTCY );
 
-	int iCullEndX = iCullX + (WINCX / DEFAULTCX) + 2;
+	int iCullEndX = iCullX + (WINCX / DEFAULTCX) + 3;
 	int iCullEndY = iCullY + (WINCY / DEFAULTCY) + 2;
 
 	const vector<CObj*> vecTile = CTileMgr::Get_Instance()->Get_vecTile();
