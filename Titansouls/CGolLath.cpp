@@ -191,6 +191,8 @@ void CGolLath::Update_Pattern()
 		TCHAR szBuff[32] = L"The First Guardian.mp3";
 		CSoundMgr::Get_Instance()->PlayBGM( szBuff );
 
+		lstrcpy(szBuff,  L"Gol_Lath_Loar.mp3");
+		CSoundMgr::Get_Instance()->PlaySound( szBuff,CSoundMgr::TITAN);
 		m_pArm[0]->Set_Active();
 		m_pArm[1]->Set_Active();
 	}
@@ -305,5 +307,7 @@ void CGolLath::Update_Dead()
 	m_pArm[LEFT]->Set_PosZ( MyMath::FInterpTo( m_pArm[LEFT]->Get_PosZ(), 0.f, DELTATIME_S, 1.f ));
 	m_pArm[RIGHT]->Set_PosZ( MyMath::FInterpTo( m_pArm[RIGHT]->Get_PosZ(), 0.f, DELTATIME_S, 1.f ) );
 	m_iFrameidx = 3;
-	CSoundMgr::Get_Instance()->StopAll();
+	m_pArm[LEFT]->Set_Dead( true );
+	m_pArm[RIGHT]->Set_Dead( true );
 }
+

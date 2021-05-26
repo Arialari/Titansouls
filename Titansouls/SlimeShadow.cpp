@@ -6,11 +6,13 @@
 #include "Player.h"
 #include "Arrow.h"
 #include "Slime.h"
+#include "SoundMgr.h"
 
 const int CSlimeShadow::m_iSizeStartX[5] = { 0, 10, 15, 18, 20 };
 const int CSlimeShadow::m_iSizeStartY[5] = { 10, 6, 4, 3, 1 };
 const int CSlimeShadow::m_iSizeX[5] = { 8, 5, 3, 2, 1 };
 const int CSlimeShadow::m_iSizeY[5] = { 5, 3, 2, 1, 1 };
+int CSlimeShadow::m_iSoundNumber = 0;
 CSlimeShadow::CSlimeShadow()
 	:m_iSizeLv(0), m_pSlime(nullptr), m_iMaxCX(0), m_fMozziX(1.f), m_iMaxCY(0), m_fMozziY( 1.f )
 {
@@ -128,6 +130,22 @@ void CSlimeShadow::OnOverlaped( CObj* _pBlockedObj, DIRECTION _eDir )
 					m_pSludgeHeart->Create_Slime( m_tInfo.fX + (rand() % 3 - 1)* 2 * DEFAULTCX, m_tInfo.fY, m_iSizeLv, false );
 					m_pSlime->Set_iSizeLv( m_iSizeLv );
 					m_pSlime->Reset_Size();
+
+					CSoundMgr::Get_Instance()->StopSound( CSoundMgr::CHANNELID( m_iSoundNumber + 5 ) );
+					TCHAR szBuff[32];
+					if ( m_iSizeLv == 0 )
+						lstrcpy( szBuff, L"Biggest1.mp3" );
+					else if ( m_iSizeLv == 1 )
+						lstrcpy( szBuff, L"Big1.mp3" );
+					else if ( m_iSizeLv == 2 )
+						lstrcpy( szBuff, L"Medium1.mp3" );
+					else if ( m_iSizeLv == 3 )
+						lstrcpy( szBuff, L"Small1.mp3" );
+					else if ( m_iSizeLv == 4 )
+						lstrcpy( szBuff, L"Smallest1.mp3" );
+
+					CSoundMgr::Get_Instance()->PlaySound( szBuff, CSoundMgr::CHANNELID( m_iSoundNumber + 5 ) );
+					m_iSoundNumber = ((m_iSoundNumber + 1) % 16);
 				}
 			}
 				

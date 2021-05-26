@@ -258,6 +258,7 @@ void CPlayer::State_Change()
 {
 	if (m_ePreState != m_eCurState || m_ePreDirection != m_eCurDirection)
 	{
+	
 		switch (m_eCurState)
 		{
 		case STATE::IDLE:
@@ -321,6 +322,47 @@ void CPlayer::State_Change()
 			m_tFrame.ePlayType = FRAME::PLAYTYPE::NO_LOOP;
 			break;
 		}
+		switch ( m_eCurState ) // Play Sound
+		{
+		case CPlayer::WALK:
+			if ( m_tFrame.iFrameX == m_tFrame.iStartX )
+			{
+				CSoundMgr::Get_Instance()->StopSound( CSoundMgr::PLAYER_WALK );
+				TCHAR szBuff[32] = L"Step1.ogg";
+				CSoundMgr::Get_Instance()->PlaySound( szBuff, CSoundMgr::PLAYER_WALK );
+			}
+			break;
+		case CPlayer::ROLL:
+			if ( m_tFrame.iFrameX == m_tFrame.iStartX )
+			{
+				CSoundMgr::Get_Instance()->StopSound( CSoundMgr::PLAYER_WALK );
+				TCHAR szBuff[32] = L"Roll.mp3";
+				CSoundMgr::Get_Instance()->PlaySound( szBuff, CSoundMgr::PLAYER_WALK );
+			}
+			break;
+		case CPlayer::RUN:
+			if ( m_tFrame.iFrameX == m_tFrame.iStartX )
+			{
+				CSoundMgr::Get_Instance()->StopSound( CSoundMgr::PLAYER_WALK );
+				TCHAR szBuff[32] = L"Step1.ogg";
+				CSoundMgr::Get_Instance()->PlaySound( szBuff, CSoundMgr::PLAYER_WALK );
+			}
+			break;
+		case CPlayer::AIM:
+			break;
+		case CPlayer::RETURN:
+			if ( m_tFrame.iFrameX == m_tFrame.iStartX )
+			{
+				CSoundMgr::Get_Instance()->StopSound( CSoundMgr::ARROW );
+				TCHAR szBuff[32] = L"arrow_retrieval.mp3";
+				CSoundMgr::Get_Instance()->PlaySound( szBuff, CSoundMgr::ARROW );
+			}
+			break;
+		case CPlayer::DEAD:
+			break;
+		default:
+			break;
+		}
 		m_ePreState = m_eCurState;
 		m_ePreDirection = m_eCurDirection;
 	}
@@ -376,6 +418,12 @@ void CPlayer::Update_Aim()
 {
 	if ( m_bIsAiming && m_bHoldArrow )
 	{
+		if ( m_fAimGaze == 0 )
+		{
+			CSoundMgr::Get_Instance()->StopSound( CSoundMgr::ARROW );
+			TCHAR szBuff[32] = L"arrow_charge.mp3";
+			CSoundMgr::Get_Instance()->PlaySound( szBuff, CSoundMgr::ARROW );
+		}
 		if ( m_fAimGaze < 1.f )
 			m_fAimGaze += 0.10f;
 		else
@@ -421,6 +469,9 @@ void CPlayer::Update_Aim()
 			m_pArrow->Set_RadianAngle( MyMathMgr::fDirectionToRadianAngle[m_eCurDirection] );
 			m_pArrow->Shoot( m_fAimGaze );
 			m_bHoldArrow = false;
+			CSoundMgr::Get_Instance()->StopSound( CSoundMgr::ARROW );
+			TCHAR szBuff[32] = L"arrow_shoot.mp3";
+			CSoundMgr::Get_Instance()->PlaySound( szBuff, CSoundMgr::ARROW );
 		}
 		else if (m_fAimGaze > 0.f)
 

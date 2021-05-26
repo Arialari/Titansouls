@@ -1,5 +1,6 @@
 #pragma once
 #include "Titan.h"
+class CArrow;
 class CSlime;
 class CSludgeHeartShadow;
 class CSludgeHeart :
@@ -25,9 +26,14 @@ public:
 private:
     virtual void Update_Dead() override;
     virtual void Update_Pattern() override;
+    void Update_RenderPoint();
 private:
     list<CSlime*>     m_pSlime;
     CSludgeHeartShadow*       m_pShadow;
+
+    float           m_fArrowAngle;
+    POINT           m_tRenderPoint[3];
+    CArrow*          m_pArrow;
 
     bool            m_bAlone;
 };

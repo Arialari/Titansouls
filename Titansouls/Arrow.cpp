@@ -4,6 +4,7 @@
 #include "ScrollMgr.h"
 #include "Tile.h"
 #include "Player.h"
+#include "SoundMgr.h"
 
 CArrow::CArrow()
     :m_fRadianAngle( 0.f ), m_hMemDc( nullptr ), m_fFullSpeed( 24.5f ), m_fSpeed( 0.f ), m_fReturnAccelator( 1.f ), m_bHolded( true ), m_bIsReturning( false ), m_bIsDamage(false)
@@ -177,6 +178,9 @@ void CArrow::OnOverlaped( CObj* _pBlockedObj, DIRECTION _eDir )
             m_bIsRender = false;
             m_bHolded = true;
             m_fSpeed = 0.f;
+            CSoundMgr::Get_Instance()->StopSound( CSoundMgr::ARROW );
+            TCHAR szBuff[32] = L"Pickuparrow.mp3";
+            CSoundMgr::Get_Instance()->PlaySound( szBuff, CSoundMgr::ARROW );
         }
     }
 }

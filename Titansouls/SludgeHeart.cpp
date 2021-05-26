@@ -7,11 +7,12 @@
 #include "ObjMgr.h"
 #include "Player.h"
 #include "Arrow.h"
+#include "SoundMgr.h"
 
 CSludgeHeart::CSludgeHeart()
-	:m_pShadow(nullptr), m_bAlone(false)
+	:m_pShadow( nullptr ), m_bAlone( false ), m_fArrowAngle( 0.f ), m_pArrow(nullptr)
 {
-	
+	ZeroMemory( m_tRenderPoint, sizeof( m_tRenderPoint ) );
 }
 
 CSludgeHeart::~CSludgeHeart()
@@ -33,6 +34,7 @@ void CSludgeHeart::Initialize()
 	m_vecCollisionRect.emplace_back( RECT() );
 	m_fPosZ = 30.f;
 	m_bIsCheckBlock = false;
+	m_bIsRender = false;
 	
 	m_pSlime.emplace_back(static_cast<CSlime*>(CAbstractFactory<CSlime>::Create(m_tInfo.fX,m_tInfo.fY)));
 	m_pSlime.back()->Set_SludgeHeart( this );
@@ -85,6 +87,35 @@ void CSludgeHeart::Render( HDC _DC )
 					   , 24 * PIXELCX, m_iFrameidx * 2 * PIXELCY
 					   , PIXELCX * 2, PIXELCY * 2
 					   , RGB( 255, 0, 255 ) );
+
+	hMemDC = CBmpMgr::Get_Instance()->Find_Bmp( L"Player" );
+
+	if ( m_bIsRender )
+	{
+		Update_RenderPoint();
+
+		int iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+		int iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+		HDC hPlgDC = CBmpMgr::Get_Instance()->Find_Bmp( L"Plg" );
+		HDC hResetDC = CBmpMgr::Get_Instance()->Find_Bmp( L"Reset" );
+
+		PlgBlt( hPlgDC, m_tRenderPoint
+				, hMemDC
+				, 30 * PIXELCX, PIXELCY
+				, PIXELCX, PIXELCY
+				, NULL, NULL, NULL );
+
+		GdiTransparentBlt( _DC
+						   , m_tRect.left + iScrollX, m_tRect.top + iScrollY - DEFAULTCY
+						   , DEFAULTCX, DEFAULTCY
+						   , hPlgDC
+						   , 0, 0
+						   , PIXELCX, PIXELCY
+						   , RGB( 255, 0, 255 ) );
+		BitBlt( hPlgDC, 0, 0, PIXELCX, PIXELCY, hResetDC, 0, 0, SRCCOPY );
+	}
+
+
 	RenderCollision(_DC);
 }
 
@@ -94,15 +125,23 @@ void CSludgeHeart::Release()
 
 void CSludgeHeart::Set_Active()
 {
-	m_bActive = true;
-	m_pShadow->Set_Active();
-
-	auto iter = m_pSlime.begin();
-	while ( iter != m_pSlime.end() && iter._Ptr != nullptr )
+	if ( !m_bActive )
 	{
-		(*iter)->Set_Active();
-		++iter;
+		m_bActive = true;
+		m_pShadow->Set_Active();
+
+		auto iter = m_pSlime.begin();
+		while ( iter != m_pSlime.end() && iter._Ptr != nullptr )
+		{
+			(*iter)->Set_Active();
+			++iter;
+		}
+		CSoundMgr::Get_Instance()->StopSound( CSoundMgr::TITANBGM );
+		CSoundMgr::Get_Instance()->StopSound( CSoundMgr::BGM );
+		TCHAR szBuff[32] = L"Sludgeheart.mp3";
+		CSoundMgr::Get_Instance()->PlayBGM( szBuff );
 	}
+
 }
 
 void CSludgeHeart::Update_ColisionRect()
@@ -155,8 +194,21 @@ void CSludgeHeart::OnOverlaped( CObj* _pBlockedObj, DIRECTION _eDir )
 		}
 		else if ( dynamic_cast<CArrow*>(_pBlockedObj) )
 		{
-			if ( static_cast<CArrow*>(_pBlockedObj)->Get_IsDamage() )
+
+			m_pArrow = static_cast<CArrow*>(_pBlockedObj);
+
+			if ( m_pArrow->Get_IsDamage() )
 				m_bDead = true;
+			CSoundMgr::Get_Instance()->StopAll();
+			TCHAR szBuff[32] = L"Impact.mp3";
+			CSoundMgr::Get_Instance()->PlaySound( szBuff, CSoundMgr::TITAN );
+
+	
+			m_pArrow->Set_IsRender( false );
+			m_fArrowAngle = m_pArrow->Get_Angle();
+			m_pArrow->Set_Pos( m_tInfo.fX, m_tInfo.fY );
+			m_pArrow->Stop_Moving();
+			m_bIsRender = true;
 		}
 	}
 
@@ -188,6 +240,11 @@ void CSludgeHeart::Update_Dead()
 		(*iter)->Set_Dead(true);
 		++iter;
 	}
+	if ( m_pArrow && m_pArrow->Get_IsDamage() )
+	{
+		m_bIsRender = false;
+		m_pArrow->Set_IsRender( true );
+	}
 }
 
 void CSludgeHeart::Update_Pattern()
@@ -210,3 +267,23 @@ void CSludgeHeart::Update_Pattern()
 		}
 	}
 }
+
+void CSludgeHeart::Update_RenderPoint()
+{
+	float	fX = (float)(PIXELCX >> 1);
+	float	fY = (float)(PIXELCY >> 1);
+
+	float	fCX = (float)(PIXELCX >> 1);
+	float	fCY = (float)(PIXELCY >> 1);
+	float	fDia = sqrtf( fCX * fCX + fCY * fCY );
+
+	m_tRenderPoint[0].x = (LONG)(fX + (cosf( PI * 5 / 4 + m_fArrowAngle ) * fDia));
+	m_tRenderPoint[0].y = (LONG)(fY - (sinf( PI * 5 / 4 + m_fArrowAngle ) * fDia));
+
+	m_tRenderPoint[1].x = (LONG)(fX + (cosf( PI * 3 / 4 + m_fArrowAngle ) * fDia));
+	m_tRenderPoint[1].y = (LONG)(fY - (sinf( PI * 3 / 4 + m_fArrowAngle ) * fDia));
+
+	m_tRenderPoint[2].x = (LONG)(fX + (cosf( PI * 7 / 4 + m_fArrowAngle ) * fDia));
+	m_tRenderPoint[2].y = (LONG)(fY - (sinf( PI * 7 / 4 + m_fArrowAngle ) * fDia));
+}
+

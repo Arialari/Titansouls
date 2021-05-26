@@ -45,6 +45,7 @@ private:
     int             m_iMaxCX;
     int             m_iMaxCY;
     list<CSlime*>::iterator     m_iterSlime;
+    static int       m_iSoundNumber;
 };
 
 #endif // !__CSlUDGEHEART_SHADOW_H__

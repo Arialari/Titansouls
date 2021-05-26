@@ -3,6 +3,7 @@
 #include "ScrollMgr.h"
 #include "BmpMgr.h"
 #include "CGolLath.h"
+#include "SoundMgr.h"
 
 CGolLathArm::CGolLathArm()
 	:m_bIsFliped(false), m_pGolLath(nullptr), m_iShakeStartFrame(0)
@@ -48,6 +49,9 @@ void CGolLathArm::Late_Update()
 		if ( m_bIsCheckOverlape )
 		{
 			m_iShakeStartFrame = m_iPatternFrame;
+			CSoundMgr::Get_Instance()->StopSound( CSoundMgr::TITAN_1 );
+			TCHAR szBuff[32] = L"GolArm.mp3";
+			CSoundMgr::Get_Instance()->PlaySound( szBuff, CSoundMgr::TITAN_1 );
 		}
 		if ( m_iPatternFrame > m_iShakeStartFrame && m_iPatternFrame < m_iShakeStartFrame + 10 )
 		{

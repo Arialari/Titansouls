@@ -4,6 +4,7 @@
 #include "Arrow.h"
 #include "ScrollMgr.h"
 #include "BmpMgr.h"
+#include "SoundMgr.h"
 
 CTitanKillBox::CTitanKillBox()
 	: m_bIsKillBoxAcive( false ), m_pTitan( nullptr ), m_bOverlapeOnce( true), m_pArrow(nullptr)
@@ -116,5 +117,9 @@ void CTitanKillBox::OnOverlaped( CObj* _pBlockedObj, DIRECTION _eDir )
 		m_pArrow->Stop_Moving();
 		m_bIsRender = true;
 		m_bOverlapeOnce = false;
+
+		CSoundMgr::Get_Instance()->StopAll();
+		TCHAR szBuff[32] = L"Impact.mp3";
+		CSoundMgr::Get_Instance()->PlaySound( szBuff, CSoundMgr::TITAN );
 	}
 }

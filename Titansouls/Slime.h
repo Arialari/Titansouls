@@ -53,6 +53,7 @@ private:
     float                       m_fTargetY;
     list<CSlime*>::iterator     m_iterThis;
     int                         m_iShakeStartFrame;
+    static  int                 m_iSoundNumber;
 };
 
 #endif // !__SLIME_H__

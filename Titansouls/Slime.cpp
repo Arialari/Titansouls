@@ -6,7 +6,9 @@
 #include "SludgeHeart.h"
 #include "ObjMgr.h"
 #include "Player.h"
+#include "SoundMgr.h"
 
+int CSlime::m_iSoundNumber = 0;
 const int CSlime::m_iSizeStartX[5] = { 0, 10, 15, 18, 20 };
 const int CSlime::m_iSize[5] = { 8, 5, 3, 2, 1 };
 const float CSlime::m_fMozziMinX = 0.6f;
@@ -91,12 +93,35 @@ void CSlime::Late_Update()
 		if ( iCurPatternFrame == 50 )
 		{
 			m_iShakeStartFrame = m_iPatternFrame;
+
 		}
 		if ( m_iPatternFrame > m_iShakeStartFrame && m_iPatternFrame < m_iShakeStartFrame + 10 )
 		{
 			int iDeltaFrame = m_iPatternFrame - m_iShakeStartFrame;
 			int sign = ((iDeltaFrame) % 3 - 1);
 			CScrollMgr::Get_Instance()->Force_Add_Scroll( ( (20.f - iDeltaFrame) * sign) / (m_iSizeLv + 1), 0.f );
+		}
+	}
+	if ( !m_bDead )
+	{
+		int iCurPatternFrame = m_iPatternFrame % 100;
+		if ( iCurPatternFrame == 50 )
+		{
+			CSoundMgr::Get_Instance()->StopSound( CSoundMgr::CHANNELID( m_iSoundNumber + 5 ) );
+			TCHAR szBuff[32];
+			if ( m_iSizeLv == 0 )
+				lstrcpy( szBuff, L"Biggest1.mp3" );
+			else if ( m_iSizeLv == 1 )
+				lstrcpy( szBuff, L"Big1.mp3" );
+			else if ( m_iSizeLv == 2 )
+				lstrcpy( szBuff, L"Medium1.mp3" );
+			else if ( m_iSizeLv == 3 )
+				lstrcpy( szBuff, L"Small1.mp3" );
+			else if ( m_iSizeLv == 4 )
+				lstrcpy( szBuff, L"Smallest1.mp3" );
+
+			CSoundMgr::Get_Instance()->PlaySound( szBuff, CSoundMgr::CHANNELID( m_iSoundNumber + 5 ) );
+			m_iSoundNumber = ((m_iSoundNumber + 1) % 16);
 		}
 	}
 }
@@ -235,9 +260,9 @@ void CSlime::Update_Pattern()
 				}
 
 			}
-			if ( m_tInfo.fX < 40 * DEFAULTCY )
+			if ( m_tInfo.fX < 32 * DEFAULTCY )
 			{
-				m_tInfo.fX = 40 * DEFAULTCY;
+				m_tInfo.fX = 32 * DEFAULTCY;
 				m_bIsHomingPlayer = true;
 			}
 			if ( m_tInfo.fX > 59 * DEFAULTCY )
