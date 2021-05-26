@@ -30,7 +30,9 @@ public:
 public:
 	inline  void Pick_Arrow() { m_bHoldArrow = true; }
 	const bool& Get_IsHolingArrow() const { return m_bHoldArrow; }
-	
+	void		Revive();
+	inline	void		Win_Titan( int _i ) { m_bWinTitan[_i] = true; }
+	inline int			Get_Win_Count() { return (m_bWinTitan[0] + m_bWinTitan[1]); }
 
 private:
 	void Key_Check();
@@ -58,6 +60,11 @@ private:
 	float		m_fAimGaze;
 	const int	m_iDeadTime;
 	int			m_iDeadFrame;
+
+	float		m_fSavedX;
+	float		m_fSavedY;
+	SCENEID::ID m_eSavedSceneID;
+	bool		m_bWinTitan[2];
 
 	//cheat
 	bool		m_bNeverDie;

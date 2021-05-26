@@ -124,6 +124,12 @@
     <Filter Include="소스 파일\01.Obj\00.Pawn\01.Titan\Sludge\Heart">
       <UniqueIdentifier>{c5bddf5d-9235-4b61-801f-193d67894c83}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\04.Scene\98.Ending">
+      <UniqueIdentifier>{f21dab7e-f062-4811-9dd1-3c06cb1251e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\01.Obj\06.BigDoor">
+      <UniqueIdentifier>{d9356c78-da1a-470a-9dfd-7a171e2f721b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -249,6 +255,12 @@
     <ClInclude Include="SludgeHeartShadow.h">
       <Filter>소스 파일\01.Obj\00.Pawn\01.Titan\Sludge\Heart</Filter>
     </ClInclude>
+    <ClInclude Include="EndingScene.h">
+      <Filter>소스 파일\04.Scene\98.Ending</Filter>
+    </ClInclude>
+    <ClInclude Include="BigDoor.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Titansouls.cpp">
@@ -364,6 +376,12 @@
     </ClCompile>
     <ClCompile Include="SludgeHeartShadow.cpp">
       <Filter>소스 파일\01.Obj\00.Pawn\01.Titan\Sludge\Heart</Filter>
+    </ClCompile>
+    <ClCompile Include="EndingScene.cpp">
+      <Filter>소스 파일\04.Scene\98.Ending</Filter>
+    </ClCompile>
+    <ClCompile Include="BigDoor.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

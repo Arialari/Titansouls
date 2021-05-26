@@ -69,9 +69,9 @@ void CMainGame::Render()
 void CMainGame::Release()
 {
 	CKeyMgr::Destroy_Instance();
-	CScrollMgr::Destroy_Instance();
 	CBmpMgr::Destroy_Instance();
 	CSceneMgr::Destroy_Instance();
+	CScrollMgr::Destroy_Instance();
 	CTileMgr::Destroy_Instance();
 	CUiMgr::Destroy_Instance();
 	CObjMgr::Destroy_Instance();

@@ -148,10 +148,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Arrow.h" />
+    <ClInclude Include="BigDoor.h" />
     <ClInclude Include="BmpMgr.h" />
     <ClInclude Include="BrainFreezeScene.h" />
     <ClInclude Include="CGolLath.h" />
     <ClInclude Include="CollisionMgr.h" />
+    <ClInclude Include="EndingScene.h" />
     <ClInclude Include="EyecubeScene.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GolLathArm.h" />
@@ -191,10 +193,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Arrow.cpp" />
+    <ClCompile Include="BigDoor.cpp" />
     <ClCompile Include="BmpMgr.cpp" />
     <ClCompile Include="BrainFreezeScene.cpp" />
     <ClCompile Include="CGolLath.cpp" />
     <ClCompile Include="CollisionMgr.cpp" />
+    <ClCompile Include="EndingScene.cpp" />
     <ClCompile Include="EyecubeScene.cpp" />
     <ClCompile Include="GolLathArm.cpp" />
     <ClCompile Include="GolSetScene.cpp" />

@@ -19,8 +19,12 @@ void CMenu::Initialize()
 {
 	CBmpMgr::Get_Instance()->Insert_Bmp( L"../Image/Menu1.bmp", L"Menu1" );
 	CBmpMgr::Get_Instance()->Insert_Bmp( L"../Image/Menu2.bmp", L"Menu2" );
-	TCHAR szBuff[32] = L"Souls.mp3";
-	CSoundMgr::Get_Instance()->PlayBGM( szBuff );
+	CSoundMgr::Get_Instance()->StopAll();
+	TCHAR szBuff[32] = L"Motif.ogg";
+	CSoundMgr::Get_Instance()->PlaySound( szBuff, CSoundMgr::EFFECT);
+	TCHAR szBuff1[32] = L"Forest.ogg";
+	CSoundMgr::Get_Instance()->PlayBGM( szBuff1);
+	
 }
 
 void CMenu::Update()

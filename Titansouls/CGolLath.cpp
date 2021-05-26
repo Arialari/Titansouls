@@ -309,5 +309,6 @@ void CGolLath::Update_Dead()
 	m_iFrameidx = 3;
 	m_pArm[LEFT]->Set_Dead( true );
 	m_pArm[RIGHT]->Set_Dead( true );
+	m_pPlayer->Win_Titan( 0 );
 }
 

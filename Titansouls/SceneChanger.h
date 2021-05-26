@@ -14,6 +14,7 @@ public:
     virtual void Release() override;
     virtual void Update_ColisionRect() override;
     inline void  Set_Scene ( SCENEID::ID _id ) { m_eChangeScene = _id; }
+    inline void Set_SizeX( int _c ) { m_tInfo.iCX = _c; }
     inline void Set_TeleportPos( float _x, float _y ) { m_fTeleportX = _x; m_fTeleportY = _y; }
 
     virtual void OnBlocked( CObj* _pBlockedObj, DIRECTION _eDir ) override;

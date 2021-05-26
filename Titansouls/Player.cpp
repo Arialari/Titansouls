@@ -6,12 +6,13 @@
 #include "BmpMgr.h"
 #include "Arrow.h"
 #include "SoundMgr.h"
+#include "SceneMgr.h"
 
 
 CPlayer::CPlayer()
 	: m_ePreState( STATE_END ), m_eCurState( STATE_END ), m_eCurDirection(DIRECTION::DIRECTION_END)
 	, m_fRunSpeed(5.0f), m_fWalkSpeed(3.5f), m_fRollSpeed(7.5f), m_pArrow(nullptr), m_bHoldArrow(true), m_bIsAiming(false), m_bIsReturning(false), m_bWasRetrun(false)
-	, m_fAimGaze(0.f), m_iDeadFrame(0), m_iDeadTime(180), m_bNeverDie(false)
+	, m_fAimGaze(0.f), m_iDeadFrame(0), m_iDeadTime(180), m_bNeverDie(false), m_fSavedX( 39.5f * DEFAULTCX ), m_fSavedY( 184.5f * DEFAULTCY ), m_eSavedSceneID(SCENEID::HALLWAY_UNDER)
 {
 }
 
@@ -38,6 +39,7 @@ void CPlayer::Initialize()
 	m_eRenderID = RENDERID::OBJECT;
 	m_vecCollisionRect.reserve( 1 );
 	m_vecCollisionRect.emplace_back( RECT() );
+	m_bWinTitan[0] = m_bWinTitan[1] = false;
 
 	m_pArrow = static_cast<CArrow*>(CAbstractFactory<CArrow>::Create());
 	m_pArrow->Set_Pos( m_tInfo.fX, m_tInfo.fY );
@@ -129,6 +131,19 @@ void CPlayer::OnBlocked( CObj* _pBlockedObj, DIRECTION _eDir )
 
 void CPlayer::OnOverlaped( CObj* _pBlockedObj, DIRECTION _eDir )
 {
+}
+
+void CPlayer::Revive()
+{
+	m_bDead = false;
+	m_tInfo.fX = m_fSavedX;
+	m_tInfo.fY = m_fSavedY;
+	m_iDeadFrame = 0;
+	m_eCurState = STATE::IDLE;
+	CScrollMgr::Get_Instance()->Force_Set_Scroll( m_fSavedX, m_fSavedY );
+	CSceneMgr::Get_Instance()->Scene_Change( SCENEID::SCENDID_END );
+	CSceneMgr::Get_Instance()->Scene_Change( SCENEID::HALLWAY_UNDER );
+	return;
 }
 
 void CPlayer::Key_Check()
@@ -403,9 +418,8 @@ void CPlayer::Update_Dead()
 			++m_iDeadFrame;
 		else
 		{
-			m_bDead = false;
-			m_iDeadFrame = 0;
-			m_eCurState = STATE::IDLE;
+			Revive();
+
 		}
 	}
 	else

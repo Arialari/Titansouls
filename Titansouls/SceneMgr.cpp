@@ -8,6 +8,7 @@
 #include "GolSetScene.h"
 #include "TileMgr.h"
 #include "Menu.h"
+#include "EndingScene.h"
 
 CSceneMgr* CSceneMgr::m_pInstance = nullptr;
 CSceneMgr::CSceneMgr()
@@ -70,10 +71,14 @@ void CSceneMgr::Scene_Change( SCENEID::ID _eID)
 		case SCENEID::ID::GOL_SET:
 			m_pScene = new CGolSetScene;
 			break;
+		case SCENEID::ID::ENDING:
+			m_pScene = new CEndingScene;
+			break;
 		default:
 			break;
 		}
-		m_pScene->Initialize();
+		if(m_pScene )
+			m_pScene->Initialize();
 		m_ePreScene = m_eCurScene;
 	}
 }

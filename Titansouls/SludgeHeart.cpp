@@ -209,6 +209,7 @@ void CSludgeHeart::OnOverlaped( CObj* _pBlockedObj, DIRECTION _eDir )
 			m_pArrow->Set_Pos( m_tInfo.fX, m_tInfo.fY );
 			m_pArrow->Stop_Moving();
 			m_bIsRender = true;
+			m_pPlayer->Win_Titan( 1 );
 		}
 	}
 

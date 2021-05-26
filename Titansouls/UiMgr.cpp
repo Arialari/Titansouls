@@ -8,7 +8,7 @@
 
 CUiMgr* CUiMgr::m_pInstance = nullptr;
 CUiMgr::CUiMgr()
-	:m_bIsCollisionVisible(true)
+	:m_bIsCollisionVisible(false)
 {
 }
 CUiMgr::~CUiMgr()

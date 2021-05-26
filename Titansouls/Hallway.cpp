@@ -9,6 +9,7 @@
 #include "UiMgr.h"
 #include "SceneChanger.h"
 #include "SoundMgr.h"
+#include "BigDoor.h"
 
 CHallway::CHallway()
 {
@@ -50,6 +51,17 @@ void CHallway::Initialize()
 	static_cast<CSceneChanger*>(pObj)->Set_Scene( SCENEID::SLUDGE );
 	static_cast<CSceneChanger*>(pObj)->Set_TeleportPos ( 45.5f * DEFAULTCX, 81.5f * DEFAULTCY );
 	CObjMgr::Get_Instance()->Add_Object( pObj, OBJID::COLLISION);
+
+	pObj = CAbstractFactory<CSceneChanger>::Create( 40.5f * DEFAULTCX, 15.5f * DEFAULTCY );
+	static_cast<CSceneChanger*>(pObj)->Set_Scene( SCENEID::ENDING );
+	static_cast<CSceneChanger*>(pObj)->Set_TeleportPos ( 0, 0 );
+	static_cast<CSceneChanger*>(pObj)->Set_SizeX( DEFAULTCX * 11.f );
+	static_cast<CSceneChanger*>(pObj)->Update_ColisionRect();
+	CObjMgr::Get_Instance()->Add_Object( pObj, OBJID::COLLISION );
+
+	pObj = CAbstractFactory<CBigDoor>::Create( 40.5f * DEFAULTCX, 21.f * DEFAULTCY );
+	static_cast<CBigDoor*>(pObj)->Set_Player( m_pPlayer );
+	CObjMgr::Get_Instance()->Add_Object( pObj, OBJID::DOOR );
 	
 	TCHAR bgmName[32] = L"Hallway.mp3";
 	CSoundMgr::Get_Instance()->PlayBGM( bgmName );
